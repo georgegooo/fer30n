@@ -1,17 +1,15 @@
 {
-  "timestamp": "2026-08-19T16:46:47.085499+00:00",
+  "timestamp": "",
+  "session_block_enabled": false,
   "strategies": {
     "SMC": {
-      "daily_pnl": 2.02,
+      "daily_pnl": 0.0,
       "daily_limit": -50.0,
-      "daily_remaining": 52.02,
-      "weekly_pnl": -79.74,
+      "daily_remaining": 50.0,
+      "weekly_pnl": 0.0,
       "weekly_limit": -120.0,
-      "weekly_remaining": 40.26,
-      "blocked_sessions": [
-        "ASIA",
-        "NEWYORK"
-      ],
+      "weekly_remaining": 120.0,
+      "blocked_sessions": [],
       "blocked_regimes": [
         "RANGING"
       ],
@@ -21,13 +19,10 @@
       "daily_pnl": 0.0,
       "daily_limit": -30.0,
       "daily_remaining": 30.0,
-      "weekly_pnl": -10.63,
+      "weekly_pnl": 0.0,
       "weekly_limit": -80.0,
-      "weekly_remaining": 69.37,
-      "blocked_sessions": [
-        "ASIA",
-        "NEWYORK"
-      ],
+      "weekly_remaining": 80.0,
+      "blocked_sessions": [],
       "blocked_regimes": [
         "RANGING",
         "TRENDING"
