@@ -1,111 +1,15 @@
 {
   "version": "phase3.0",
-  "total_predictions": 15414,
-  "total_resolved": 6703,
+  "total_predictions": 15426,
+  "total_resolved": 6715,
   "correct_predictions": 734,
   "last_health_score": 50.0,
   "last_drift_magnitude": 1.0,
   "drift_alerts_count": 337,
   "retrain_recommendations": 331,
-  "last_check": 1787264721.7504737,
+  "last_check": 1787266350.302871,
   "baseline_accuracy": 0.5,
   "prediction_history": [
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242392.1203065
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242452.601812
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242513.0874941
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242573.548884
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242634.0909214
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242694.5694149
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242755.0620232
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242815.6936
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242876.1357877
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242936.5995302
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787242997.004165
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "RANGING",
-      "timestamp": 1787243057.4553795
-    },
     {
       "prediction_score": 50.0,
       "actual_outcome": null,
@@ -1609,6 +1513,102 @@
       "session": "OFF_HOURS",
       "regime": "TRENDING",
       "timestamp": 1787264720.2533097
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265562.9848058
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265683.6215303
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265744.1944902
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265804.7555065
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265865.354486
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265926.0319076
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787265986.6213725
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787266047.1584868
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787266167.9450803
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787266228.5828884
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787266289.4070647
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787266350.1503842
     }
   ]
 }

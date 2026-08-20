@@ -3,86 +3,14 @@
   "per_strategy": {
     "SMC": {
       "strategy": "SMC",
-      "total_trades": 2447,
+      "total_trades": 2459,
       "wins": 535,
-      "losses": 1912,
-      "win_rate": 0.2186350633428688,
+      "losses": 1924,
+      "win_rate": 0.2175681171207808,
       "avg_profit": 20.218112149532715,
-      "avg_loss": 2.226108786610883,
-      "expectancy": 2.681,
+      "avg_loss": 2.212224532224537,
+      "expectancy": 2.6679,
       "recent_results": [
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": true,
-          "profit": 6.11,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": false,
-          "profit": -29.62,
-          "session": "LONDON",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": false,
-          "profit": -29.62,
-          "session": "LONDON",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": false,
-          "profit": -29.62,
-          "session": "LONDON",
-          "regime": "UNKNOWN"
-        },
-        {
-          "win": false,
-          "profit": -29.62,
-          "session": "LONDON",
-          "regime": "UNKNOWN"
-        },
         {
           "win": false,
           "profit": -29.62,
@@ -610,12 +538,84 @@
           "profit": 0.0,
           "session": "OFF_HOURS",
           "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
         }
       ],
-      "recent_win_rate": 0.09,
-      "best_session": "ASIA",
-      "best_regime": "UNKNOWN",
-      "dna_score": 50.55
+      "recent_win_rate": 0.01,
+      "best_session": "LONDON",
+      "best_regime": "TRENDING",
+      "dna_score": 48.9
     },
     "MICRO": {
       "strategy": "MICRO",
@@ -1851,7 +1851,7 @@
     }
   },
   "last_ranked_at": 0,
-  "total_updates": 7076,
-  "last_updated": 1787264721.3362184,
+  "total_updates": 7088,
+  "last_updated": 1787266350.2536306,
   "_cleanup_note": "V9 cleanup: removed test-only entries (TEST_STRAT, WEAK_STRAT) not in official STRATEGY_TO_MAGIC list"
 }
