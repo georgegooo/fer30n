@@ -1,0 +1,1498 @@
+import os
+import sys
+import time
+from datetime import datetime, timezone
+from typing import Optional
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(os.getcwd())))
+
+from certification.framework import update_certification_progress
+from core.analytics import analyze_trades, write_daily_performance_report
+from core.atr_manager import calculate_atr
+from core.candle_trigger import check_candle_trigger
+from core.confidence_engine import get_confidence_v2
+from core.execution_intelligence import execute_intelligence_check
+from core.fer3on_decision_authority import (
+    build_decision_context,
+    decide_trade,
+    decision_to_runtime_format,
+    format_authority_log,
+)
+from core.market_regime import detect_market_regime
+from core.market_structure import get_market_structure
+from core.professional_swing_structure import (
+    analyze_swing_structure,
+    build_swing_structure_report,
+    evaluate_entry_readiness,
+    select_structural_targets,
+)
+from core.mt5_compat import MT5_AVAILABLE, connect_mt5, mt5
+from core.mt5_history_sync import sync_mt5_history
+from analytics.csv_truth_bridge import sync_csv_to_truth_layer
+from core.quality_score import evaluate_quality_gate
+from core.risk_manager import calculate_smart_lot, evaluate_position_limits, get_loss_limits_status, compute_realized_risk_percent
+from core.news_filter import is_news_active
+from core.session_intelligence import (
+    compute_session_intelligence_score,
+    detect_session_phase,
+    get_session,
+    get_session_confidence,
+)
+from core.settings import (
+    CHECK_INTERVAL, SMC_MAGIC, SYMBOL, TESTING_MODE_LOT_CAPS, MAX_DAILY_TRADES,
+    BASE_ACCOUNT_BALANCE, MAX_LOT, TRADE_COOLDOWN, ASIA_TRADING_ENABLED,
+    OFF_HOURS_MAX_TRADES,
+    LONDON_VOLATILE_BLOCK_ENABLED, LONDON_VOLATILE_START, LONDON_VOLATILE_END,
+    MAX_SAME_DIRECTION_POSITIONS,
+    RISK_PER_TRADE_PERCENT, MIN_EFFECTIVE_RISK_PERCENT, MAX_RISK_TOTAL,
+    HISTORY_DIR,
+    TP_ATR_CAP_MULT, TP_SL_MULT,
+    get_tp_cap_multiplier, get_tp_sl_multiplier,
+    get_min_sl_dollars,
+)
+from core.portfolio_risk_authority import (
+    evaluate_risk,
+    record_trade_open,
+    record_trade_close,
+    reconcile_with_live_positions,
+)
+from core.strategy_runners import run_scalp_cycle, run_swing_cycle, run_micro_cycle
+from core.startup_check import run_startup_check
+from core.test_mode_manager import get_quota_state
+from core.trade_executor import execute_trade
+from core.adaptive_sl_tp_engine import calculate_adaptive_sl_tp
+from core.trailing_stop import update_scalp_trailing
+from core.loss_pause_guard import (
+    evaluate_loss_pause,
+    register_trade_result as register_loss_pause_result,
+    get_status as get_loss_pause_status,
+)
+from core.watchdog import run_watchdog_cycle
+from ml.feature_engine import extract_live_features
+from ml.ml_orchestrator import ml_evaluate_trade
+from brain.master_brain import get_master_score
+from core.liquidity_intelligence import get_liquidity_bias
+from core.smc_entry_engine import check_smc_entry_sequence
+
+# =============================================================================
+# PHASE 3 — Institutional Shadow Architecture
+# Sidecar import — safe lazy load. Never blocks runtime if Phase 3 missing.
+# =============================================================================
+try:
+    from core.settings import PHASE3_ENABLED as _PHASE3_ENABLED
+    if _PHASE3_ENABLED:
+        from core.phase3.phase3_orchestrator import (
+            Phase3Input,
+            run_phase3_shadow,
+            notify_trade_closed as _phase3_notify_trade_closed,
+            get_phase3_status as _get_phase3_status,
+        )
+        _PHASE3_AVAILABLE = True
+        print("[PHASE3] Shadow architecture loaded — ADVISORY MODE ONLY")
+    else:
+        _PHASE3_AVAILABLE = False
+        print("[PHASE3] Disabled in settings")
+except Exception as _phase3_import_err:
+    _PHASE3_AVAILABLE = False
+    print(f"[PHASE3] Import skipped (non-fatal): {_phase3_import_err}")
+
+# Track last Phase 3 shadow decision for trade-close correlation
+_last_phase3_shadow_decision: str = "UNKNOWN"
+_last_phase3_ml_timestamp: float = 0.0
+
+# =============================================================================
+# FAIE — Phase-2 spec §5: Shadow-Logging Call Site
+# (docs/FAIE/PHASE_2_SPECIFICATION.md §5 — distinct from the "PHASE 3"
+# Institutional Shadow Architecture above, which is an unrelated sidecar.)
+# Sidecar import — safe lazy load, disabled by default. Never blocks runtime
+# if brain.faie is missing or FAIE_SHADOW_LOGGING_ENABLED is False.
+# =============================================================================
+try:
+    from core.settings import FAIE_SHADOW_LOGGING_ENABLED as _FAIE_SHADOW_LOGGING_ENABLED
+    if _FAIE_SHADOW_LOGGING_ENABLED:
+        from brain.faie import log_faie_shadow_decision as _log_faie_shadow_decision
+        _FAIE_SHADOW_AVAILABLE = True
+        print("[FAIE] Shadow logging enabled — ADVISORY/LOGGING ONLY, see docs/FAIE/PHASE_2_SPECIFICATION.md §5")
+    else:
+        _FAIE_SHADOW_AVAILABLE = False
+except Exception as _faie_import_err:
+    _FAIE_SHADOW_AVAILABLE = False
+    print(f"[FAIE] Shadow logging import skipped (non-fatal): {_faie_import_err}")
+
+
+def build_market_snapshot_hash(rates, atr, market_regime, session, confidence_pct):
+    if rates is None:
+        return None
+    try:
+        if len(rates) == 0:
+            return None
+    except TypeError:
+        return None
+
+    sample = rates[-5:] if len(rates) >= 5 else rates
+    price_features = []
+    for candle in sample:
+        price_features.append(round(_get_rate_close(candle), 4))
+
+    return hash(
+        (
+            tuple(price_features),
+            round(float(atr or 0), 4),
+            str(market_regime or 'UNKNOWN'),
+            str(session or 'UNKNOWN'),
+            round(float(confidence_pct or 0), 2),
+        )
+    )
+
+
+_last_analysis_hash = None
+_last_analysis_time = 0.0
+
+# =============================================================================
+# V3.5 PHASE-1 FIX: real per-strategy cooldown tracking.
+# Previously `cooldown_active=False` was hardcoded in build_decision_context(),
+# meaning the COOLDOWN_ACTIVE hard-block in unified_decision.py could never
+# fire and TRADE_COOLDOWN (settings.py) was never actually read anywhere.
+# =============================================================================
+_last_trade_time: dict = {}  # strategy -> unix timestamp of last opened trade
+
+
+def _cooldown_active_for(strategy: str) -> bool:
+    last = _last_trade_time.get(str(strategy or '').upper(), 0.0)
+    return (time.time() - last) < TRADE_COOLDOWN
+
+
+def _register_trade_opened(strategy: str) -> None:
+    _last_trade_time[str(strategy or '').upper()] = time.time()
+
+
+# V3.5 PHASE-1: OFF_HOURS daily trade cap — separate from cooldown, counts
+# trades opened during the OFF_HOURS session and resets at UTC day rollover.
+_off_hours_trade_count = 0
+_off_hours_count_day: Optional[str] = None
+
+
+def _off_hours_cap_hit() -> bool:
+    global _off_hours_trade_count, _off_hours_count_day
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    if _off_hours_count_day != today:
+        _off_hours_count_day = today
+        _off_hours_trade_count = 0
+    return _off_hours_trade_count >= OFF_HOURS_MAX_TRADES
+
+
+def _register_off_hours_trade() -> None:
+    global _off_hours_trade_count
+    _off_hours_trade_count += 1
+
+
+def maybe_skip_analysis(now, rates, atr, market_regime, session, confidence_pct):
+    global _last_analysis_hash, _last_analysis_time
+    current_hash = build_market_snapshot_hash(rates, atr, market_regime, session, confidence_pct)
+    if current_hash is None:
+        return False
+    if _last_analysis_hash == current_hash and (now - _last_analysis_time) < 20:
+        print('ANALYSIS_SKIPPED | NO_MEANINGFUL_CHANGE')
+        return True
+    _last_analysis_hash = current_hash
+    _last_analysis_time = now
+    return False
+
+
+def _safe_mid_price(tick) -> float:
+    if tick is None:
+        return 0.0
+    try:
+        return round((float(tick.ask) + float(tick.bid)) / 2.0, 5)
+    except Exception:
+        return 0.0
+
+
+def _get_rate_close(rate) -> float:
+    if rate is None:
+        return 0.0
+    try:
+        if isinstance(rate, dict):
+            return float(rate.get('close', 0.0) or 0.0)
+        if hasattr(rate, 'close'):
+            return float(getattr(rate, 'close') or 0.0)
+        try:
+            return float(rate['close'] or 0.0)
+        except Exception:
+            return 0.0
+    except Exception:
+        return 0.0
+
+
+def _derive_signal(structure_bias: str, liquidity_bias: str) -> str:
+    structure_bias = str(structure_bias or 'NEUTRAL').upper()
+    liquidity_bias = str(liquidity_bias or 'NEUTRAL').upper()
+    if structure_bias in {'BUY', 'SELL'}:
+        return structure_bias
+    if liquidity_bias in {'BUY', 'SELL'}:
+        return liquidity_bias
+    return 'NONE'
+
+
+def _smc_strength_from_details(details: dict) -> float:
+    grade_score = float(details.get('grade_score', 0) or 0)
+    advanced_score = float(details.get('advanced_score', 0) or 0)
+    conditions_met = float(details.get('conditions_met', 0) or 0)
+    return round(min(9.0, max(grade_score / 10.0, advanced_score, conditions_met * 1.5)), 2)
+
+
+def _account_balance() -> float:
+    try:
+        account = mt5.account_info() if mt5 is not None else None
+        bal = float(getattr(account, 'balance', 0) or 0)
+        # FIXED: إذا الحساب جديد أو balance=0 → استخدم BASE_ACCOUNT_BALANCE (1000$)
+        if bal <= 0:
+            bal = float(BASE_ACCOUNT_BALANCE)
+        return bal
+    except Exception:
+        return float(BASE_ACCOUNT_BALANCE)
+
+
+def _position_counts() -> tuple[int, int]:
+    try:
+        positions = mt5.positions_get(symbol=SYMBOL) if mt5 is not None else []
+        positions = positions or []
+        return len(positions), len(positions)
+    except Exception:
+        return 0, 0
+
+
+def _get_symbol_point() -> float:
+    try:
+        if mt5 is not None:
+            info = mt5.symbol_info(SYMBOL)
+            if info:
+                return float(getattr(info, 'point', 0.01) or 0.01)
+    except Exception:
+        pass
+    return 0.01
+
+
+def _get_broker_min_stop() -> float:
+    try:
+        if MT5_AVAILABLE and mt5 is not None:
+            info = mt5.symbol_info(SYMBOL)
+            if info:
+                broker_min = int(getattr(info, 'trade_stops_level', 0) or 0)
+                point = _get_symbol_point()
+                return broker_min * point
+    except Exception:
+        pass
+    return 0
+
+
+def _build_order_request(signal: str, lot: float, sl_dist: float, tp_dist: float, atr: float = None, strategy: str = 'SMC'):
+    tick = mt5.symbol_info_tick(SYMBOL) if mt5 is not None else None
+    symbol_info = mt5.symbol_info(SYMBOL) if mt5 is not None else None
+    point = _get_symbol_point()
+
+    # =================================================================
+    # [SLTP-4]: single, authoritative SL/TP finalization — see
+    # core/sl_tp_finalizer.py. Replaces the previous separate
+    # enforce-min-stop + redundant broker_min re-check (already covered
+    # internally by _enforce_min_stop_distance) + TP rescale + ATR-cap
+    # sequence, which is exactly what let execute_trade silently disagree
+    # with what this function built (see [SLTP-3] history).
+    # =================================================================
+    from core.sl_tp_finalizer import finalize_sl_tp
+
+    original_sl = sl_dist
+    original_tp = float(tp_dist)
+    final = finalize_sl_tp(
+        symbol=SYMBOL,
+        sl_dist_raw=sl_dist,
+        tp_dist_raw=tp_dist,
+        point=point,
+        strategy=strategy,
+        atr=atr,
+    )
+    sl_dist = final['sl_dist']
+    tp_dist = final['tp_dist']
+
+    if sl_dist != original_sl:
+        print(f'🛡 SL_DIST_FIXED | was={original_sl} → now={sl_dist}')
+    if tp_dist != original_tp:
+        print(f'🛡 TP_ADJUSTED | was={original_tp:.2f} → now={tp_dist:.2f} | rr={final["rr"]}')
+    if final['tp_was_atr_capped']:
+        try:
+            from analytics.tp_cap_monitor import record_tp_cap_event
+            record_tp_cap_event(
+                strategy=str(strategy or 'SMC').upper(), signal=signal, atr=atr,
+                sl_dist=sl_dist, tp_dist_requested=original_tp,
+                tp_dist_capped=tp_dist,
+                cap_multiplier_atr=float(get_tp_cap_multiplier(strategy)),
+                cap_multiplier_sl=float(get_tp_sl_multiplier(strategy)),
+            )
+        except Exception as _tp_log_err:
+            print(f'⚠️ TP_CAP_MONITOR_LOG_FAILED (non-fatal): {_tp_log_err}')
+
+    if str(signal).upper() == 'SELL':
+        order_type = mt5.ORDER_TYPE_SELL
+        price = float(getattr(tick, 'bid', 0.0) or 0.0)
+        # FER3ON FINAL BUGFIX [SLTP-1]: sl_dist/tp_dist are RAW PRICE UNITS
+        # from the adaptive engine (e.g. $29.35 for gold), not points — used
+        # directly here, not multiplied by `point` again. See
+        # FER3ON_FINAL_CHANGELOG.md [SLTP-1] and core/trailing_stop.py,
+        # which already used this same convention correctly.
+        sl = round(price + sl_dist, 5)
+        tp = round(price - tp_dist, 5)
+    else:
+        order_type = mt5.ORDER_TYPE_BUY
+        price = float(getattr(tick, 'ask', 0.0) or 0.0)
+        sl = round(price - sl_dist, 5)
+        tp = round(price + tp_dist, 5)
+
+    # =================================================================
+    # V3.0.1-SLTP-FIXED: معلومات SL/TP للمراجعة قبل الإرسال
+    # =================================================================
+    try:
+        sl_dist_pts = abs(price - sl)
+        tp_dist_pts = abs(price - tp)
+        rr = round(tp_dist_pts / sl_dist_pts, 2) if sl_dist_pts > 0 else 0.0
+        print(
+            f'🛡 SL/TP BUILT | signal={signal} price={price} sl={sl} tp={tp} '
+            f'sl_dist={sl_dist_pts:.2f}pts tp_dist={tp_dist_pts:.2f}pts RR={rr}'
+        )
+    except Exception as _exc:
+        print(f'⚠️ SL/TP info log failed: {_exc}')
+
+    # =================================================================
+    # FIXED: نوع الـ filling — IOC بدل RETURN
+    # =================================================================
+    filling = getattr(symbol_info, 'filling_mode', None) if symbol_info else None
+    if filling is None or filling not in (0, 1, 2):
+        filling = mt5.ORDER_FILLING_IOC
+
+    return {
+        'symbol': SYMBOL,
+        'action': mt5.TRADE_ACTION_DEAL,
+        'volume': float(lot),
+        'type': order_type,
+        'price': price,
+        'sl': sl,
+        'tp': tp,
+        'deviation': 20,
+        'magic': SMC_MAGIC,
+        'comment': 'F3V3FIXED',
+        'type_time': mt5.ORDER_TIME_GTC,
+        'type_filling': filling,
+    }
+
+
+def _build_live_snapshot(symbol: str) -> dict:
+    now = datetime.now(timezone.utc)
+
+    # =========================================================================
+    # FER3ON FINAL — LONDON OPEN VOLATILE WINDOW (Hard Block)
+    # Ported from V3.7 main.py (which documented 33% WR on 36 trades, -$178
+    # during 08:00-10:00 UTC London open). Hard block before any other work —
+    # blocks every strategy during this window and saves the regime/structure/
+    # ATR calculations that would otherwise run for a snapshot that's about
+    # to be discarded anyway. See build spec Merge item #2 /
+    # FER3ON_FINAL_CHANGELOG.md [MAIN-1].
+    # =========================================================================
+    if LONDON_VOLATILE_BLOCK_ENABLED and LONDON_VOLATILE_START <= now.hour < LONDON_VOLATILE_END:
+        return {
+            'ready': False,
+            'reason': f'LONDON_VOLATILE_WINDOW_BLOCK ({LONDON_VOLATILE_START:02d}:00-{LONDON_VOLATILE_END:02d}:00 UTC)',
+            'tick': mt5.symbol_info_tick(symbol) if mt5 is not None else None,
+            'session': get_session(now.hour),
+            'phase': detect_session_phase(now.hour, now.minute),
+        }
+
+    tick = mt5.symbol_info_tick(symbol) if mt5 is not None else None
+    rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_M5, 0, 120) if mt5 is not None else None
+    if rates is None or len(rates) < 30:
+        return {
+            'ready': False,
+            'reason': 'NO_MARKET_RATES',
+            'tick': tick,
+            'session': get_session(now.hour),
+            'phase': detect_session_phase(now.hour, now.minute),
+        }
+
+    session_name = get_session(now.hour)
+    phase = detect_session_phase(now.hour, now.minute)
+    regime = detect_market_regime(symbol)
+    atr = float(calculate_atr(rates) or 0.0)
+    structure = get_market_structure(symbol)
+    liquidity = get_liquidity_bias(symbol)
+    current_price = _get_rate_close(rates[-1])
+    structure_analysis = analyze_swing_structure(rates, current_price=current_price)
+    signal = _derive_signal(structure_analysis.get('structure_bias', structure.get('bias', 'NEUTRAL')), liquidity.get('bias'))
+    if signal == 'NONE':
+        signal = _derive_signal(structure.get('bias'), liquidity.get('bias'))
+    if signal == 'NONE':
+        return {
+            'ready': False,
+            'reason': 'NO_DIRECTIONAL_SIGNAL',
+            'tick': tick,
+            'rates': rates,
+            'atr': atr,
+            'market_regime': regime,
+            'session': session_name,
+            'phase': phase,
+        }
+
+    entry_readiness = evaluate_entry_readiness(structure_analysis, entry_price=current_price)
+    if not entry_readiness.get('ready', False):
+        return {
+            'ready': False,
+            'reason': 'STRUCTURE_NOT_READY',
+            'tick': tick,
+            'rates': rates,
+            'atr': atr,
+            'market_regime': regime,
+            'session': session_name,
+            'phase': phase,
+            'signal': signal,
+            'structure': structure,
+            'structure_analysis': structure_analysis,
+            'entry_readiness': entry_readiness,
+        }
+
+    candle = check_candle_trigger(symbol, signal, 'SMC', rates=rates)
+    smc_confirmed, entry_grade, smc_details = check_smc_entry_sequence(symbol, signal)
+    smc_strength = _smc_strength_from_details(smc_details)
+    session_history = get_session_confidence(now.hour)
+    session_score = compute_session_intelligence_score(phase, session_history, signal)
+    daily_bias = structure.get('bias', 'NEUTRAL')
+    mtf_direction = daily_bias if daily_bias in {'BUY', 'SELL'} else signal
+    mtf_strength = 3 if structure.get('mtf_aligned') else 2 if daily_bias in {'BUY', 'SELL'} else 0
+
+    news_state = is_news_active(symbol)
+    if news_state['is_news'] and news_state['impact'] == 'HIGH':
+        print(
+            f"📰 NEWS_HIGH | event={news_state['event']} "
+            f"Δ={news_state['minutes_to_event']:.0f}m → cycle paused"
+        )
+        return {
+            'ready': False,
+            'reason': 'NEWS_HIGH_IMPACT',
+            'tick': tick,
+            'session': session_name,
+            'phase': phase,
+            'news_state': news_state,
+        }
+
+    confidence = get_confidence_v2(
+        strategy='SMC',
+        signal=signal,
+        market_regime=regime,
+        mtf_direction=mtf_direction,
+        mtf_strength=mtf_strength,
+        smc_strength=smc_strength,
+        entry_grade=entry_grade,
+        session_name=session_name,
+        session_score=session_score,
+        liquidity_bias=liquidity.get('bias', 'NEUTRAL'),
+        is_news=news_state['is_news'],
+        news_impact=news_state['impact'],
+        asian_data=liquidity,
+    )
+
+    quality_score = round(max(float(smc_details.get('grade_score', 0) or 0), float(candle.get('score', 0) or 0), 50.0), 2)
+
+    # === Real sweep probability (was binary 0/100) ===
+    # نستخدم core/sweep_predictor.py الحقيقي بدل التقدير الثنائي القديم.
+    # لو الحساب فشل لأي سبب نسقط بأمان على المنطق القديم كـ fallback.
+    try:
+        from core.sweep_predictor import compute_sweep_probability as _compute_sweep_prob
+        _current_price = float(tick.ask if signal == 'BUY' else tick.bid) if tick else 0.0
+        _sweep_res = _compute_sweep_prob(
+            signal=signal,
+            equal_highs=liquidity.get('equal_highs') or [],
+            equal_lows=liquidity.get('equal_lows') or [],
+            liquidity_pools=liquidity.get('pools') or [],
+            current_price=_current_price,
+            session=session_name,
+            distance_to_pool=liquidity.get('distance_next_pool'),
+        )
+        sweep_probability = float(_sweep_res.get('sweep_probability', 0.0) or 0.0)
+        # لو المُتنبّئ معطّل أو النتيجة صفر لكن هناك سويب مؤكد فعليًا، نعوّض بمنطق قديم.
+        if sweep_probability <= 0.0 and liquidity.get('sweep') not in {None, '', 'NONE'}:
+            sweep_probability = 100.0
+    except Exception as _sweep_err:
+        # سقوط آمن على المنطق القديم
+        sweep_probability = 100.0 if liquidity.get('sweep') not in {None, '', 'NONE'} else 0.0
+
+    quality_gate = evaluate_quality_gate(
+        quality_score=quality_score,
+        confidence_pct=confidence.get('pct', 0),
+        strategy='SMC',
+        session=session_name,
+        smc_entry_confirmed=bool(smc_confirmed),
+        candle_trigger_confirmed=bool(candle.get('confirmed')),
+        sweep_probability=sweep_probability,
+        missed_opportunity_score=0,
+        ml_score=50,
+    )
+
+    brain = get_master_score('SMC', regime, session_name)
+
+    broker_min = _get_broker_min_stop()
+    execution = {
+        'grade': 'B',
+        'spread_pts': 0.0,
+        'rr_ratio': 1.5,
+        'score': 50.0,
+    }
+    structure_strength = max(
+        float(structure.get('confidence', 0.5) or 0.5),
+        float(structure_analysis.get('structure_strength', 0.0) or 0.0) / 100.0,
+    )
+    adaptive = calculate_adaptive_sl_tp(
+        atr=atr,
+        strategy='SMC',
+        lot=lot if 'lot' in locals() else 0.01,
+        confidence=confidence.get('pct', 0) / 100.0,
+        quality_score=quality_score,
+        market_regime=regime,
+        session=session_name,
+        structure_strength=structure_strength,
+        liquidity=liquidity.get('score', 0) / 100.0,
+        volatility=0.5,
+        spread=execution.get('spread_pts', 0),
+        execution_grade=execution.get('grade', 'B'),
+        broker_stop_level=broker_min,
+        broker_stop_fallback=0.0,
+        min_sl=get_min_sl_dollars(),  # [REARCH-1]: single source of truth, see core/settings.py
+        structure_analysis=structure_analysis,
+    )
+    sl_dist = adaptive['sl_distance']
+    tp_dist = adaptive['tp_distance']
+
+    execution = execute_intelligence_check(
+        symbol=symbol,
+        signal=signal,
+        sl_dist=sl_dist,
+        tp_dist=tp_dist,
+        atr=atr,
+        liquidity_map={
+            'liquidity_score': liquidity.get('score', 0),
+            'direction': 'UP' if liquidity.get('bias') == 'BUY' else 'DOWN' if liquidity.get('bias') == 'SELL' else 'NEUTRAL',
+            'distance_next': max(tp_dist * 3, 1.0),
+        },
+        session=session_name,
+        quality_score=quality_score,
+        strategy='SMC',
+        market_regime=regime,
+    )
+
+    features_array, feature_record = extract_live_features(
+        symbol=symbol,
+        strategy='SMC',
+        signal=signal,
+        market_regime=regime,
+        session=session_name,
+        quality_score=quality_score,
+        confidence_pct=confidence.get('pct', 0),
+        choch_state=structure.get('structure', 'UNKNOWN'),
+        liq_map_score=liquidity.get('score', 0),
+        exec_grade=execution.get('grade', 'REJECT'),
+        rr_ratio=execution.get('rr_ratio', 0),
+        spread_pts=execution.get('spread_pts', 0),
+        mtf_strength=mtf_strength,
+        mtf_structural=1 if structure.get('mtf_aligned') else 0,
+        atr=atr,
+        key_levels={
+            'PDH': liquidity.get('asian_high', 0),
+            'PDL': liquidity.get('asian_low', 0),
+        },
+    )
+
+    ml_result = ml_evaluate_trade(
+        features_array=features_array,
+        state_key=f'{signal}|{regime}|{session_name}|{entry_grade}',
+        signal=signal,
+        quality_score=quality_score,
+        exec_grade=execution.get('grade', 'REJECT'),
+        market_regime=regime,
+        session=session_name,
+        mtf_strength=mtf_strength,
+        choch_active=structure.get('structure', 'UNKNOWN').startswith('TRANSITION'),
+        liq_score=liquidity.get('score', 0),
+    )
+
+    quality_gate = evaluate_quality_gate(
+        quality_score=quality_score,
+        confidence_pct=confidence.get('pct', 0),
+        strategy='SMC',
+        session=session_name,
+        smc_entry_confirmed=bool(smc_confirmed),
+        candle_trigger_confirmed=bool(candle.get('confirmed')),
+        sweep_probability=sweep_probability,
+        missed_opportunity_score=0,
+        ml_score=ml_result.get('ml_score', 50),
+    )
+
+    structural_targets = select_structural_targets(structure_analysis, entry_price=current_price, signal=signal)
+    swing_report = build_swing_structure_report(
+        structure_analysis,
+        entry_price=current_price,
+        signal=signal,
+        stop_distance=sl_dist,
+        tp_distance=tp_dist,
+        final_rr=adaptive.get('risk_reward', 0.0),
+    )
+    print(swing_report)
+
+    current_positions, total_positions = _position_counts()
+    position_limits = evaluate_position_limits(strategy='SMC', current_positions=current_positions, total_positions=total_positions)
+    balance = _account_balance()
+    loss_limits = get_loss_limits_status(balance=balance)
+    risk_limits_hit = not position_limits.get('allowed', True) or loss_limits.get('daily_used', 0) >= loss_limits.get('daily_limit', 0) or loss_limits.get('weekly_used', 0) >= loss_limits.get('weekly_limit', 0)
+
+    ctx = build_decision_context(
+        strategy='SMC',
+        signal=signal,
+        symbol=symbol,
+        quality_score=quality_score,
+        confidence_pct=confidence.get('pct', 0),
+        brain_score=brain.get('master_score', 50),
+        execution_score=execution.get('score', 0),
+        execution_grade=execution.get('grade', 'UNKNOWN'),
+        structure_quality=float(structure_analysis.get('structure_strength', 50.0) or 50.0),
+        daily_bias=daily_bias if daily_bias in {'BUY', 'SELL'} else 'NONE',
+        mtf_strength=mtf_strength,
+        smc_strength=smc_strength,
+        smc_entry_confirmed=bool(smc_confirmed),
+        candle_trigger_confirmed=bool(candle.get('confirmed')),
+        candle_weight=int(candle.get('weight', 0) or 0),
+        candle_bonus=float(candle.get('candle_bonus', 0) or 0),
+        candle_penalty=float(candle.get('candle_penalty', 0) or 0),
+        liquidity_alignment=round(float(liquidity.get('score', 0) or 0) / 15.0 * 100.0, 2),
+        sweep_probability=sweep_probability,
+        session=session_name,
+        market_regime=regime,
+        session_score=session_score,
+        risk_limits_hit=risk_limits_hit,
+        cooldown_active=_cooldown_active_for('SMC'),
+        market_unsafe=regime == 'CRISIS',
+        daily_loss_capped=loss_limits.get('daily_used', 0) >= loss_limits.get('daily_limit', 0),
+        emergency_stop=False,
+        spread_ratio=execution.get('spread_pct', 0),
+        atr_sufficient=atr >= 1.0,
+        rr_ratio=execution.get('rr_ratio', 0),
+        ml_score=ml_result.get('ml_score', 50),
+        ml_rl_action=ml_result.get('rl_action', 'PASS'),
+        memory_score=brain.get('memory_score', brain.get('history_score', 50)),
+        dna_score=brain.get('dna_score', 50),
+        # §3.2 Institutional Session Engine — reuse the exact same UTC
+        # timestamp already used above for session_name/phase, rather than
+        # letting build_decision_context() call datetime.now() again a few
+        # lines later (functionally equivalent, this is just exact).
+        hour=now.hour,
+        minute=now.minute,
+    )
+
+    return {
+        'ready': True,
+        'tick': tick,
+        'rates': rates,
+        'atr': atr,
+        'market_regime': regime,
+        'session': session_name,
+        'phase': phase,
+        'signal': signal,
+        'structure': structure,
+        'structure_analysis': structure_analysis,
+        'liquidity': liquidity,
+        'mtf_strength': mtf_strength,
+        'candle': candle,
+        'smc_confirmed': smc_confirmed,
+        'entry_grade': entry_grade,
+        'smc_details': smc_details,
+        'confidence': confidence,
+        'quality_gate': quality_gate,
+        'quality_score': quality_score,
+        'brain': brain,
+        'execution': execution,
+        'ml': ml_result,
+        'feature_record': feature_record,
+        'decision_context': ctx,
+        'news_state': news_state,
+        'position_limits': position_limits,
+        'loss_limits': loss_limits,
+        'balance': balance,
+        'sl_dist': sl_dist,
+        'tp_dist': tp_dist,
+        'entry_readiness': entry_readiness,
+        'structural_targets': structural_targets,
+        'swing_structure_report': swing_report,
+    }
+
+
+def main():
+    print('=' * 60)
+    print('   FER3ON-AI-V3-PLUS-PLUS-PLUS')
+    print('   حساب 1000$ | 60 صفقة يومياً | Demo/Live Hardened')
+    print('=' * 60)
+    print(f"Time: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC")
+    print(f'MT5 available: {MT5_AVAILABLE}')
+    print(f'Account balance: ${BASE_ACCOUNT_BALANCE} (fallback)')
+    print(f'Max daily trades: {MAX_DAILY_TRADES}')
+    print(f'Testing mode lot caps: {TESTING_MODE_LOT_CAPS}')
+
+    # FIXED: إظهار broker minimum stop distance عند التشغيل
+    broker_min = _get_broker_min_stop()
+    print(f'Broker XAUUSD min stop distance: {broker_min:.5f} ({broker_min / 0.01:.0f} points)')
+
+    try:
+        startup_result = run_startup_check()
+        print(f"Startup check: {startup_result.get('startup_status', 'unknown')}")
+    except Exception as exc:
+        print(f'Startup check skipped: {exc}')
+        startup_result = {}
+
+    # FIX: production_ready must reflect genuine system health, not "did a
+    # trade get approved this specific heartbeat". Both run_watchdog_cycle()
+    # call sites below used to tie production_ready to per-cycle trade
+    # approval (one hardcoded to False outright on the loss-pause-guard
+    # path) — since most heartbeats correctly reject a trade (that's
+    # normal, not a health problem), this made the watchdog report
+    # DEGRADED/STARTUP_BLOCK on nearly every single cycle, burying any
+    # genuine health signal in constant false-alarm noise.
+    _system_startup_ready = startup_result.get('startup_status') == 'SYSTEM_READY'
+
+    try:
+        connect_mt5()
+    except Exception as exc:
+        print(f'MT5 connect warning: {exc}')
+
+    try:
+        sync_mt5_history()
+        update_certification_progress()
+    except Exception as exc:
+        print(f'History/bootstrap sync warning: {exc}')
+
+    # =========================================================================
+    # الإصلاح #1 (حرج): ربط Quant Engine بالصفقات الحقيقية
+    # trades.csv يحتوي الصفقات الفعلية — truth_layer كان فارغًا منها.
+    # هذا الجسر يُغذّي truth_layer بكل الصفقات المُغلقة من CSV
+    # حتى تعمل ميزات V6 (tier, risk_multiplier) بشكل صحيح.
+    # =========================================================================
+    try:
+        sync_csv_to_truth_layer()
+    except Exception as exc:
+        print(f'⚠️ CSV→TruthLayer sync warning: {exc}')
+
+    print('Entering trading loop. Press Ctrl+C to stop.')
+    print('=' * 60)
+
+    counter = 0
+    try:
+        while True:
+            counter += 1
+            loop_start = time.time()
+            now = datetime.now(timezone.utc)
+            tick = mt5.symbol_info_tick(SYMBOL) if mt5 is not None else None
+
+            if tick is None:
+                _mt5_status = 'online' if MT5_AVAILABLE else 'offline'
+                print(
+                    f'Heartbeat {counter} | {now.strftime("%H:%M:%S")} UTC | '
+                    f'MT5={_mt5_status} | tick=unavailable'
+                )
+            else:
+                _mt5_status = 'online' if MT5_AVAILABLE else 'offline'
+                print(
+                    f'Heartbeat {counter} | {now.strftime("%H:%M:%S")} UTC | '
+                    f'MT5={_mt5_status} | bid={tick.bid:.2f} ask={tick.ask:.2f}'
+                )
+
+            snapshot = _build_live_snapshot(SYMBOL)
+            if not snapshot.get('ready'):
+                _skip_reason = snapshot.get('reason', 'NO_RUNTIME_SNAPSHOT')
+                print(f'V3+++ skipped: {_skip_reason}')
+                time.sleep(CHECK_INTERVAL)
+                continue
+
+            # V3.6: استدعاء دوري حقيقي للتريلينج المتقدم (break-even Stage1 +
+            # ATR staged trailing Stage2) لكل الصفقات المفتوحة، لكل الاستراتيجيات
+            # الأربع (كان قبلها معطّلاً فعليًا — غير مُستدعى من حلقة main على
+            # الإطلاق، فقط مرة واحدة عند فتح الصفقة بمنطق بدائي مختلف وbug في
+            # فلتر الكومنت). هذا الاستدعاء مستقل تمامًا عن قرار الدخول لهذه
+            # الدورة — يعمل دائمًا طالما توفر snapshot صالح.
+            try:
+                if MT5_AVAILABLE and mt5 is not None:
+                    update_scalp_trailing(SYMBOL, snapshot.get('atr', 0.0))
+            except Exception as exc:
+                print(f'⚠️ ADAPTIVE_TRAILING_UPDATE_FAILED (non-fatal): {exc}')
+
+            # V3.6: process TP ladders (partial TP execution)
+            try:
+                if MT5_AVAILABLE and mt5 is not None:
+                    from execution.tp_monitor import process_tp_ladders
+                    process_tp_ladders(SYMBOL)
+            except Exception as exc:
+                print(f'⚠️ TP_MONITOR_FAILED (non-fatal): {exc}')
+
+            # V3.5 PHASE-1 POST-INCIDENT FIX: reconcile the Portfolio Risk
+            # Authority's in-memory open_trades against MT5's real position
+            # list every single cycle. This is independent of WHY a mismatch
+            # could happen (ticket-id drift, a missed close-sync cycle, a
+            # restart that lost in-memory state, etc) — it just guarantees
+            # open_trades can never stay stuck pointing at a trade that
+            # isn't actually open anymore, which would otherwise block every
+            # future trade forever with PER_STRATEGY_MAX_OPEN_HIT.
+            try:
+                if MT5_AVAILABLE and mt5 is not None:
+                    _live_positions = mt5.positions_get(symbol=SYMBOL) or ()
+                    _reconcile_result = reconcile_with_live_positions(_live_positions)
+                    _removed = _reconcile_result.get('removed', 0)
+                    _imported = _reconcile_result.get('imported', 0)
+                    if _removed:
+                        print(f'🔧 RECONCILE | removed {_removed} stale open_trades entr{"y" if _removed == 1 else "ies"} not found on live MT5 positions')
+                    if _imported:
+                        print(f'🔧 RECONCILE | imported {_imported} live MT5 position{"" if _imported == 1 else "s"} missing from open_trades (e.g. after a restart)')
+            except Exception as exc:
+                print(f'⚠️ reconcile_with_live_positions failed (non-fatal): {exc}')
+
+            # V3.5 PHASE-1: ASIA session hard filter — documented 22% WR / 86
+            # trades. Stays off until proven otherwise on real data.
+            _session_now = snapshot.get('session')
+            if _session_now == 'ASIA' and not ASIA_TRADING_ENABLED:
+                print(f'🛑 ASIA_SESSION_BLOCK | trading disabled for this session')
+                time.sleep(CHECK_INTERVAL)
+                continue
+
+            if _session_now == 'OFF_HOURS' and _off_hours_cap_hit():
+                print(f'🛑 OFF_HOURS_CAP_HIT | max={OFF_HOURS_MAX_TRADES}/day')
+                time.sleep(CHECK_INTERVAL)
+                continue
+
+            limits = get_loss_limits_status(balance=_account_balance())
+            if limits['daily_used'] >= limits['daily_limit']:
+                print(f"🛑 DAILY_HALT | used={limits['daily_used']:.2f}% / limit={limits['daily_limit']:.2f}%")
+                time.sleep(60)
+                continue
+            if limits['weekly_used'] >= limits['weekly_limit']:
+                print(f"🛑 WEEKLY_HALT | used={limits['weekly_used']:.2f}% / limit={limits['weekly_limit']:.2f}%")
+                time.sleep(60)
+                continue
+
+            if maybe_skip_analysis(
+                time.time(),
+                snapshot.get('rates'),
+                snapshot.get('atr'),
+                snapshot.get('market_regime'),
+                snapshot.get('session'),
+                snapshot.get('confidence', {}).get('pct', 0),
+            ):
+                time.sleep(CHECK_INTERVAL)
+                continue
+
+            authority_result = decide_trade(snapshot['decision_context'])
+            runtime_decision = decision_to_runtime_format(authority_result)
+            print(format_authority_log(authority_result))
+            _mode_val = runtime_decision.get('mode', 'NONE')
+            _quality_mode = snapshot.get('quality_gate', {}).get('mode', 'N/A')
+            print(
+                f'V3-FIXED gate: quality={_quality_mode} '
+                f'authority={_mode_val}'
+            )
+
+            # =================================================================
+            # FAIE — Phase-2 spec §5: Shadow-Logging Call Site
+            # OPTIONAL, LOGGING-ONLY — see docs/FAIE/PHASE_2_SPECIFICATION.md §5.
+            # Runs ChiefDecisionOfficer on the SAME DecisionContext already
+            # built for decide_trade() above and appends the advisory
+            # Decision to data/faie/shadow_log.jsonl. Zero effect on
+            # runtime_decision, snapshot, or any core state — never raises
+            # (log_faie_shadow_decision swallows every failure internally),
+            # and is entirely gated behind FAIE_SHADOW_LOGGING_ENABLED
+            # (defaults to False).
+            # =================================================================
+            if _FAIE_SHADOW_AVAILABLE:
+                try:
+                    _log_faie_shadow_decision(
+                        snapshot['decision_context'],
+                        real_decision_summary={
+                            'decision': getattr(authority_result, 'decision', None),
+                            'composite_score': getattr(authority_result, 'composite_score', None),
+                            'risk_multiplier': getattr(authority_result, 'risk_multiplier', None),
+                            'size_mode': getattr(authority_result, 'size_mode', None),
+                        },
+                    )
+                except Exception as _faie_shadow_err:
+                    # Defense in depth: log_faie_shadow_decision already
+                    # catches everything internally and returns False on
+                    # failure rather than raising, but this call site stays
+                    # wrapped too so a future change to that contract can
+                    # never take down the real decision loop.
+                    print(f"[FAIE] Shadow logging cycle error (non-fatal): {_faie_shadow_err}")
+
+            # =================================================================
+            # PHASE 3 — INSTITUTIONAL SHADOW ARCHITECTURE
+            # Runs as a fully independent sidecar after core decision.
+            # Does NOT modify runtime_decision, snapshot, or any core state.
+            # Any error here is caught and logged — never affects trading.
+            # =================================================================
+            if _PHASE3_AVAILABLE:
+                try:
+                    _p3_open_trades = []
+                    try:
+                        from core.portfolio_risk_authority import _state as _pra_state
+                        _p3_open_trades = list(getattr(_pra_state, 'open_trades', []) or [])
+                    except Exception:
+                        pass
+
+                    _p3_input = Phase3Input(
+                        strategy=snapshot.get('decision_context', {}).strategy
+                            if hasattr(snapshot.get('decision_context', {}), 'strategy')
+                            else snapshot.get('strategy', 'SMC'),
+                        signal=snapshot.get('decision_context', {}).signal
+                            if hasattr(snapshot.get('decision_context', {}), 'signal')
+                            else snapshot.get('signal', 'NONE'),
+                        symbol=SYMBOL,
+                        quality_score=float(snapshot.get('quality_score', 0) or 0),
+                        confidence_pct=float(
+                            snapshot.get('confidence', {}).get('pct', 50) or 50
+                        ),
+                        composite_score=float(
+                            snapshot.get('decision_context', {}).get('composite_score', 50)
+                            if isinstance(snapshot.get('decision_context', {}), dict)
+                            else getattr(snapshot.get('decision_context', {}), 'composite_score', 50)
+                            or 50
+                        ),
+                        actual_decision=str(_mode_val or 'UNKNOWN'),
+                        open_trades=_p3_open_trades,
+                        account_balance=float(_account_balance() or 1000),
+                        equity=float(_account_balance() or 1000),
+                        session=str(snapshot.get('session', 'UNKNOWN') or 'UNKNOWN'),
+                        market_regime=str(snapshot.get('market_regime', 'UNKNOWN') or 'UNKNOWN'),
+                        ml_score=float(
+                            snapshot.get('ml', {}).get('score', 50)
+                            if isinstance(snapshot.get('ml'), dict)
+                            else 50
+                        ),
+                        gold_macro_factors=None,  # سيُضاف لاحقاً من data feed
+                    )
+                    _p3_out = run_phase3_shadow(_p3_input)
+                    _last_phase3_shadow_decision = _p3_out.final_brain_decision
+                    _last_phase3_ml_timestamp = _p3_input.timestamp
+
+                except Exception as _p3_err:
+                    print(f"[PHASE3] Shadow cycle error (non-fatal): {_p3_err}")
+            # =================================================================
+            # END PHASE 3 SHADOW
+            # =================================================================
+
+            # =================================================================
+            # V3.0.1-SLTP-FIXED: LOSS-PAUSE GUARD
+            # بعد 3 صفقات خاسرة متتالية → انتظر CHoCH/BOS جديد
+            # =================================================================
+            loss_pause = evaluate_loss_pause(
+                snapshot_or_symbol=snapshot,
+                market_regime=snapshot.get('market_regime'),
+            )
+            if not loss_pause.get('trading_allowed', True):
+                print(
+                    f'V3-FIXED blocked: LOSS_PAUSE_GUARD active — '
+                    f'{loss_pause.get("reason", "")}'
+                )
+                # skip rest of cycle, but still run post-sync, watchdog, etc.
+                regime = snapshot.get('market_regime')
+                history_sync = {}
+                try:
+                    history_sync = sync_mt5_history()
+                except Exception:
+                    pass
+                try:
+                    update_certification_progress()
+                except Exception:
+                    pass
+                try:
+                    metrics_pair = analyze_trades()
+                    metrics = metrics_pair[1] if isinstance(metrics_pair, tuple) else {}
+                    write_daily_performance_report(metrics=metrics)
+                except Exception:
+                    pass
+                loss_pause_status = get_loss_pause_status()
+                run_watchdog_cycle(
+                    mt5_available=MT5_AVAILABLE,
+                    memory_available=True,
+                    telegram_available=True,
+                    cpu_ok=True,
+                    db_ok=True,
+                    production_ready=_system_startup_ready,
+                    signal_quality=int(snapshot.get('quality_score', 0)),
+                    process_alive=True,
+                    cpu_percent=0.0,
+                    disk_ok=True,
+                    loop_frozen=False,
+                    feed_ok=snapshot.get('tick') is not None,
+                    ram_ok=True,
+                    ram_percent=0.0,
+                    rss_mb=0.0,
+                    rss_growth_mb=0.0,
+                    ai_memory_healthy=True,
+                    ai_memory_rows=0,
+                    db_latency_ms=0.0,
+                    telegram_latency_ms=0.0,
+                    loop_latency_sec=time.time() - loop_start,
+                    historical_degradation=1 if loss_pause_status.get('pause_active') else 0,
+                )
+                time.sleep(CHECK_INTERVAL)
+                continue
+
+            if runtime_decision.get('approved'):
+                # ─────────────────────────────────────────────────────────
+                # SIZE-TIER RESOLUTION — authority gates EXECUTION,
+                # quality and execution grade determine LOT SIZE TIER.
+                #
+                # Rule:  authority  → sole arbiter of whether to execute
+                #        quality    → sets the lot-size tier (FULL/REDUCED/MICRO)
+                #        execution  → further refines lot via exec_grade in
+                #                     calculate_smart_lot (unchanged)
+                #
+                # When authority says FULL but quality says EXECUTE_REDUCED,
+                # we execute at REDUCED — not FULL, not blocked.
+                # When execution grade is REJECT, we fall back to MICRO tier
+                # but still execute (authority approved; exec_grade passed
+                # through to calculate_smart_lot which will apply its own
+                # multiplier — it does NOT zero out lot for REJECT grade).
+                # ─────────────────────────────────────────────────────────
+                _TIER_RANK = {'MICRO': 0, 'REDUCED': 1, 'FULL': 2}
+                _QUALITY_TIER_MAP = {
+                    'STRICT_PASS':     'FULL',
+                    'EXECUTE_FULL':    'FULL',
+                    'ADAPTIVE_PASS':   'REDUCED',
+                    'EXECUTE_REDUCED': 'REDUCED',
+                    'EXECUTE_MICRO':   'MICRO',
+                    'REJECT':          'MICRO',   # authority overrides; minimum tier
+                }
+                _auth_mode = runtime_decision.get('mode', 'MICRO')
+                _qual_raw  = snapshot['quality_gate'].get('mode', 'REJECT')
+                _qual_mode = _QUALITY_TIER_MAP.get(_qual_raw, 'MICRO')
+                # Take the most conservative (smallest rank) of the two
+                _effective_mode = (
+                    _auth_mode
+                    if _TIER_RANK.get(_auth_mode, 0) <= _TIER_RANK.get(_qual_mode, 0)
+                    else _qual_mode
+                )
+                _exec_grade_used = snapshot['execution'].get('grade', 'C')
+                _exec_approved   = snapshot['execution'].get('approved', False)
+                print(
+                    f'V3-FIXED sizing: auth={_auth_mode} | qual={_qual_raw}→{_qual_mode} '
+                    f'| effective={_effective_mode} '
+                    f'| exec_grade={_exec_grade_used} exec_approved={_exec_approved}'
+                )
+
+                # FER3ON FINAL [EXPOSURE-3]: was `round(max(0.10, min(0.75,
+                # 0.50 * risk_multiplier)), 3)` — a hardcoded 0.50% base with
+                # no connection to settings.RISK_PER_TRADE_PERCENT. On this
+                # account's $200-$1000 range that meant every real value here
+                # (0.10-0.75%) was too small for calculate_smart_lot's
+                # MIN_LOT_RISK_GUARD to ever pass at $200 — it would silently
+                # skip every SMC trade. Now anchored to the same single
+                # source of truth as every other strategy, floored so it
+                # can't silently stop trading. See FER3ON_FINAL_CHANGELOG.md
+                # [EXPOSURE-3].
+                risk_percent = round(max(
+                    MIN_EFFECTIVE_RISK_PERCENT,
+                    min(MAX_RISK_TOTAL, RISK_PER_TRADE_PERCENT * float(runtime_decision.get('risk_multiplier', 0.5) or 0.5))
+                ), 3)
+                lot, raw_lot, lot_adjustments = calculate_smart_lot(
+                    balance=snapshot['balance'],
+                    risk_percent=risk_percent,
+                    sl_dist=snapshot['sl_dist'],
+                    symbol=SYMBOL,
+                    quality_score=snapshot['quality_score'],
+                    session=snapshot['session'],
+                    recovery_mode=False,
+                    exec_grade=_exec_grade_used,
+                    ai_score=snapshot['ml'].get('ml_score', 50),
+                    brain_score=snapshot['brain'].get('master_score', 50),
+                    session_score=snapshot['decision_context'].context_score,
+                    aggression_mode='SMART',
+                    strategy='SMC',
+                    market_regime=snapshot['market_regime'],
+                    size_mode=_effective_mode,
+                )
+                print(f'POSITION SIZING | raw_lot={raw_lot} final_lot={lot} adjustments={lot_adjustments}')
+                if lot > MAX_LOT:
+                    lot = MAX_LOT
+                    print(f'🛡 LOT_CAPPED | to MAX_LOT={MAX_LOT}')
+
+                if lot > 0 and MT5_AVAILABLE:
+
+                    positions = mt5.positions_get(symbol=SYMBOL)
+
+                    same_direction_count = 0
+
+                    if positions:
+
+                        signal_type = snapshot['signal']
+
+                        for pos in positions:
+
+                            if (
+                                signal_type == "BUY"
+                                and pos.type == mt5.POSITION_TYPE_BUY
+                            ):
+                                same_direction_count += 1
+
+                            elif (
+                                signal_type == "SELL"
+                                and pos.type == mt5.POSITION_TYPE_SELL
+                            ):
+                                same_direction_count += 1
+
+                        if same_direction_count >= MAX_SAME_DIRECTION_POSITIONS:
+                            print(
+                                f"🚫 MAX SAME DIRECTION REACHED ({same_direction_count}/{MAX_SAME_DIRECTION_POSITIONS})"
+                            )
+                            continue
+
+                    # =========================================================
+                    # V3.5 PHASE-1 FIX: Portfolio Risk Authority gate.
+                    # evaluate_risk() existed in portfolio_risk_authority.py
+                    # but was never called anywhere — this is the root cause
+                    # of the 149-simultaneous-trades incident (MAX_OPEN_TRADES
+                    # in settings.py was defined but never enforced here).
+                    # This is the SOLE additional gate; it does not replace
+                    # the same-direction check above, it adds the missing
+                    # portfolio-wide open-trade / exposure / daily-loss caps.
+                    # =========================================================
+                    risk_decision = evaluate_risk(
+                        strategy='SMC',
+                        direction=snapshot['signal'],
+                        requested_risk_percent=risk_percent,
+                        ml_advice_boost=0.0,
+                        ml_advice_enabled=False,
+                    )
+                    try:
+                        from analytics.authority_impact import record_risk_decision
+                        record_risk_decision(
+                            strategy='SMC', direction=snapshot['signal'],
+                            requested_risk_percent=risk_percent, decision=risk_decision,
+                        )
+                    except Exception as _impact_log_err:
+                        print(f'⚠️ AUTHORITY_IMPACT_LOG_FAILED (non-fatal): {_impact_log_err}')
+                    if not risk_decision.approved:
+                        print(f"🛑 PORTFOLIO_RISK_BLOCK | {risk_decision.rejection_reason} | {risk_decision.notes}")
+                        time.sleep(CHECK_INTERVAL)
+                        continue
+
+                    if _cooldown_active_for('SMC'):
+                        print(f"🛑 COOLDOWN_BLOCK | SMC | {TRADE_COOLDOWN}s window")
+                        time.sleep(CHECK_INTERVAL)
+                        continue
+
+                    request = _build_order_request(
+                        snapshot['signal'],
+                        lot,
+                        snapshot['sl_dist'],
+                        snapshot['tp_dist'],
+                        atr=snapshot.get('atr', 0.0),
+                        strategy='SMC',
+                    )
+
+                    _snap_structure = snapshot.get('structure') or {}
+                    _snap_structure_analysis = snapshot.get('structure_analysis') or {}
+                    _snap_liquidity = snapshot.get('liquidity') or {}
+                    _liq_bias = _snap_liquidity.get('bias')
+                    _liq_map_dir = 'UP' if _liq_bias == 'BUY' else 'DOWN' if _liq_bias == 'SELL' else 'NEUTRAL'
+
+                    result = execute_trade(
+                        request=request,
+                        strategy='SMC',
+                        signal=snapshot['signal'],
+                        lot=lot,
+                        sl_dist=snapshot['sl_dist'],
+                        tp_dist=snapshot['tp_dist'],
+                        rr_ratio=snapshot['execution'].get('rr_ratio', 0),
+                        risk_percent=risk_percent,
+                        exec_grade=_exec_grade_used,
+                        final_brain={'final_score': snapshot['brain'].get('master_score', 50)},
+                        quality_score=snapshot['quality_score'],
+                        confidence=snapshot['confidence'],
+                        market_regime=snapshot['market_regime'],
+                        atr=snapshot['atr'],
+                        session=snapshot['session'],
+                        magic=SMC_MAGIC,
+                        tp_tiers=snapshot.get('tp_tiers'),
+                        choch_state=_snap_structure.get('structure', 'UNKNOWN'),
+                        choch_strength=_snap_structure_analysis.get('choch_strength', 'WEAK'),
+                        liq_map_score=_snap_liquidity.get('score', 0),
+                        liq_map_dir=_liq_map_dir,
+                        mtf_strength=snapshot.get('mtf_strength', 0),
+                        mtf_structural=1 if _snap_structure.get('mtf_aligned') else 0,
+
+                    )
+
+                    if result is not None and getattr(result, "retcode", None) == mt5.TRADE_RETCODE_DONE:
+                        print(f'✅ TRADE OPENED | ticket={result.order} lot={lot}')
+                        _register_trade_opened('SMC')
+                        if snapshot.get('session') == 'OFF_HOURS':
+                            _register_off_hours_trade()
+                        try:
+                            _entry_price_val = float(getattr(result, 'price', 0) or 0)
+                            _sl_price_val = float(request.get('sl', 0) or 0)
+                            _realized_risk_pct = compute_realized_risk_percent(
+                                lot=float(lot),
+                                entry_price=_entry_price_val,
+                                sl_price=_sl_price_val,
+                                balance=_account_balance(),
+                            )
+                            record_trade_open(
+                                ticket=int(result.order),
+                                strategy='SMC',
+                                direction=snapshot['signal'],
+                                lot=float(lot),
+                                # FER3ON FINAL [EXPOSURE-1]: record the ACTUAL
+                                # realized risk (from final lot + SL), not the
+                                # nominal pre-sizing risk_percent — see
+                                # FER3ON_FINAL_CHANGELOG.md [EXPOSURE-1].
+                                risk_percent=_realized_risk_pct,
+                                entry_price=_entry_price_val,
+                                sl=_sl_price_val,
+                                tp=float(request.get('tp', 0) or 0),
+                                meta={'quality_score': snapshot['quality_score'], 'session': snapshot.get('session')},
+                            )
+                        except Exception as exc:
+                            print(f'⚠️ record_trade_open failed: {exc}')
+                    else:
+                        _skip_comment = None
+                        _skip_retcode = None
+                        if isinstance(result, dict):
+                            _skip_comment = result.get("comment")
+                            _skip_retcode = result.get("retcode")
+                        else:
+                            _skip_comment = getattr(result, "comment", None)
+                            _skip_retcode = getattr(result, "retcode", None)
+                        print(
+                            f"V3-FIXED execution skipped | reason={_skip_comment or 'UNKNOWN'}"
+                            f" retcode={_skip_retcode}"
+                        )
+                else:
+                    # lot=0 (sizing computed zero) or MT5 not available — not a policy block.
+                    print(
+                        f'V3-FIXED skip: lot={lot:.3f} MT5_AVAILABLE={MT5_AVAILABLE}'
+                        f' | effective_mode={_effective_mode} exec_grade={_exec_grade_used}'
+                    )
+            else:
+                # Authority rejected — the sole legitimate block path.
+                _block_reason = (
+                    runtime_decision.get('hard_block_reason')
+                    or runtime_decision.get('reason')
+                    or 'AUTHORITY_REJECTED'
+                )
+                print(f'V3-FIXED blocked: AUTHORITY | {_block_reason}')
+
+            # =================================================================
+            # V3.5 PHASE-2.3: independent strategy runners.
+            # SCALP/SWING/MICRO engines existed in core/ but were never
+            # called from the live loop — only SMC ran. Each runner reuses
+            # its own (unmodified) signal engine and goes through the same
+            # Portfolio Risk Authority gate SMC uses, so MAX_OPEN_TRADES and
+            # exposure caps apply uniformly across all four strategies.
+            # =================================================================
+            try:
+                _strat_session = snapshot.get('session', 'UNKNOWN')
+                _strat_regime = snapshot.get('market_regime', 'UNKNOWN')
+                scalp_result = run_scalp_cycle(session=_strat_session, market_regime=_strat_regime)
+                if scalp_result.get('opened'):
+                    print(f"SCALP_RUNNER | opened ticket={scalp_result.get('ticket')}")
+                elif scalp_result.get('reason') not in ('MT5_UNAVAILABLE', 'SESSION_NOT_ALLOWED', 'NO_SIGNAL', 'COOLDOWN_ACTIVE'):
+                    print(f"SCALP_RUNNER | skipped: {scalp_result.get('reason')}")
+
+                swing_result = run_swing_cycle(session=_strat_session, market_regime=_strat_regime)
+                if swing_result.get('opened'):
+                    print(f"SWING_RUNNER | opened ticket={swing_result.get('ticket')}")
+                elif swing_result.get('reason') not in ('MT5_UNAVAILABLE', 'NO_SIGNAL', 'DAILY_CAP_HIT'):
+                    print(f"SWING_RUNNER | skipped: {swing_result.get('reason')}")
+
+                try:
+                    from core.settings import MICRO_STRATEGY_ENABLED as _MICRO_STRATEGY_ENABLED
+                except Exception:
+                    _MICRO_STRATEGY_ENABLED = False
+
+                if _MICRO_STRATEGY_ENABLED:
+                    micro_result = run_micro_cycle(
+                        session=_strat_session,
+                        market_regime=_strat_regime,
+                        confidence_pct=snapshot.get('confidence', {}).get('pct', 50.0),
+                    )
+                    if micro_result.get('opened'):
+                        print(f"MICRO_RUNNER | opened ticket={micro_result.get('ticket')}")
+                    elif micro_result.get('reason') not in ('MT5_UNAVAILABLE', 'NOT_APPROVED', 'COOLDOWN_ACTIVE', 'DAILY_CAP_HIT', 'MICRO_DISABLED_BY_POLICY'):
+                        print(f"MICRO_RUNNER | skipped: {micro_result.get('reason')}")
+                else:
+                    print("MICRO_RUNNER | disabled by policy (SMC primary / SCALP backup / SWING selective)")
+            except Exception as exc:
+                print(f'⚠️ strategy runner error (non-fatal): {exc}')
+
+            try:
+                history_sync = sync_mt5_history()
+                certification = update_certification_progress()
+                analytics_result = analyze_trades()
+                metrics = analytics_result[1] if isinstance(analytics_result, tuple) else {}
+                write_daily_performance_report(metrics=metrics)
+            except Exception as exc:
+                print(f'Post-cycle sync warning: {exc}')
+                history_sync = {}
+                certification = {}
+
+            # =================================================================
+            # V3.0.1-SLTP-FIXED: تحديث عداد LOSS-PAUSE من آخر صفقة مغلقة
+            # =================================================================
+            try:
+                # الأسلوب 1: من history_sync (إذا أرجع آخر صفقة)
+                last_closed = None
+                if isinstance(history_sync, dict):
+                    last_closed = (
+                        history_sync.get('last_closed')
+                        or history_sync.get('last_deal')
+                        or history_sync.get('last_trade')
+                    )
+                # الأسلوب 2: من trades.csv (آخر صفقة مُضافة)
+                last_csv_row = None
+                try:
+                    import csv as _csv
+                    _trades_path = os.path.join(HISTORY_DIR, 'trades.csv')
+                    if os.path.exists(_trades_path):
+                        with open(_trades_path, 'r', encoding='utf-8') as _csvfile:
+                            _reader = list(_csv.DictReader(_csvfile))
+                            if _reader:
+                                last_csv_row = _reader[-1]
+                except Exception:
+                    last_csv_row = None
+
+                # الأسلوب 3: من mt5_trade_history.csv (كـ backup)
+                if last_csv_row is None:
+                    try:
+                        import csv as _csv2
+                        _mt5_path = os.path.join(HISTORY_DIR, 'mt5_trade_history.csv')
+                        if os.path.exists(_mt5_path):
+                            with open(_mt5_path, 'r', encoding='utf-8') as _cf2:
+                                _r2 = list(_csv2.DictReader(_cf2))
+                                if _r2:
+                                    last_csv_row = _r2[-1]
+                    except Exception:
+                        last_csv_row = None
+
+                chosen = last_closed if isinstance(last_closed, dict) else last_csv_row
+                if chosen:
+                    _res = (
+                        chosen.get('result')
+                        or chosen.get('outcome')
+                        or chosen.get('Result')
+                        or ''
+                    )
+                    _profit_str = (
+                        chosen.get('profit')
+                        or chosen.get('Profit')
+                        or chosen.get('pnl')
+                        or '0'
+                    )
+                    try:
+                        _profit = float(_profit_str)
+                    except Exception:
+                        _profit = 0.0
+                    _ticket = (
+                        chosen.get('ticket')
+                        or chosen.get('order')
+                        or chosen.get('Ticket')
+                        or chosen.get('Order')
+                    )
+                    try:
+                        _ticket = int(_ticket) if _ticket is not None else None
+                    except Exception:
+                        _ticket = None
+
+                    # فقط إذا الصفقة لم تُسجّل من قبل في الـ guard
+                    _lp_state = get_loss_pause_status()
+                    _last_registered_ts = float(_lp_state.get('last_loss_timestamp') or 0.0)
+                    import time as _time_mod
+                    _now_ts = _time_mod.time()
+                    _too_recent = (_now_ts - _last_registered_ts) < 5.0  # debounce 5s
+
+                    if not _too_recent:
+                        if _res == 'LOSS' or _profit < 0:
+                            register_loss_pause_result(
+                                trade_result='LOSS',
+                                ticket=_ticket,
+                                profit=_profit,
+                            )
+                        elif _res == 'WIN' or _profit > 0:
+                            register_loss_pause_result(
+                                trade_result='WIN',
+                                ticket=_ticket,
+                                profit=_profit,
+                            )
+            except Exception as exc:
+                print(f'⚠️ LOSS_PAUSE_GUARD update skipped: {exc}')
+
+            # =================================================================
+            # PHASE 3 — Notify trade close (updates STRATEGY_DNA, FINAL_BRAIN)
+            # =================================================================
+            if _PHASE3_AVAILABLE and chosen:
+                try:
+                    _p3_was_winner = (_res == 'WIN' or _profit > 0)
+                    _p3_strategy = str(
+                        chosen.get('strategy') or chosen.get('Strategy') or 'SMC'
+                    )
+                    _p3_session = str(
+                        chosen.get('session') or snapshot.get('session', 'UNKNOWN') or 'UNKNOWN'
+                    )
+                    _p3_regime = str(
+                        chosen.get('market_regime') or snapshot.get('market_regime', 'UNKNOWN') or 'UNKNOWN'
+                    )
+                    _phase3_notify_trade_closed(
+                        ticket=int(_ticket) if _ticket else 0,
+                        strategy=_p3_strategy,
+                        session=_p3_session,
+                        regime=_p3_regime,
+                        was_winner=_p3_was_winner,
+                        profit=_profit,
+                        shadow_final_brain_decision=_last_phase3_shadow_decision,
+                        ml_prediction_timestamp=_last_phase3_ml_timestamp,
+                    )
+                except Exception as _p3_close_err:
+                    print(f"[PHASE3] Trade close notify error (non-fatal): {_p3_close_err}")
+            # =================================================================
+            # END PHASE 3 TRADE CLOSE
+            # =================================================================
+
+            quota = get_quota_state()
+            ai_memory_rows = int(certification.get('closed_trade_count', 0) or 0)
+            run_watchdog_cycle(
+                mt5_available=MT5_AVAILABLE,
+                memory_available=True,
+                telegram_available=True,
+                cpu_ok=True,
+                db_ok=True,
+                production_ready=_system_startup_ready,
+                signal_quality=int(snapshot['quality_score']),
+                process_alive=True,
+                cpu_percent=0.0,
+                disk_ok=True,
+                loop_frozen=False,
+                feed_ok=snapshot.get('tick') is not None,
+                ram_ok=True,
+                ram_percent=0.0,
+                rss_mb=0.0,
+                rss_growth_mb=0.0,
+                ai_memory_healthy=True,
+                ai_memory_rows=ai_memory_rows,
+                db_latency_ms=0.0,
+                telegram_latency_ms=0.0,
+                loop_latency_sec=time.time() - loop_start,
+                historical_degradation=0 if quota.get('remaining_total', 0) > 0 else 1,
+            )
+
+            time.sleep(CHECK_INTERVAL)
+    except KeyboardInterrupt:
+        print('\nShutdown requested. Exiting.')
+
+
+if __name__ == '__main__':
+    main()

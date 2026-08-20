@@ -1,0 +1,958 @@
+{
+  "version": "7.0",
+  "total_trades": 1007,
+  "wins": 449,
+  "losses": 558,
+  "last_tune_at_trade": 995,
+  "offsets": {
+    "composite_full": 5,
+    "composite_reduced": 5,
+    "composite_micro": 5
+  },
+  "recent_results": [
+    {
+      "ts": 1786433427,
+      "strategy": "MICRO",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -26.84,
+      "win": false
+    },
+    {
+      "ts": 1786433489,
+      "strategy": "SMC",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -28.93,
+      "win": false
+    },
+    {
+      "ts": 1786445710,
+      "strategy": "MICRO",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 7.88,
+      "win": true
+    },
+    {
+      "ts": 1786451758,
+      "strategy": "MICRO",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 9.88,
+      "win": true
+    },
+    {
+      "ts": 1786467954,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 19.56,
+      "win": true
+    },
+    {
+      "ts": 1786478596,
+      "strategy": "MICRO",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -30.02,
+      "win": false
+    },
+    {
+      "ts": 1786492875,
+      "strategy": "MICRO",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.98,
+      "win": false
+    },
+    {
+      "ts": 1786508066,
+      "strategy": "MICRO",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 30.68,
+      "win": true
+    },
+    {
+      "ts": 1786510541,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 30.48,
+      "win": true
+    },
+    {
+      "ts": 1786529794,
+      "strategy": "MICRO",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 4.99,
+      "win": true
+    },
+    {
+      "ts": 1786541852,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 6.01,
+      "win": true
+    },
+    {
+      "ts": 1786545303,
+      "strategy": "MICRO",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -27.25,
+      "win": false
+    },
+    {
+      "ts": 1786580654,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -30.24,
+      "win": false
+    },
+    {
+      "ts": 1786580655,
+      "strategy": "MICRO",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -28.27,
+      "win": false
+    },
+    {
+      "ts": 1786590440,
+      "strategy": "MICRO",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 19.29,
+      "win": true
+    },
+    {
+      "ts": 1786590441,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 31.34,
+      "win": true
+    },
+    {
+      "ts": 1786594013,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -30.02,
+      "win": false
+    },
+    {
+      "ts": 1786615250,
+      "strategy": "MICRO",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 30.19,
+      "win": true
+    },
+    {
+      "ts": 1786631760,
+      "strategy": "MICRO",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -30.15,
+      "win": false
+    },
+    {
+      "ts": 1786639804,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.85,
+      "win": false
+    },
+    {
+      "ts": 1786663961,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.89,
+      "win": false
+    },
+    {
+      "ts": 1786663962,
+      "strategy": "MICRO",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.96,
+      "win": false
+    },
+    {
+      "ts": 1786715657,
+      "strategy": "MANUAL",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 143.49,
+      "win": true
+    },
+    {
+      "ts": 1787030393,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -23.34,
+      "win": false
+    },
+    {
+      "ts": 1787076565,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 25.82,
+      "win": true
+    },
+    {
+      "ts": 1787104419,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 29.76,
+      "win": true
+    },
+    {
+      "ts": 1787108778,
+      "strategy": "MANUAL",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -4.87,
+      "win": false
+    },
+    {
+      "ts": 1787108779,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 6.11,
+      "win": true
+    },
+    {
+      "ts": 1787134480,
+      "strategy": "SMC",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.62,
+      "win": false
+    },
+    {
+      "ts": 1787150123,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -30.05,
+      "win": false
+    }
+  ],
+  "per_strategy": {
+    "SMC": {
+      "trades": 734,
+      "wins": 335,
+      "pnl": -445.1
+    },
+    "SCALP": {
+      "trades": 7,
+      "wins": 2,
+      "pnl": -25.26
+    },
+    "MICRO": {
+      "trades": 226,
+      "wins": 93,
+      "pnl": -907.78
+    },
+    "SWING": {
+      "trades": 2,
+      "wins": 0,
+      "pnl": -74.61
+    },
+    "MANUAL": {
+      "trades": 38,
+      "wins": 19,
+      "pnl": 142.83
+    }
+  },
+  "per_session": {
+    "NEWYORK": {
+      "trades": 191,
+      "wins": 94,
+      "pnl": -232.46
+    },
+    "OFF_HOURS": {
+      "trades": 241,
+      "wins": 101,
+      "pnl": -658.28
+    },
+    "ASIA": {
+      "trades": 309,
+      "wins": 137,
+      "pnl": 355.43
+    },
+    "LONDON": {
+      "trades": 266,
+      "wins": 117,
+      "pnl": -774.61
+    }
+  },
+  "per_regime": {
+    "RANGING": {
+      "trades": 24,
+      "wins": 9,
+      "pnl": -69.07
+    },
+    "UNKNOWN": {
+      "trades": 983,
+      "wins": 440,
+      "pnl": -1240.85
+    }
+  },
+  "updated_at": 1787150124,
+  "tune_log": [
+    {
+      "ts": 1782290691,
+      "wr": 0.267,
+      "expectancy": -1.067,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782293403,
+      "wr": 0.3,
+      "expectancy": -2.5197,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782297667,
+      "wr": 0.4,
+      "expectancy": -0.0757,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782302060,
+      "wr": 0.367,
+      "expectancy": 0.2397,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782321898,
+      "wr": 0.3,
+      "expectancy": -6.0387,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782325508,
+      "wr": 0.433,
+      "expectancy": 1.543,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782328272,
+      "wr": 0.467,
+      "expectancy": 7.0033,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782338409,
+      "wr": 0.367,
+      "expectancy": -2.7173,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782338412,
+      "wr": 0.533,
+      "expectancy": -0.9223,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782338415,
+      "wr": 0.533,
+      "expectancy": 1.499,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782709656,
+      "wr": 0.333,
+      "expectancy": 0.3793,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782715369,
+      "wr": 0.467,
+      "expectancy": 3.5477,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782720097,
+      "wr": 0.667,
+      "expectancy": 7.366,
+      "direction": -1,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1782722354,
+      "wr": 0.533,
+      "expectancy": 2.8753,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1782728162,
+      "wr": 0.367,
+      "expectancy": -3.1307,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782754057,
+      "wr": 0.467,
+      "expectancy": -1.589,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782754061,
+      "wr": 0.633,
+      "expectancy": 4.8427,
+      "direction": -1,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1782766837,
+      "wr": 0.567,
+      "expectancy": -0.03,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782774741,
+      "wr": 0.5,
+      "expectancy": -3.2533,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782788114,
+      "wr": 0.5,
+      "expectancy": 0.273,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782799914,
+      "wr": 0.533,
+      "expectancy": 2.2983,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782811002,
+      "wr": 0.533,
+      "expectancy": 3.336,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782826540,
+      "wr": 0.433,
+      "expectancy": -2.9427,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782838031,
+      "wr": 0.533,
+      "expectancy": 2.5017,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782844369,
+      "wr": 0.567,
+      "expectancy": 5.4697,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782863066,
+      "wr": 0.533,
+      "expectancy": 1.451,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782897549,
+      "wr": 0.667,
+      "expectancy": 5.4033,
+      "direction": -1,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1782982984,
+      "wr": 0.567,
+      "expectancy": 0.236,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1782984138,
+      "wr": 0.433,
+      "expectancy": -3.5903,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1782991588,
+      "wr": 0.4,
+      "expectancy": -0.42,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1783310636,
+      "wr": 0.467,
+      "expectancy": -0.2777,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784245840,
+      "wr": 0.6,
+      "expectancy": -0.293,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784245849,
+      "wr": 0.6,
+      "expectancy": -6.418,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784245859,
+      "wr": 0.667,
+      "expectancy": -4.9953,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784269148,
+      "wr": 0.567,
+      "expectancy": -17.3417,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784527027,
+      "wr": 0.4,
+      "expectancy": -19.9437,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784628040,
+      "wr": 0.433,
+      "expectancy": -6.8927,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784703877,
+      "wr": 0.4,
+      "expectancy": -10.624,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1784785708,
+      "wr": 0.267,
+      "expectancy": -13.0947,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1785114883,
+      "wr": 0.433,
+      "expectancy": -7.785,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1785114897,
+      "wr": 0.7,
+      "expectancy": -1.5217,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1785114908,
+      "wr": 0.633,
+      "expectancy": -12.8223,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1785161146,
+      "wr": 0.433,
+      "expectancy": -19.445,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1785277367,
+      "wr": 0.4,
+      "expectancy": -11.546,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1786004207,
+      "wr": 0.533,
+      "expectancy": 1.518,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1786010458,
+      "wr": 0.633,
+      "expectancy": 10.2953,
+      "direction": -1,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1786089353,
+      "wr": 0.633,
+      "expectancy": 0.9923,
+      "direction": -1,
+      "offsets": {
+        "composite_full": 4.0,
+        "composite_reduced": 4.0,
+        "composite_micro": 4.0
+      }
+    },
+    {
+      "ts": 1786316136,
+      "wr": 0.433,
+      "expectancy": -18.121,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 4.5,
+        "composite_reduced": 4.5,
+        "composite_micro": 4.5
+      }
+    },
+    {
+      "ts": 1786445710,
+      "wr": 0.333,
+      "expectancy": -8.0687,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    },
+    {
+      "ts": 1786615250,
+      "wr": 0.5,
+      "expectancy": 5.889,
+      "direction": 0,
+      "offsets": {
+        "composite_full": 5,
+        "composite_reduced": 5,
+        "composite_micro": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-08-19T15:42:36.935967+00:00",
+  "mode": "SHADOW_ADVISORY_ONLY",
+  "important_notice": "These are RECOMMENDATIONS ONLY. No changes are applied automatically. Human review and explicit approval required before any live activation.",
+  "cannot_change_in_phase3": [
+    "core_trading_logic",
+    "direction_logic",
+    "execution_logic",
+    "default_thresholds_live",
+    "entry_conditions",
+    "risk_ratios"
+  ],
+  "confidence_suggestions": [
+    {
+      "suggestion_type": "confidence_floor_raise",
+      "current_value": "30-40",
+      "suggested_value": "Raise floor above 30",
+      "reason": "Win rate 0.0% below 35% in bucket 30-40",
+      "confidence": 0.5,
+      "data_sample_size": 25,
+      "approved_for_live": false,
+      "timestamp": 1787154156.935843
+    }
+  ],
+  "session_preferences": {
+    "ASIA": {
+      "win_rate": 0.0,
+      "total_trades": 25,
+      "total_profit": -125.0,
+      "recommended": false,
+      "advisory_note": "Weak session (0.0% WR)"
+    }
+  },
+  "strategy_rankings": [
+    {
+      "strategy": "MICRO",
+      "win_rate": 0.0,
+      "total_trades": 25,
+      "total_profit": -125.0,
+      "shadow_rank_score": 0.0,
+      "advisory_note": "Review performance",
+      "approved_for_live": false,
+      "suggested_rank": 1
+    }
+  ],
+  "total_analyzed": 25
+}

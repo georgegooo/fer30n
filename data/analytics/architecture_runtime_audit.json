@@ -1,0 +1,2254 @@
+{
+  "module_count": 368,
+  "incoming_edges": {
+    "core.settings": [
+      "analytics.adaptive_shadow_prep",
+      "analytics.contribution_analysis",
+      "analytics.execution_quality",
+      "analytics.institutional_dashboard_phase3",
+      "analytics.performance_repository",
+      "analytics.portfolio_statistics",
+      "analytics.quant_engine",
+      "analytics.recovery_dashboard",
+      "analytics.regime_edge_analysis",
+      "analytics.regime_sizing_shadow",
+      "analytics.session_edge_analysis",
+      "analytics.session_filter_shadow",
+      "analytics.tp_cap_monitor",
+      "analytics.truth_layer",
+      "analytics.v9_readiness_bridge",
+      "brain.faie.shadow_logging",
+      "brain.filter_relaxation",
+      "brain.opportunity_engine",
+      "brain.smc_arbitration",
+      "certification.framework",
+      "check_open_trades",
+      "core.adaptive_floor",
+      "core.adaptive_learning",
+      "core.adaptive_sl_tp_engine",
+      "core.ai_v1_authority",
+      "core.analytics",
+      "core.candle_context",
+      "core.confidence_decay",
+      "core.confidence_engine",
+      "core.context_memory",
+      "core.dynamic_confidence",
+      "core.liquidity_vacuum",
+      "core.london_breakout",
+      "core.loss_pause_guard",
+      "core.market_regime",
+      "core.micro_trading_engine",
+      "core.micro_trigger",
+      "core.missed_opportunity",
+      "core.ml_status_manager",
+      "core.mt5_history_sync",
+      "core.opportunity_classifier",
+      "core.phase3.adaptive_shadow_calibration",
+      "core.phase3.final_brain",
+      "core.phase3.gold_context_layer",
+      "core.phase3.ml_safety_framework",
+      "core.phase3.phase3_orchestrator",
+      "core.phase3.portfolio_brain",
+      "core.phase3.strategy_dna",
+      "core.phase3.system_health_layer",
+      "core.portfolio_risk_authority",
+      "core.production_intelligence",
+      "core.quality_score",
+      "core.risk_manager",
+      "core.scalp.trailing",
+      "core.scalping_engine",
+      "core.session_intelligence",
+      "core.sl_tp_finalizer",
+      "core.smart_money",
+      "core.smc_debug_report",
+      "core.startup_check",
+      "core.strategy_runners",
+      "core.sweep_predictor",
+      "core.swing_engine",
+      "core.test_mode_manager",
+      "core.trade_executor",
+      "core.trade_identity",
+      "core.trade_logger",
+      "core.trend_confluence",
+      "core.unified_decision",
+      "core.v7_integration",
+      "core.velocity_engine",
+      "execution.multi_tp",
+      "execution.scale_in",
+      "main",
+      "ml.ml_orchestrator",
+      "ml.neural_network",
+      "ml.xgboost_model",
+      "risk.hard_risk_cap",
+      "run_backtest",
+      "scripts.tp_cap_demo",
+      "scripts.validate_phase3",
+      "tests.faie.test_shadow_logging",
+      "tests.test_adaptive_architecture",
+      "tests.test_audit_fixes",
+      "tests.test_certification_framework",
+      "tests.test_governance_p0",
+      "tests.test_phase2",
+      "tests.test_phase3_shadow",
+      "tests.test_quant_engine_build_id_fix",
+      "tests.test_real_risk_percent_clears_guard",
+      "tests.test_risk_consistency",
+      "tests.test_sltp_unit_fix",
+      "tests.test_small_account_profile",
+      "tests.test_test_mode_manager",
+      "tests.test_tp_capping",
+      "tests.test_tp_ladder",
+      "tools.backfill_build_id",
+      "tools.ci_shadow_backtest_gate",
+      "tools.development_readiness_gate",
+      "tools.fix_truth_layer_ticket_keys",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "analytics.truth_layer": [
+      "analytics.adaptive_shadow_prep",
+      "analytics.contribution_analysis",
+      "analytics.csv_truth_bridge",
+      "analytics.performance_repository",
+      "analytics.portfolio_statistics",
+      "analytics.quant_engine",
+      "analytics.regime_edge_analysis",
+      "analytics.regime_sizing_shadow",
+      "analytics.session_edge_analysis",
+      "analytics.session_filter_shadow",
+      "analytics.setup_analyzer",
+      "core.mt5_history_sync",
+      "tests.test_performance_validation",
+      "tests.test_phase2",
+      "tests.test_quant_engine_build_id_fix",
+      "tests.test_truth_layer"
+    ],
+    "analytics.performance_repository": [
+      "analytics.adaptive_shadow_prep",
+      "analytics.contribution_analysis",
+      "analytics.portfolio_statistics",
+      "analytics.regime_edge_analysis",
+      "analytics.regime_sizing_shadow",
+      "analytics.session_edge_analysis",
+      "analytics.session_filter_shadow",
+      "tests.test_phase2",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "core.data_integrity": [
+      "analytics.csv_truth_bridge",
+      "certification.framework",
+      "core.ai_memory",
+      "core.analytics",
+      "core.mt5_history_sync",
+      "core.session_intelligence",
+      "core.trade_logger",
+      "fer3on_masr.learning.history_loader",
+      "scripts.cleanup_ai_memory",
+      "testing.faie_backtest",
+      "testing.statistics",
+      "tests.test_certification_framework",
+      "tests.test_mt5_history_sync_merge_fix",
+      "tools.backfill_build_id",
+      "tools.generate_phase2_reports",
+      "tools.repair_memory_records"
+    ],
+    "core.risk_manager": [
+      "analytics.institutional_dashboard_phase3",
+      "core.mt5_history_sync",
+      "core.risk_protection",
+      "core.spec_runtime",
+      "core.strategy_runners",
+      "main",
+      "tests.test_audit_fixes",
+      "tests.test_exposure_realized_risk",
+      "tests.test_production_spec_features",
+      "tests.test_real_risk_percent_clears_guard",
+      "tests.test_sltp_unit_fix",
+      "tests.test_small_account_profile"
+    ],
+    "brain.trade_dna": [
+      "analytics.institutional_dashboard_phase3",
+      "brain.master_brain",
+      "core.institutional_dashboard",
+      "ml.feature_engine",
+      "ml.ml_orchestrator",
+      "ml.neural_network",
+      "ml.xgboost_model",
+      "run_ml_train",
+      "tests.test_adaptive_architecture"
+    ],
+    "core.phase3.phase3_orchestrator": [
+      "analytics.institutional_dashboard_phase3",
+      "main",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "core.phase3.portfolio_brain": [
+      "analytics.institutional_dashboard_phase3",
+      "core.phase3.phase3_orchestrator",
+      "core.phase3.system_health_layer",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "core.phase3.final_brain": [
+      "analytics.institutional_dashboard_phase3",
+      "analytics.v9_readiness_bridge",
+      "core.phase3.phase3_orchestrator",
+      "core.phase3.system_health_layer",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "core.portfolio_risk_authority": [
+      "analytics.institutional_dashboard_phase3",
+      "brain.faie.analysts",
+      "core.mt5_history_sync",
+      "core.strategy_runners",
+      "main",
+      "scripts.validate_phase3",
+      "tests.faie.test_faie_master_brain",
+      "tests.test_authority_isolation",
+      "tests.test_exposure_realized_risk",
+      "tests.test_phase3_shadow",
+      "tests.test_reconcile_restart_bug"
+    ],
+    "core.phase3.adaptive_shadow_calibration": [
+      "analytics.institutional_dashboard_phase3",
+      "core.phase3.phase3_orchestrator",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "core.phase3.ml_safety_framework": [
+      "analytics.institutional_dashboard_phase3",
+      "core.phase3.phase3_orchestrator",
+      "core.phase3.system_health_layer",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "core.phase3.gold_context_layer": [
+      "analytics.institutional_dashboard_phase3",
+      "core.phase3.phase3_orchestrator",
+      "core.phase3.system_health_layer",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "analytics.session_edge_analysis": [
+      "analytics.institutional_dashboard_phase3",
+      "tests.test_phase2",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "core.phase3.system_health_layer": [
+      "analytics.institutional_dashboard_phase3",
+      "core.phase3.phase3_orchestrator",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "analytics.regime_edge_analysis": [
+      "analytics.institutional_dashboard_phase3",
+      "tests.test_phase2",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "core.phase3.strategy_dna": [
+      "analytics.institutional_dashboard_phase3",
+      "core.phase3.phase3_orchestrator",
+      "core.phase3.system_health_layer",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "brain.faie.contradiction": [
+      "brain.faie.__init__",
+      "brain.faie.chief_decision_officer"
+    ],
+    "brain.faie.analysts": [
+      "brain.faie.__init__",
+      "brain.faie.chief_decision_officer",
+      "brain.faie.contradiction",
+      "brain.faie.fusion",
+      "tests.faie.test_faie_master_brain",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst",
+      "tests.test_unified_bridge_session"
+    ],
+    "brain.faie.explainability": [
+      "brain.faie.__init__"
+    ],
+    "brain.faie.shadow_logging": [
+      "brain.faie.__init__",
+      "tests.faie.test_shadow_logging"
+    ],
+    "brain.faie.chief_decision_officer": [
+      "brain.faie.__init__",
+      "brain.faie.explainability",
+      "brain.faie.shadow_logging",
+      "testing.faie_backtest",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst",
+      "tests.faie.test_shadow_logging"
+    ],
+    "brain.faie.scenario": [
+      "brain.faie.__init__",
+      "brain.faie.chief_decision_officer"
+    ],
+    "brain.faie.personality": [
+      "brain.faie.__init__",
+      "brain.faie.shadow_logging",
+      "testing.faie_backtest",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst",
+      "tests.faie.test_shadow_logging"
+    ],
+    "brain.faie.fusion": [
+      "brain.faie.__init__",
+      "brain.faie.chief_decision_officer",
+      "brain.faie.personality",
+      "brain.faie.scenario",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst"
+    ],
+    "brain.faie.evidence": [
+      "brain.faie.__init__",
+      "brain.faie.analysts",
+      "brain.faie.chief_decision_officer",
+      "brain.faie.contradiction",
+      "brain.faie.fusion",
+      "brain.faie.scenario",
+      "testing.faie_backtest",
+      "tests.faie.test_faie_master_brain",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst"
+    ],
+    "core.unified_decision": [
+      "brain.faie.analysts",
+      "brain.faie.chief_decision_officer",
+      "brain.faie.shadow_logging",
+      "core.ai_v1_authority",
+      "core.fer3on_decision_authority",
+      "core.unified_bridge",
+      "run_faie_shadow",
+      "scripts.v7_smoke_test",
+      "scripts.validate_phase3",
+      "testing.faie_backtest",
+      "tests.ai_consistency.test_authority_immutable",
+      "tests.faie.test_faie_master_brain",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst",
+      "tests.faie.test_shadow_logging",
+      "tests.test_counter_trend_rules",
+      "tests.test_phase3_shadow",
+      "tests.test_smart_decision_authority",
+      "tests.test_unified_bridge_session",
+      "tests.test_unified_decision_v2"
+    ],
+    "analytics.portfolio_intelligence": [
+      "brain.faie.analysts",
+      "tests.test_portfolio_intelligence"
+    ],
+    "brain.knowledge_base": [
+      "brain.faie.analysts",
+      "brain.master_brain",
+      "tests.test_knowledge_base_v2"
+    ],
+    "core.session_intelligence": [
+      "brain.faie.analysts",
+      "core.v7_integration",
+      "fer3on_masr.integration.adapters",
+      "main",
+      "testing.test_recovery_plus"
+    ],
+    "core.ai_memory": [
+      "brain.history_learner",
+      "brain.trade_dna",
+      "core.adaptive_ai",
+      "core.adaptive_weighting",
+      "core.engine_analytics",
+      "core.institutional_dashboard",
+      "core.market_memory",
+      "core.mt5_history_sync",
+      "core.outcome_learning",
+      "core.self_optimizer",
+      "core.session_intelligence",
+      "core.trade_executor",
+      "dashboard",
+      "fer3on_masr.learning.history_loader",
+      "tools.development_readiness_gate"
+    ],
+    "core.outcome_learning": [
+      "brain.history_learner",
+      "brain.master_brain"
+    ],
+    "brain.history_learner": [
+      "brain.master_brain"
+    ],
+    "brain.news_memory": [
+      "brain.master_brain"
+    ],
+    "core.dynamic_confidence": [
+      "brain.opportunity_engine",
+      "core.confidence_engine",
+      "core.v7_integration",
+      "core.v7_validator",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "certification.framework": [
+      "certification.level1",
+      "certification.level2",
+      "core.mt5_history_sync",
+      "main",
+      "tests.test_certification_framework",
+      "tools.activate_v22_reports"
+    ],
+    "config.ai_config": [
+      "config.__init__",
+      "core.settings",
+      "tests.execution.test_execution_config"
+    ],
+    "config.execution_config": [
+      "config.__init__",
+      "core.settings",
+      "tests.execution.test_execution_config"
+    ],
+    "config.risk_config": [
+      "config.__init__",
+      "tests.execution.test_execution_config"
+    ],
+    "core.mt5_compat": [
+      "core.account_protection",
+      "core.atr_manager",
+      "core.candle_trigger",
+      "core.choch_engine",
+      "core.crisis_intelligence",
+      "core.daily.signal",
+      "core.daily_macro_engine",
+      "core.daily_trade_manager",
+      "core.execution_intelligence",
+      "core.execution_optimizer_v2",
+      "core.execution_quality",
+      "core.liquidity_intelligence",
+      "core.liquidity_map",
+      "core.london_breakout",
+      "core.loss_pause_guard",
+      "core.market_regime",
+      "core.market_structure",
+      "core.mt5_history_sync",
+      "core.mt5_order_utils",
+      "core.multi_timeframe",
+      "core.risk_manager",
+      "core.scalp.trailing",
+      "core.scalping_engine",
+      "core.smart_money",
+      "core.smc_entry_engine",
+      "core.strategy_runners",
+      "core.survival_intelligence",
+      "core.swing_engine",
+      "core.trade_executor",
+      "core.trailing_stop",
+      "core.v7_integration",
+      "dashboard",
+      "execution.tp_monitor",
+      "main",
+      "ml.feature_engine",
+      "run_backtest",
+      "tests.test_mt5_compat",
+      "tools.activate_v22_reports",
+      "tools.check_correlation_and_volume_data",
+      "tools.dev.test_mt5"
+    ],
+    "core.micro_probe_entries": [
+      "core.adaptive_execution_engine",
+      "core.dynamic_aggression",
+      "core.meta_ai_orchestrator",
+      "tests.test_evolution_layer"
+    ],
+    "core.adaptive_learning": [
+      "core.adaptive_floor",
+      "core.mt5_history_sync",
+      "core.unified_bridge",
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "core.smc_advanced": [
+      "core.advanced_smc",
+      "core.smart_money",
+      "core.smc_entry_engine"
+    ],
+    "core.unified_bridge": [
+      "core.ai_v1_authority",
+      "core.fer3on_decision_authority",
+      "scripts.v7_smoke_test",
+      "tests.ai_consistency.test_authority_immutable",
+      "tests.test_unified_bridge_session"
+    ],
+    "core.conflict_resolution": [
+      "core.brain_unified",
+      "tests.ai_consistency.test_conflict_resolution"
+    ],
+    "core.micro_trigger": [
+      "core.candle_context",
+      "core.liquidity_vacuum",
+      "core.v7_integration",
+      "core.v7_validator",
+      "ml.feature_engine",
+      "testing.test_v7_execution_intelligence",
+      "tests.test_micro_trigger_numpy"
+    ],
+    "core.candle_patterns": [
+      "core.candle_engine",
+      "core.candle_trigger",
+      "core.daily_macro_engine",
+      "core.scalping_engine",
+      "core.trend_confluence",
+      "tests.test_four_fixes"
+    ],
+    "core.candle_engine": [
+      "core.candle_trigger"
+    ],
+    "core.candle_gate_v3": [
+      "core.candle_trigger",
+      "tests.test_candle_gate_v3"
+    ],
+    "core.choch_engine": [
+      "core.confidence_engine",
+      "core.loss_pause_guard",
+      "core.market_structure",
+      "core.multi_timeframe"
+    ],
+    "core.adaptive_ai": [
+      "core.confidence_engine",
+      "core.risk_protection",
+      "dashboard",
+      "tests.test_adaptive_architecture"
+    ],
+    "core.utils": [
+      "core.daily.signal",
+      "core.london_breakout",
+      "core.market_regime",
+      "core.multi_timeframe",
+      "core.scalping_engine",
+      "core.swing_engine"
+    ],
+    "core.execution_optimizer_v2": [
+      "core.execution_orchestrator"
+    ],
+    "core.quality_score": [
+      "core.fer3on_quality_gate",
+      "main",
+      "testing.test_quality_floor_adaptation",
+      "tests.test_adaptive_architecture"
+    ],
+    "core.daily.signal": [
+      "core.london_breakout",
+      "core.scalping_engine"
+    ],
+    "core.market_structure": [
+      "core.loss_pause_guard",
+      "main"
+    ],
+    "core.atr_manager": [
+      "core.market_regime",
+      "core.strategy_runners",
+      "fer3on_masr.integration.adapters",
+      "main"
+    ],
+    "core.recovery_cooldown": [
+      "core.meta_ai_orchestrator",
+      "tests.test_evolution_layer"
+    ],
+    "core.dynamic_aggression": [
+      "core.meta_ai_orchestrator",
+      "tests.test_ai_evolution",
+      "tests.test_evolution_layer"
+    ],
+    "core.contextual_memory": [
+      "core.meta_ai_orchestrator",
+      "tests.test_ai_evolution"
+    ],
+    "ml.ml_manager": [
+      "core.ml_status_manager",
+      "ml.ml_orchestrator",
+      "tools.activate_v22_reports",
+      "tools.generate_phase2_reports"
+    ],
+    "core.trade_identity": [
+      "core.mt5_history_sync",
+      "core.portfolio_risk_authority",
+      "core.scalp.trailing",
+      "core.trade_executor",
+      "tests.test_audit_fixes",
+      "tools.generate_phase2_reports",
+      "tools.repair_memory_records"
+    ],
+    "core.test_mode_manager": [
+      "core.risk_manager",
+      "core.trade_executor",
+      "core.unified_decision",
+      "main",
+      "tests.test_counter_trend_rules",
+      "tests.test_test_mode_manager",
+      "tools.activate_v22_reports"
+    ],
+    "risk.hard_risk_cap": [
+      "core.risk_manager",
+      "core.v7_integration",
+      "testing.test_recovery_plus"
+    ],
+    "core.__init__": [
+      "core.risk_policy",
+      "scripts.v7_smoke_test",
+      "tests.test_env_utils",
+      "tests.test_micro_stability",
+      "tests.test_mt5_compat"
+    ],
+    "core.ai_scoring": [
+      "core.scalping_engine"
+    ],
+    "core.multi_timeframe": [
+      "core.scalping_engine"
+    ],
+    "core.trade_executor": [
+      "core.sl_tp_finalizer",
+      "core.strategy_runners",
+      "main",
+      "tests.test_sltp_unit_fix"
+    ],
+    "core.smart_money": [
+      "core.smc_entry_engine"
+    ],
+    "core.smc_entry_engine": [
+      "core.smc_entry_v4",
+      "main",
+      "tests.test_smc_entry_gate"
+    ],
+    "core.advanced_smc": [
+      "core.smc_v3_integration"
+    ],
+    "core.smc_entry_v4": [
+      "core.smc_v3_integration"
+    ],
+    "core.module_registry": [
+      "core.spec_runtime",
+      "tests.test_production_spec_features",
+      "tools.activate_v22_reports"
+    ],
+    "core.watchdog": [
+      "core.spec_runtime",
+      "main",
+      "tests.test_datetime_warnings",
+      "tests.test_production_integrity",
+      "tests.test_production_intelligence",
+      "tests.test_production_spec_features",
+      "tools.activate_v22_reports"
+    ],
+    "core.production_intelligence": [
+      "core.spec_runtime",
+      "tests.test_production_intelligence",
+      "tests.test_production_spec_features"
+    ],
+    "core.runtime_validation": [
+      "core.startup_check"
+    ],
+    "core.v7_integration": [
+      "core.strategy_runners"
+    ],
+    "core.professional_swing_structure": [
+      "core.strategy_runners",
+      "main",
+      "tests.test_professional_swing_structure"
+    ],
+    "core.sl_tp_finalizer": [
+      "core.strategy_runners",
+      "core.trade_executor",
+      "main"
+    ],
+    "core.micro_trading_engine": [
+      "core.strategy_runners"
+    ],
+    "core.scalping_engine": [
+      "core.strategy_runners"
+    ],
+    "analytics.tp_cap_monitor": [
+      "core.strategy_runners",
+      "main",
+      "tests.test_tp_cap_monitor"
+    ],
+    "core.velocity_engine": [
+      "core.strategy_runners",
+      "core.v7_integration",
+      "core.v7_validator",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "core.adaptive_floor": [
+      "core.strategy_runners"
+    ],
+    "core.adaptive_sl_tp_engine": [
+      "core.strategy_runners",
+      "main",
+      "scripts.tp_cap_demo",
+      "tests.test_adaptive_sl_tp_engine",
+      "tests.test_professional_swing_structure"
+    ],
+    "core.swing_engine": [
+      "core.strategy_runners"
+    ],
+    "core.liquidity_intelligence": [
+      "core.strategy_runners",
+      "main"
+    ],
+    "analytics.authority_impact": [
+      "core.strategy_runners",
+      "main",
+      "tests.test_authority_impact"
+    ],
+    "core.london_breakout": [
+      "core.swing_engine"
+    ],
+    "core.market_regime": [
+      "core.trade_executor",
+      "fer3on_masr.integration.adapters",
+      "main",
+      "tests.test_adaptive_architecture"
+    ],
+    "analytics.v9_readiness_bridge": [
+      "core.trade_executor"
+    ],
+    "core.trailing_stop": [
+      "core.trade_executor",
+      "main"
+    ],
+    "analytics.quant_engine": [
+      "core.trade_executor",
+      "tests.test_quant_engine_build_id_fix"
+    ],
+    "analytics.execution_quality": [
+      "core.trade_executor",
+      "tests.test_execution_quality"
+    ],
+    "execution.multi_tp": [
+      "core.trade_executor",
+      "execution.tp_monitor",
+      "tests.test_tp_ladder",
+      "tests.test_tp_monitor"
+    ],
+    "core.trade_logger": [
+      "core.trade_executor"
+    ],
+    "core.mt5_order_utils": [
+      "core.trade_executor",
+      "tests.test_mt5_comment"
+    ],
+    "core.scalp.trailing": [
+      "core.trailing_stop"
+    ],
+    "core.smc_v3_integration": [
+      "core.unified_decision"
+    ],
+    "core.v7_validator": [
+      "core.v7_audit",
+      "testing.test_v7_deep_validation"
+    ],
+    "core.missed_opportunity": [
+      "core.v7_integration",
+      "core.v7_validator",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "core.liquidity_vacuum": [
+      "core.v7_integration",
+      "core.v7_validator",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "brain.opportunity_engine": [
+      "core.v7_integration",
+      "core.v7_validator",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "brain.smc_arbitration": [
+      "core.v7_integration",
+      "testing.test_recovery_plus"
+    ],
+    "core.sweep_predictor": [
+      "core.v7_integration",
+      "fer3on_masr.integration.adapters",
+      "main",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "brain.filter_relaxation": [
+      "core.v7_integration",
+      "testing.test_recovery_plus",
+      "tests.test_filter_relaxation_store"
+    ],
+    "core.candle_context": [
+      "core.v7_integration",
+      "tests.test_candle_context"
+    ],
+    "core.confidence_decay": [
+      "core.v7_integration",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "execution.scale_in": [
+      "core.v7_integration",
+      "core.v7_validator",
+      "testing.test_v7_execution_intelligence"
+    ],
+    "analytics.recovery_dashboard": [
+      "core.v7_integration",
+      "testing.test_recovery_plus"
+    ],
+    "testing.v7_scenarios": [
+      "core.v7_validator"
+    ],
+    "core.engine_analytics": [
+      "dashboard"
+    ],
+    "core.news_filter": [
+      "dashboard",
+      "main"
+    ],
+    "core.analytics": [
+      "dashboard",
+      "main",
+      "tools.generate_phase2_reports"
+    ],
+    "fer3on_masr.app": [
+      "fer3on_masr.__init__",
+      "run_masr",
+      "tests.fer3on_masr.test_app_smoke",
+      "tests.test_four_fixes"
+    ],
+    "fer3on_masr.intelligence.liquidity": [
+      "fer3on_masr.app",
+      "tests.test_four_fixes"
+    ],
+    "fer3on_masr.optimization.performance": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.kernel.context": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.strategy_ai.agents": [
+      "fer3on_masr.app",
+      "tests.fer3on_masr.test_agents"
+    ],
+    "fer3on_masr.learning.evolution": [
+      "fer3on_masr.app",
+      "tests.fer3on_masr.test_evolution_and_discovery"
+    ],
+    "fer3on_masr.integration.adapters": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.intelligence.candles": [
+      "fer3on_masr.app",
+      "tests.fer3on_masr.test_candles"
+    ],
+    "fer3on_masr.intelligence.timeframes": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.intelligence.orderflow": [
+      "fer3on_masr.app",
+      "tests.test_four_fixes"
+    ],
+    "fer3on_masr.learning.knowledge_graph": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.learning.history_loader": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.intelligence.vwap": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.intelligence.range_forecast": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.api.contracts": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.intelligence.market": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.learning.center": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.intelligence.volume_profile": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.director.executive": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.explainability.service": [
+      "fer3on_masr.app"
+    ],
+    "fer3on_masr.kernel.models": [
+      "fer3on_masr.director.executive",
+      "fer3on_masr.explainability.service",
+      "fer3on_masr.intelligence.candles",
+      "fer3on_masr.intelligence.liquidity",
+      "fer3on_masr.intelligence.market",
+      "fer3on_masr.intelligence.orderflow",
+      "fer3on_masr.intelligence.range_forecast",
+      "fer3on_masr.intelligence.timeframes",
+      "fer3on_masr.intelligence.volume_profile",
+      "fer3on_masr.intelligence.vwap",
+      "fer3on_masr.strategy_ai.agents"
+    ],
+    "core.synthetic_orderflow": [
+      "fer3on_masr.intelligence.orderflow"
+    ],
+    "core.volume_profile": [
+      "fer3on_masr.intelligence.volume_profile",
+      "tests.test_four_fixes"
+    ],
+    "core.anchored_vwap": [
+      "fer3on_masr.intelligence.vwap",
+      "tests.test_four_fixes"
+    ],
+    "fer3on_masr.kernel.config": [
+      "fer3on_masr.kernel.context"
+    ],
+    "fer3on_masr.kernel.registry": [
+      "fer3on_masr.kernel.context"
+    ],
+    "fer3on_masr.kernel.events": [
+      "fer3on_masr.kernel.context"
+    ],
+    "core.execution_intelligence": [
+      "main"
+    ],
+    "core.confidence_engine": [
+      "main"
+    ],
+    "core.loss_pause_guard": [
+      "main",
+      "tests.test_loss_pause_guard_choch_bos"
+    ],
+    "core.mt5_history_sync": [
+      "main",
+      "tests.test_mt5_history_sync_merge_fix"
+    ],
+    "analytics.csv_truth_bridge": [
+      "main"
+    ],
+    "ml.feature_engine": [
+      "main"
+    ],
+    "core.strategy_runners": [
+      "main"
+    ],
+    "brain.master_brain": [
+      "main",
+      "scripts.v7_smoke_test"
+    ],
+    "core.startup_check": [
+      "main",
+      "tests.test_startup_compat"
+    ],
+    "brain.faie.__init__": [
+      "main",
+      "run_faie_shadow",
+      "tests.faie.test_faie_master_brain"
+    ],
+    "core.fer3on_decision_authority": [
+      "main"
+    ],
+    "execution.tp_monitor": [
+      "main",
+      "tests.test_tp_monitor"
+    ],
+    "ml.ml_orchestrator": [
+      "main",
+      "run_ml_train"
+    ],
+    "core.candle_trigger": [
+      "main",
+      "tests.test_adaptive_architecture"
+    ],
+    "ml.reinforcement": [
+      "ml.ml_orchestrator",
+      "run_ml_train",
+      "tests.test_adaptive_architecture"
+    ],
+    "core.ml_status_manager": [
+      "ml.ml_orchestrator",
+      "tests.test_adaptive_architecture"
+    ],
+    "ml.neural_network": [
+      "ml.ml_orchestrator",
+      "run_ml_train"
+    ],
+    "ml.xgboost_model": [
+      "ml.ml_orchestrator",
+      "run_ml_train",
+      "tests.test_adaptive_architecture"
+    ],
+    "testing.statistics": [
+      "run_backtest",
+      "run_ml_train",
+      "testing.backtester",
+      "tools.generate_phase2_reports"
+    ],
+    "testing.backtester": [
+      "run_backtest",
+      "tools.ci_shadow_backtest_gate"
+    ],
+    "testing.faie_backtest": [
+      "run_faie_backtest",
+      "run_faie_self_audit",
+      "tests.faie.test_session_analyst",
+      "tests.test_faie_backtest"
+    ],
+    "certification.self_audit": [
+      "run_faie_self_audit",
+      "tests.test_self_audit"
+    ],
+    "analytics.institutional_dashboard_phase3": [
+      "scripts.validate_phase3",
+      "tests.test_phase3_shadow"
+    ],
+    "risk.__init__": [
+      "testing.test_recovery_plus"
+    ],
+    "core.brain_unified": [
+      "testing.test_recovery_plus",
+      "testing.test_v7_execution_intelligence",
+      "tests.test_adaptive_architecture"
+    ],
+    "core.v7_audit": [
+      "testing.test_v7_audit"
+    ],
+    "core.ai_v1_authority": [
+      "tests.ai_consistency.test_authority_immutable"
+    ],
+    "fer3on_masr.learning.__init__": [
+      "tests.fer3on_masr.test_history_loader"
+    ],
+    "tools.system_health_check": [
+      "tests.system_integrity.test_system_health",
+      "tests.test_system_health_check"
+    ],
+    "main": [
+      "tests.test_adaptive_architecture"
+    ],
+    "core.meta_ai_orchestrator": [
+      "tests.test_ai_evolution"
+    ],
+    "core.adaptive_lot_engine": [
+      "tests.test_ai_evolution"
+    ],
+    "tools.backup_restore": [
+      "tests.test_backup_restore",
+      "tests.test_backup_rotation"
+    ],
+    "tools.check_correlation_and_volume_data": [
+      "tests.test_check_correlation_and_volume_data"
+    ],
+    "core.professional_logging": [
+      "tests.test_datetime_warnings",
+      "tests.test_production_integrity"
+    ],
+    "tools.development_readiness_gate": [
+      "tests.test_development_readiness_gate"
+    ],
+    "tools.end_to_end_smoke": [
+      "tests.test_end_to_end_smoke"
+    ],
+    "core.execution_orchestrator": [
+      "tests.test_execution_orchestrator"
+    ],
+    "brain.__init__": [
+      "tests.test_filter_relaxation_store"
+    ],
+    "core.data_source_registry": [
+      "tests.test_governance_p0"
+    ],
+    "core.risk_policy": [
+      "tests.test_governance_p0"
+    ],
+    "analytics.setup_analyzer": [
+      "tests.test_performance_validation"
+    ],
+    "analytics.contribution_analysis": [
+      "tests.test_phase2",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "analytics.portfolio_statistics": [
+      "tests.test_phase2",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "analytics.adaptive_shadow_prep": [
+      "tests.test_phase2",
+      "tools.generate_performance_intelligence_reports"
+    ],
+    "analytics.regime_sizing_shadow": [
+      "tests.test_regime_sizing_shadow"
+    ],
+    "analytics.session_filter_shadow": [
+      "tests.test_session_filter_shadow"
+    ],
+    "core.smc_debug_report": [
+      "tests.test_smc_diagnostic"
+    ],
+    "core.structured_logging": [
+      "tests.test_structured_logging"
+    ],
+    "core.telegram_bot": [
+      "tests.test_telegram_bot"
+    ]
+  },
+  "dead_candidates": {
+    "zero_inbound_non_runtime": [
+      "analytics.__init__",
+      "certification.__init__",
+      "certification.level1",
+      "certification.level2",
+      "certification.level3",
+      "check_open_trades",
+      "config.__init__",
+      "core.account_protection",
+      "core.adaptive_execution_engine",
+      "core.adaptive_weighting",
+      "core.context_memory",
+      "core.crisis_intelligence",
+      "core.daily.__init__",
+      "core.daily_macro_engine",
+      "core.daily_trade_manager",
+      "core.decision_engine",
+      "core.decision_snapshot",
+      "core.env_utils",
+      "core.execution_quality",
+      "core.fer3on_quality_gate",
+      "core.institutional_dashboard",
+      "core.liquidity_map",
+      "core.market_dna",
+      "core.market_memory",
+      "core.opportunity_classifier",
+      "core.phase3.__init__",
+      "core.recovery_engine",
+      "core.recovery_intelligence_v2",
+      "core.risk_protection",
+      "core.scalp.__init__",
+      "core.self_optimizer",
+      "core.spec_runtime",
+      "core.survival_intelligence",
+      "core.trend_confluence",
+      "dashboard",
+      "execution.__init__",
+      "fer3on.__init__",
+      "fer3on.__main__",
+      "fer3on_masr.__init__",
+      "fer3on_masr.api.__init__",
+      "fer3on_masr.director.__init__",
+      "fer3on_masr.explainability.__init__",
+      "fer3on_masr.integration.__init__",
+      "fer3on_masr.intelligence.__init__",
+      "fer3on_masr.kernel.__init__",
+      "fer3on_masr.kernel.plugin",
+      "fer3on_masr.lab.__init__",
+      "fer3on_masr.lab.simulation",
+      "fer3on_masr.optimization.__init__",
+      "fer3on_masr.strategy_ai.__init__",
+      "ml.__init__",
+      "ml.rl_agents.__init__",
+      "run_backtest",
+      "run_faie_backtest",
+      "run_faie_self_audit",
+      "run_faie_shadow",
+      "run_masr",
+      "run_ml_train"
+    ],
+    "tests_and_tools_only": [
+      "scripts.__init__",
+      "scripts.apply_master_patch",
+      "scripts.architecture_runtime_audit",
+      "scripts.cleanup_ai_memory",
+      "scripts.cleanup_demo",
+      "scripts.smoke_test",
+      "scripts.tp_cap_demo",
+      "scripts.v7_smoke_test",
+      "scripts.validate_phase3",
+      "testing.__init__",
+      "testing.backtester",
+      "testing.faie_backtest",
+      "testing.statistics",
+      "testing.test_quality_floor_adaptation",
+      "testing.test_recovery_plus",
+      "testing.test_v7_audit",
+      "testing.test_v7_deep_validation",
+      "testing.test_v7_execution_intelligence",
+      "testing.v7_scenarios",
+      "tests.__init__",
+      "tests.ai_consistency.__init__",
+      "tests.ai_consistency.test_authority_immutable",
+      "tests.ai_consistency.test_conflict_resolution",
+      "tests.execution.__init__",
+      "tests.execution.test_execution_config",
+      "tests.faie.__init__",
+      "tests.faie.test_faie_master_brain",
+      "tests.faie.test_personality",
+      "tests.faie.test_session_analyst",
+      "tests.faie.test_shadow_logging",
+      "tests.fer3on_masr.__init__",
+      "tests.fer3on_masr.test_agents",
+      "tests.fer3on_masr.test_app_smoke",
+      "tests.fer3on_masr.test_candles",
+      "tests.fer3on_masr.test_evolution_and_discovery",
+      "tests.fer3on_masr.test_history_loader",
+      "tests.system_integrity.__init__",
+      "tests.system_integrity.test_system_health",
+      "tests.test_adaptive_architecture",
+      "tests.test_adaptive_sl_tp_engine",
+      "tests.test_ai_evolution",
+      "tests.test_audit_fixes",
+      "tests.test_authority_impact",
+      "tests.test_authority_isolation",
+      "tests.test_backup_restore",
+      "tests.test_backup_rotation",
+      "tests.test_candle_context",
+      "tests.test_candle_gate_v3",
+      "tests.test_certification_framework",
+      "tests.test_check_correlation_and_volume_data",
+      "tests.test_ci_shadow_backtest_gate",
+      "tests.test_cleanup_ai_memory",
+      "tests.test_counter_trend_rules",
+      "tests.test_datetime_warnings",
+      "tests.test_development_readiness_gate",
+      "tests.test_end_to_end_smoke",
+      "tests.test_env_utils",
+      "tests.test_evolution_layer",
+      "tests.test_execution_orchestrator",
+      "tests.test_execution_quality",
+      "tests.test_exposure_realized_risk",
+      "tests.test_faie_backtest",
+      "tests.test_fer3on_cli",
+      "tests.test_filter_relaxation_store",
+      "tests.test_four_fixes",
+      "tests.test_governance_p0",
+      "tests.test_knowledge_base_v2",
+      "tests.test_live_execution",
+      "tests.test_loss_pause_guard_choch_bos",
+      "tests.test_micro_stability",
+      "tests.test_micro_trigger_numpy",
+      "tests.test_mt5_comment",
+      "tests.test_mt5_compat",
+      "tests.test_mt5_history_sync_merge_fix",
+      "tests.test_performance_validation",
+      "tests.test_phase2",
+      "tests.test_phase3_shadow",
+      "tests.test_portfolio_intelligence",
+      "tests.test_production_integrity",
+      "tests.test_production_intelligence",
+      "tests.test_production_spec_features",
+      "tests.test_professional_swing_structure",
+      "tests.test_quant_engine_build_id_fix",
+      "tests.test_real_risk_percent_clears_guard",
+      "tests.test_reconcile_restart_bug",
+      "tests.test_regime_sizing_shadow",
+      "tests.test_risk_consistency",
+      "tests.test_self_audit",
+      "tests.test_session_filter_shadow",
+      "tests.test_sltp_unit_fix",
+      "tests.test_small_account_profile",
+      "tests.test_smart_decision_authority",
+      "tests.test_smc_diagnostic",
+      "tests.test_smc_entry_gate",
+      "tests.test_startup_compat",
+      "tests.test_structured_logging",
+      "tests.test_system_health_check",
+      "tests.test_telegram_bot",
+      "tests.test_test_mode_manager",
+      "tests.test_tp_cap_monitor",
+      "tests.test_tp_capping",
+      "tests.test_tp_ladder",
+      "tests.test_tp_monitor",
+      "tests.test_truth_layer",
+      "tests.test_unified_bridge_session",
+      "tests.test_unified_decision_v2",
+      "tests.test_watchdog_production_ready_wiring",
+      "tools.__init__",
+      "tools.activate_v22_reports",
+      "tools.backfill_build_id",
+      "tools.backup_restore",
+      "tools.check_correlation_and_volume_data",
+      "tools.ci_shadow_backtest_gate",
+      "tools.clean_repo",
+      "tools.dedupe_truth_layer",
+      "tools.dev.sitecustomize",
+      "tools.dev.test_mt5",
+      "tools.development_readiness_gate",
+      "tools.end_to_end_smoke",
+      "tools.fix_truth_layer_ticket_keys",
+      "tools.full_start",
+      "tools.generate_performance_intelligence_reports",
+      "tools.generate_phase2_reports",
+      "tools.migrate_knowledge_rules",
+      "tools.phase1_acceptance",
+      "tools.repair_memory_records",
+      "tools.run_project_checks",
+      "tools.system_health_check"
+    ]
+  },
+  "legacy_markers": {
+    "V5": [
+      "brain.history_learner",
+      "brain.master_brain",
+      "core.adaptive_weighting",
+      "core.candle_engine",
+      "core.choch_engine",
+      "core.confidence_engine",
+      "core.execution_intelligence",
+      "core.execution_optimizer_v2",
+      "core.execution_quality",
+      "core.liquidity_intelligence",
+      "core.liquidity_map",
+      "core.market_regime",
+      "core.multi_timeframe",
+      "core.outcome_learning",
+      "core.quality_score",
+      "core.risk_protection",
+      "core.self_optimizer",
+      "core.smc_advanced",
+      "core.smc_entry_engine",
+      "core.survival_intelligence",
+      "core.telegram_bot",
+      "ml.__init__",
+      "ml.feature_engine",
+      "ml.reinforcement",
+      "run_backtest",
+      "run_ml_train",
+      "scripts.apply_master_patch",
+      "scripts.architecture_runtime_audit",
+      "testing.__init__",
+      "testing.backtester",
+      "testing.statistics"
+    ],
+    "V6": [
+      "analytics.__init__",
+      "analytics.quant_engine",
+      "analytics.v9_readiness_bridge",
+      "brain.__init__",
+      "brain.filter_relaxation",
+      "brain.smc_arbitration",
+      "core.__init__",
+      "core.adaptive_lot_engine",
+      "core.ai_v1_authority",
+      "core.candle_context",
+      "core.candle_trigger",
+      "core.daily.__init__",
+      "core.decision_engine",
+      "core.liquidity_vacuum",
+      "core.market_regime",
+      "core.market_structure",
+      "core.scalp.__init__",
+      "core.session_intelligence",
+      "core.settings",
+      "core.trade_executor",
+      "core.unified_decision",
+      "main",
+      "risk.__init__",
+      "risk.hard_risk_cap",
+      "scripts.__init__",
+      "scripts.architecture_runtime_audit",
+      "scripts.smoke_test",
+      "testing.test_recovery_plus",
+      "tests.test_candle_context",
+      "tests.test_filter_relaxation_store",
+      "tests.test_mt5_comment"
+    ],
+    "V7": [
+      "analytics.recovery_dashboard",
+      "analytics.v9_readiness_bridge",
+      "brain.filter_relaxation",
+      "brain.master_brain",
+      "brain.opportunity_engine",
+      "brain.smc_arbitration",
+      "core.adaptive_learning",
+      "core.ai_v1_authority",
+      "core.candle_context",
+      "core.confidence_decay",
+      "core.confidence_engine",
+      "core.conflict_resolution",
+      "core.dynamic_confidence",
+      "core.fer3on_decision_authority",
+      "core.liquidity_vacuum",
+      "core.market_regime",
+      "core.micro_trigger",
+      "core.missed_opportunity",
+      "core.recovery_engine",
+      "core.risk_manager",
+      "core.risk_policy",
+      "core.session_intelligence",
+      "core.settings",
+      "core.strategy_runners",
+      "core.sweep_predictor",
+      "core.trade_executor",
+      "core.v7_audit",
+      "core.v7_integration",
+      "core.v7_validator",
+      "core.velocity_engine",
+      "execution.__init__",
+      "execution.scale_in",
+      "risk.hard_risk_cap",
+      "scripts.apply_master_patch",
+      "scripts.architecture_runtime_audit",
+      "scripts.smoke_test",
+      "scripts.v7_smoke_test",
+      "testing.test_v7_audit",
+      "testing.test_v7_deep_validation",
+      "testing.test_v7_execution_intelligence",
+      "tests.test_micro_trigger_numpy"
+    ],
+    "ai_v1_authority": [
+      "core.ai_v1_authority",
+      "scripts.architecture_runtime_audit",
+      "tests.ai_consistency.test_authority_immutable"
+    ]
+  },
+  "possible_unused_imports": {
+    "analytics.adaptive_shadow_prep": [
+      "annotations",
+      "field",
+      "get_regime_breakdown",
+      "get_session_breakdown",
+      "get_strategy_breakdown"
+    ],
+    "analytics.authority_impact": [
+      "annotations"
+    ],
+    "analytics.contribution_analysis": [
+      "annotations",
+      "field",
+      "math"
+    ],
+    "analytics.csv_truth_bridge": [
+      "annotations",
+      "timezone"
+    ],
+    "analytics.execution_quality": [
+      "annotations",
+      "field"
+    ],
+    "analytics.institutional_dashboard_phase3": [
+      "FINAL_BRAIN_ENABLED",
+      "GOLD_CONTEXT_ENABLED",
+      "List",
+      "ML_SAFETY_ENABLED",
+      "PORTFOLIO_BRAIN_ENABLED",
+      "STRATEGY_DNA_ENABLED",
+      "SYSTEM_HEALTH_ENABLED",
+      "annotations"
+    ],
+    "analytics.performance_repository": [
+      "annotations",
+      "dataclass",
+      "field"
+    ],
+    "analytics.portfolio_intelligence": [
+      "annotations"
+    ],
+    "analytics.portfolio_statistics": [
+      "PHASE2_MIN_SAMPLE_PER_BUCKET",
+      "annotations",
+      "field",
+      "get_overall_metrics"
+    ],
+    "analytics.quant_engine": [
+      "annotations"
+    ],
+    "analytics.regime_edge_analysis": [
+      "Metrics",
+      "annotations",
+      "get_regime_breakdown",
+      "safe_metrics_dict"
+    ],
+    "analytics.regime_sizing_shadow": [
+      "annotations"
+    ],
+    "analytics.session_edge_analysis": [
+      "annotations",
+      "describe_metrics",
+      "safe_metrics_dict"
+    ],
+    "analytics.session_filter_shadow": [
+      "annotations"
+    ],
+    "analytics.setup_analyzer": [
+      "annotations",
+      "asdict"
+    ],
+    "analytics.tp_cap_monitor": [
+      "annotations"
+    ],
+    "analytics.truth_layer": [
+      "Tuple",
+      "annotations"
+    ],
+    "analytics.v9_readiness_bridge": [
+      "annotations"
+    ],
+    "brain.faie.__init__": [
+      "Analyst",
+      "AnalystReport",
+      "ChiefDecisionOfficer",
+      "Conflict",
+      "ContradictionReport",
+      "ContradictionResolver",
+      "DEFAULT_ANALYSTS",
+      "Decision",
+      "Evidence",
+      "EvidenceFusionEngine",
+      "EvidenceGraph",
+      "ExecutionOfficer",
+      "ExplanationBuilder",
+      "FusedEvidence",
+      "LiquidityAnalyst",
+      "MacroAnalyst",
+      "PERSONALITY_PROFILES",
+      "PatternAnalyst",
+      "PsychologyAnalyst",
+      "RiskOfficer",
+      "SMCAnalyst",
+      "Scenario",
+      "ScenarioEngine",
+      "TechnicalAnalyst",
+      "VolumeAnalyst",
+      "build_shadow_decision",
+      "get_profile",
+      "log_faie_shadow_decision"
+    ],
+    "brain.faie.analysts": [
+      "annotations"
+    ],
+    "brain.faie.chief_decision_officer": [
+      "Evidence",
+      "annotations",
+      "field"
+    ],
+    "brain.faie.contradiction": [
+      "annotations"
+    ],
+    "brain.faie.evidence": [
+      "annotations"
+    ],
+    "brain.faie.explainability": [
+      "annotations"
+    ],
+    "brain.faie.fusion": [
+      "annotations"
+    ],
+    "brain.faie.personality": [
+      "annotations"
+    ],
+    "brain.faie.scenario": [
+      "annotations",
+      "field"
+    ],
+    "brain.faie.shadow_logging": [
+      "annotations"
+    ],
+    "brain.master_brain": [
+      "find_similar_trades",
+      "get_history_score",
+      "get_trade_dna_display",
+      "get_trade_dna_score"
+    ],
+    "certification.framework": [
+      "annotations"
+    ],
+    "certification.self_audit": [
+      "annotations"
+    ],
+    "config.__init__": [
+      "AI_CONFIG",
+      "EXECUTION_CONFIG",
+      "RISK_CONFIG"
+    ],
+    "config.risk_config": [
+      "annotations"
+    ],
+    "core.account_protection": [
+      "MT5_AVAILABLE"
+    ],
+    "core.adaptive_execution_engine": [
+      "annotations"
+    ],
+    "core.adaptive_floor": [
+      "annotations"
+    ],
+    "core.adaptive_learning": [
+      "List",
+      "deque"
+    ],
+    "core.adaptive_lot_engine": [
+      "Any",
+      "Dict",
+      "annotations"
+    ],
+    "core.adaptive_sl_tp_engine": [
+      "MIN_SL_DISTANCE",
+      "annotations"
+    ],
+    "core.advanced_smc": [
+      "_body",
+      "_inside_zone",
+      "_is_bearish",
+      "_is_bullish",
+      "_median_range",
+      "_range",
+      "compute_premium_discount_zone",
+      "detect_breaker_block",
+      "detect_mitigation_block",
+      "detect_real_fvg"
+    ],
+    "core.ai_v1_authority": [
+      "AI_V1_RISK_MULT_PREMIUM",
+      "Any",
+      "DecisionContext",
+      "UNIFIED_DECISION_PRIMARY",
+      "decide_and_log",
+      "format_decision_log"
+    ],
+    "core.anchored_vwap": [
+      "annotations"
+    ],
+    "core.atr_manager": [
+      "MT5_AVAILABLE"
+    ],
+    "core.candle_gate_v3": [
+      "Optional",
+      "annotations"
+    ],
+    "core.candle_trigger": [
+      "MT5_AVAILABLE",
+      "detect_candle_pattern_full"
+    ],
+    "core.choch_engine": [
+      "MT5_AVAILABLE"
+    ],
+    "core.contextual_memory": [
+      "annotations"
+    ],
+    "core.crisis_intelligence": [
+      "MT5_AVAILABLE"
+    ],
+    "core.daily.signal": [
+      "MT5_AVAILABLE"
+    ],
+    "core.daily_macro_engine": [
+      "MT5_AVAILABLE"
+    ],
+    "core.daily_trade_manager": [
+      "MT5_AVAILABLE"
+    ],
+    "core.data_integrity": [
+      "deepcopy"
+    ],
+    "core.data_source_registry": [
+      "annotations"
+    ],
+    "core.dynamic_aggression": [
+      "annotations"
+    ],
+    "core.execution_intelligence": [
+      "MT5_AVAILABLE",
+      "datetime",
+      "timezone"
+    ],
+    "core.execution_optimizer_v2": [
+      "MT5_AVAILABLE"
+    ],
+    "core.execution_quality": [
+      "MT5_AVAILABLE"
+    ],
+    "core.fer3on_quality_gate": [
+      "evaluate_quality_gate"
+    ],
+    "core.liquidity_intelligence": [
+      "MT5_AVAILABLE"
+    ],
+    "core.liquidity_map": [
+      "MT5_AVAILABLE",
+      "datetime",
+      "timezone"
+    ],
+    "core.london_breakout": [
+      "MT5_AVAILABLE"
+    ],
+    "core.loss_pause_guard": [
+      "annotations"
+    ],
+    "core.market_dna": [
+      "annotations"
+    ],
+    "core.market_regime": [
+      "MT5_AVAILABLE"
+    ],
+    "core.market_structure": [
+      "MT5_AVAILABLE"
+    ],
+    "core.meta_ai_orchestrator": [
+      "annotations"
+    ],
+    "core.micro_probe_entries": [
+      "annotations"
+    ],
+    "core.mt5_compat": [
+      "annotations"
+    ],
+    "core.multi_timeframe": [
+      "MT5_AVAILABLE"
+    ],
+    "core.opportunity_classifier": [
+      "Optional",
+      "TIER_REJECT_BELOW",
+      "annotations"
+    ],
+    "core.phase3.adaptive_shadow_calibration": [
+      "annotations"
+    ],
+    "core.phase3.final_brain": [
+      "FINAL_BRAIN_MAX_SETUPS_PER_CYCLE",
+      "Optional",
+      "PHASE3_REQUIRED_CLOSED_TRADES",
+      "PHASE3_REQUIRED_WIN_RATE_MIN",
+      "annotations"
+    ],
+    "core.phase3.gold_context_layer": [
+      "annotations"
+    ],
+    "core.phase3.ml_safety_framework": [
+      "annotations"
+    ],
+    "core.phase3.phase3_orchestrator": [
+      "annotations"
+    ],
+    "core.phase3.portfolio_brain": [
+      "annotations"
+    ],
+    "core.phase3.strategy_dna": [
+      "Optional",
+      "STRATEGY_DNA_RANK_INTERVAL",
+      "annotations"
+    ],
+    "core.phase3.system_health_layer": [
+      "Optional",
+      "annotations"
+    ],
+    "core.portfolio_risk_authority": [
+      "MAX_RISK_PER_DAY_PERCENT",
+      "Tuple",
+      "annotations"
+    ],
+    "core.professional_swing_structure": [
+      "annotations"
+    ],
+    "core.recovery_cooldown": [
+      "annotations"
+    ],
+    "core.recovery_intelligence_v2": [
+      "annotations"
+    ],
+    "core.risk_manager": [
+      "V7_PLUS_ENABLED",
+      "planned_lot_for_mode"
+    ],
+    "core.risk_policy": [
+      "annotations"
+    ],
+    "core.runtime_validation": [
+      "annotations"
+    ],
+    "core.scalp.trailing": [
+      "MT5_AVAILABLE",
+      "TRAILING_R2"
+    ],
+    "core.scalping_engine": [
+      "MT5_AVAILABLE",
+      "get_mtf_consensus"
+    ],
+    "core.sl_tp_finalizer": [
+      "annotations"
+    ],
+    "core.smart_money": [
+      "MT5_AVAILABLE"
+    ],
+    "core.smc_debug_report": [
+      "annotations",
+      "asdict",
+      "defaultdict",
+      "os"
+    ],
+    "core.smc_entry_engine": [
+      "MT5_AVAILABLE"
+    ],
+    "core.smc_entry_v4": [
+      "_grade_smc",
+      "_inside_zone",
+      "check_smc_entry_sequence",
+      "get_entry_grade_bonus",
+      "get_entry_grade_score",
+      "should_allow_smc_entry"
+    ],
+    "core.startup_check": [
+      "mt5"
+    ],
+    "core.strategy_runners": [
+      "MAX_SL_DISTANCE_DOLLARS",
+      "SCALP_MAX_PER_SESSION",
+      "SCALP_SL_ATR_MULT",
+      "SCALP_TP_ATR_MULT",
+      "SWING_SL_ATR_MULT",
+      "SWING_TP_ATR_MULT",
+      "TP_ATR_CAP_MULT",
+      "TP_SL_MULT",
+      "annotations"
+    ],
+    "core.survival_intelligence": [
+      "MT5_AVAILABLE"
+    ],
+    "core.swing_engine": [
+      "MT5_AVAILABLE"
+    ],
+    "core.synthetic_orderflow": [
+      "annotations"
+    ],
+    "core.test_mode_manager": [
+      "annotations"
+    ],
+    "core.trade_identity": [
+      "annotations"
+    ],
+    "core.trade_logger": [
+      "os"
+    ],
+    "core.trailing_stop": [
+      "MT5_AVAILABLE"
+    ],
+    "core.trend_confluence": [
+      "annotations"
+    ],
+    "core.unified_bridge": [
+      "best_strategy_for_context"
+    ],
+    "core.unified_decision": [
+      "COMPOSITE_FULL_MIN",
+      "COMPOSITE_MICRO_MIN",
+      "COMPOSITE_REDUCED_MIN"
+    ],
+    "core.v7_audit": [
+      "annotations"
+    ],
+    "core.v7_integration": [
+      "MT5_AVAILABLE",
+      "record_recovery_trade",
+      "record_trade_loss"
+    ],
+    "core.v7_validator": [
+      "annotations",
+      "build_velocity_closes"
+    ],
+    "core.volume_profile": [
+      "annotations"
+    ],
+    "core.watchdog": [
+      "Dict",
+      "annotations"
+    ],
+    "dashboard": [
+      "MT5_AVAILABLE",
+      "deal_exists",
+      "initialize_memory",
+      "save_trade_memory",
+      "time"
+    ],
+    "execution.multi_tp": [
+      "annotations"
+    ],
+    "execution.tp_monitor": [
+      "annotations"
+    ],
+    "fer3on.__main__": [
+      "annotations"
+    ],
+    "fer3on_masr.api.contracts": [
+      "annotations"
+    ],
+    "fer3on_masr.app": [
+      "annotations"
+    ],
+    "fer3on_masr.director.executive": [
+      "annotations"
+    ],
+    "fer3on_masr.explainability.service": [
+      "annotations"
+    ],
+    "fer3on_masr.integration.adapters": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.candles": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.liquidity": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.market": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.orderflow": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.range_forecast": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.timeframes": [
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.volume_profile": [
+      "Dict",
+      "annotations"
+    ],
+    "fer3on_masr.intelligence.vwap": [
+      "Dict",
+      "annotations"
+    ],
+    "fer3on_masr.kernel.config": [
+      "annotations"
+    ],
+    "fer3on_masr.kernel.context": [
+      "annotations"
+    ],
+    "fer3on_masr.kernel.events": [
+      "annotations"
+    ],
+    "fer3on_masr.kernel.models": [
+      "annotations"
+    ],
+    "fer3on_masr.kernel.plugin": [
+      "annotations"
+    ],
+    "fer3on_masr.kernel.registry": [
+      "annotations"
+    ],
+    "fer3on_masr.lab.simulation": [
+      "annotations"
+    ],
+    "fer3on_masr.learning.center": [
+      "annotations"
+    ],
+    "fer3on_masr.learning.evolution": [
+      "annotations"
+    ],
+    "fer3on_masr.learning.history_loader": [
+      "annotations"
+    ],
+    "fer3on_masr.learning.knowledge_graph": [
+      "annotations"
+    ],
+    "fer3on_masr.optimization.performance": [
+      "annotations"
+    ],
+    "fer3on_masr.strategy_ai.agents": [
+      "annotations"
+    ],
+    "main": [
+      "TP_ATR_CAP_MULT",
+      "TP_SL_MULT",
+      "_get_phase3_status",
+      "record_trade_close"
+    ],
+    "ml.feature_engine": [
+      "MT5_AVAILABLE"
+    ],
+    "ml.ml_manager": [
+      "annotations",
+      "os"
+    ],
+    "ml.ml_orchestrator": [
+      "encode_state"
+    ],
+    "ml.neural_network": [
+      "sklearn"
+    ],
+    "ml.rl_agents.__init__": [
+      "annotations"
+    ],
+    "ml.xgboost_model": [
+      "json",
+      "sklearn",
+      "xgboost"
+    ],
+    "run_faie_backtest": [
+      "annotations"
+    ],
+    "run_faie_self_audit": [
+      "annotations"
+    ],
+    "run_faie_shadow": [
+      "annotations"
+    ],
+    "run_ml_train": [
+      "FEATURE_NAMES",
+      "get_gbm_predictor",
+      "get_nn_predictor",
+      "train_from_dna",
+      "train_nn_from_dna"
+    ],
+    "scripts.architecture_runtime_audit": [
+      "annotations"
+    ],
+    "scripts.v7_smoke_test": [
+      "json"
+    ],
+    "scripts.validate_phase3": [
+      "DecisionContext",
+      "get_ml_safety_status",
+      "get_phase3_status",
+      "get_portfolio_brain_status",
+      "get_readiness_report",
+      "get_strategy_rankings",
+      "json",
+      "notify_trade_closed",
+      "record_strategy_trade",
+      "time"
+    ],
+    "testing.backtester": [
+      "csv",
+      "format_stats_report"
+    ],
+    "testing.faie_backtest": [
+      "annotations"
+    ],
+    "testing.statistics": [
+      "HISTORY_COLUMNS"
+    ],
+    "testing.test_v7_execution_intelligence": [
+      "tempfile"
+    ],
+    "testing.v7_scenarios": [
+      "annotations"
+    ],
+    "tests.fer3on_masr.test_agents": [
+      "annotations"
+    ],
+    "tests.fer3on_masr.test_app_smoke": [
+      "annotations"
+    ],
+    "tests.fer3on_masr.test_candles": [
+      "annotations"
+    ],
+    "tests.fer3on_masr.test_evolution_and_discovery": [
+      "annotations"
+    ],
+    "tests.fer3on_masr.test_history_loader": [
+      "annotations"
+    ],
+    "tests.test_authority_impact": [
+      "Any",
+      "Dict"
+    ],
+    "tests.test_authority_isolation": [
+      "record_trade_close"
+    ],
+    "tests.test_backup_restore": [
+      "Path"
+    ],
+    "tests.test_backup_rotation": [
+      "Path"
+    ],
+    "tests.test_end_to_end_smoke": [
+      "Path"
+    ],
+    "tests.test_four_fixes": [
+      "annotations"
+    ],
+    "tests.test_live_execution": [
+      "List",
+      "annotations"
+    ],
+    "tests.test_loss_pause_guard_choch_bos": [
+      "time"
+    ],
+    "tests.test_mt5_history_sync_merge_fix": [
+      "patch"
+    ],
+    "tests.test_performance_validation": [
+      "TradeRecord",
+      "analyze_all_setups",
+      "datetime",
+      "timezone"
+    ],
+    "tests.test_phase2": [
+      "Any",
+      "List",
+      "SHADOW_CANDIDATES_PATH",
+      "SHADOW_STATE_PATH",
+      "annotations",
+      "filter_trades",
+      "get_all_trades",
+      "persist_shadow_state",
+      "shutil"
+    ],
+    "tests.test_phase3_shadow": [
+      "DecisionContext",
+      "MAX_LOT",
+      "MAX_RISK_PER_DAY_PERCENT",
+      "MIN_LOT",
+      "MagicMock",
+      "json",
+      "patch",
+      "tempfile"
+    ],
+    "tests.test_quant_engine_build_id_fix": [
+      "json"
+    ],
+    "tests.test_small_account_profile": [
+      "MIN_LOT"
+    ],
+    "tests.test_structured_logging": [
+      "Path"
+    ],
+    "tests.test_tp_capping": [
+      "TP_ATR_CAP_MULT",
+      "TP_CAP_DAILY",
+      "TP_CAP_MICRO",
+      "TP_CAP_SCALP",
+      "TP_CAP_SMC",
+      "TP_CAP_SWING",
+      "TP_SL_MULT",
+      "TP_SL_MULT_DAILY",
+      "TP_SL_MULT_MICRO",
+      "TP_SL_MULT_SCALP",
+      "TP_SL_MULT_SMC",
+      "TP_SL_MULT_SWING"
+    ],
+    "tests.test_truth_layer": [
+      "TradeRecord"
+    ],
+    "tools.activate_v22_reports": [
+      "annotations",
+      "build_certification_snapshot"
+    ],
+    "tools.backfill_build_id": [
+      "annotations",
+      "timezone"
+    ],
+    "tools.check_correlation_and_volume_data": [
+      "annotations"
+    ],
+    "tools.ci_shadow_backtest_gate": [
+      "annotations"
+    ],
+    "tools.clean_repo": [
+      "os"
+    ],
+    "tools.dedupe_truth_layer": [
+      "annotations"
+    ],
+    "tools.dev.test_mt5": [
+      "sys"
+    ],
+    "tools.development_readiness_gate": [
+      "BACKUP_DIR",
+      "annotations"
+    ],
+    "tools.end_to_end_smoke": [
+      "os"
+    ],
+    "tools.fix_truth_layer_ticket_keys": [
+      "annotations"
+    ],
+    "tools.full_start": [
+      "os"
+    ],
+    "tools.generate_performance_intelligence_reports": [
+      "PHASE2_ANALYTICS_DIR",
+      "annotations",
+      "json",
+      "safe_metrics_dict"
+    ],
+    "tools.generate_phase2_reports": [
+      "annotations"
+    ],
+    "tools.migrate_knowledge_rules": [
+      "re"
+    ],
+    "tools.phase1_acceptance": [
+      "annotations"
+    ],
+    "tools.repair_memory_records": [
+      "annotations"
+    ],
+    "tools.run_project_checks": [
+      "os"
+    ],
+    "tools.system_health_check": [
+      "annotations",
+      "mt5"
+    ]
+  },
+  "duplicate_roles": {
+    "decision_layers": [
+      "analytics.authority_impact",
+      "brain.faie.chief_decision_officer",
+      "core.ai_v1_authority",
+      "core.decision_engine",
+      "core.decision_snapshot",
+      "core.fer3on_decision_authority",
+      "core.portfolio_risk_authority",
+      "core.unified_bridge",
+      "core.unified_decision",
+      "tests.ai_consistency.test_authority_immutable",
+      "tests.test_authority_impact",
+      "tests.test_authority_isolation",
+      "tests.test_smart_decision_authority",
+      "tests.test_unified_decision_v2"
+    ],
+    "risk_layers": [
+      "config.risk_config",
+      "core.portfolio_risk_authority",
+      "core.risk_manager",
+      "core.risk_policy",
+      "core.risk_protection",
+      "risk.__init__",
+      "risk.hard_risk_cap",
+      "tests.test_exposure_realized_risk",
+      "tests.test_real_risk_percent_clears_guard",
+      "tests.test_risk_consistency"
+    ],
+    "execution_layers": [
+      "analytics.execution_quality",
+      "config.execution_config",
+      "core.adaptive_execution_engine",
+      "core.execution_intelligence",
+      "core.execution_optimizer_v2",
+      "core.execution_orchestrator",
+      "core.execution_quality",
+      "core.trade_executor",
+      "execution.__init__",
+      "execution.multi_tp",
+      "execution.scale_in",
+      "execution.tp_monitor",
+      "testing.test_v7_execution_intelligence",
+      "tests.execution.__init__",
+      "tests.execution.test_execution_config",
+      "tests.test_execution_orchestrator",
+      "tests.test_execution_quality",
+      "tests.test_live_execution"
+    ],
+    "memory_layers": [
+      "brain.news_memory",
+      "core.ai_memory",
+      "core.context_memory",
+      "core.contextual_memory",
+      "core.market_memory",
+      "scripts.cleanup_ai_memory",
+      "tests.test_cleanup_ai_memory",
+      "tools.repair_memory_records"
+    ],
+    "runtime_validation_layers": [
+      "core.module_registry",
+      "core.runtime_validation",
+      "core.spec_runtime",
+      "core.startup_check",
+      "core.v7_audit",
+      "testing.test_v7_audit",
+      "tests.test_end_to_end_smoke",
+      "tests.test_system_health_check",
+      "tools.end_to_end_smoke",
+      "tools.system_health_check"
+    ]
+  }
+}

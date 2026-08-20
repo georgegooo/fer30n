@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-06-14T14:48:50.886923+00:00",
+  "false_rejection_rate": 0.0,
+  "missed_opportunity_score": 50.0,
+  "total_trades": 24,
+  "opportunity_engine_win_rate": 0.0,
+  "scale_in_win_rate": 0.0,
+  "micro_trigger_win_rate": 0.0,
+  "smc_win_rate": 0.0,
+  "velocity_bonus_win_rate": 0.0,
+  "session_win_rates": {
+    "ASIA": 0.0,
+    "LONDON": 0.0,
+    "NEWYORK": 0.0,
+    "OVERLAP": 0.0,
+    "OFF_HOURS": 50.0
+  },
+  "average_confidence": 0.0,
+  "average_trade_duration_minutes": 0.0,
+  "average_profit": -2.88,
+  "average_drawdown": 9.04,
+  "total_profit": -69.07,
+  "total_wins": 9,
+  "total_losses": 15
+}

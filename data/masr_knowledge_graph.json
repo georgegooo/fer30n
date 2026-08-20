@@ -1,0 +1,71 @@
+{
+  "nodes": [
+    "ATR Expansion",
+    "Bearish",
+    "Breakout Success",
+    "Discovered Pattern",
+    "High ATR + Liquidity Sweep + Pin Bar",
+    "High ATR + Sweep + Pin Bar",
+    "Liquidity Sweep",
+    "London",
+    "Pattern Discovery"
+  ],
+  "edges": [
+    {
+      "source": "Liquidity Sweep",
+      "relation": "linked_to",
+      "target": "Bearish",
+      "weight": 0.82,
+      "metadata": {}
+    },
+    {
+      "source": "Bearish",
+      "relation": "appears_in",
+      "target": "London",
+      "weight": 0.74,
+      "metadata": {}
+    },
+    {
+      "source": "London",
+      "relation": "expands",
+      "target": "ATR Expansion",
+      "weight": 0.79,
+      "metadata": {}
+    },
+    {
+      "source": "ATR Expansion",
+      "relation": "improves",
+      "target": "Breakout Success",
+      "weight": 0.81,
+      "metadata": {}
+    },
+    {
+      "source": "High ATR + Sweep + Pin Bar",
+      "relation": "discovers",
+      "target": "Pattern Discovery",
+      "weight": 0.91,
+      "metadata": {}
+    },
+    {
+      "source": "High ATR + Liquidity Sweep + Pin Bar",
+      "relation": "registered_as",
+      "target": "Discovered Pattern",
+      "weight": 0.91,
+      "metadata": {}
+    },
+    {
+      "source": "High ATR + Liquidity Sweep + Pin Bar",
+      "relation": "registered_as",
+      "target": "Discovered Pattern",
+      "weight": 0.91,
+      "metadata": {}
+    },
+    {
+      "source": "High ATR + Liquidity Sweep + Pin Bar",
+      "relation": "registered_as",
+      "target": "Discovered Pattern",
+      "weight": 0.91,
+      "metadata": {}
+    }
+  ]
+}

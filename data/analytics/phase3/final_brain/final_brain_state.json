@@ -1,0 +1,16 @@
+{
+  "version": "phase3.0",
+  "total_shadow_cycles": 18470,
+  "total_approvals": 12906,
+  "total_rejections": 231,
+  "total_waits": 5333,
+  "matched_actual_count": 10355,
+  "false_rejections": 77,
+  "missed_winners": 0,
+  "avoided_losers": 0,
+  "approval_accuracy": 0.5606,
+  "false_rejection_rate": 0.3347826086956522,
+  "readiness_score": 72.38,
+  "live_ready": false,
+  "last_updated": 1787154156.957215
+}
