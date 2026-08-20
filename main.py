@@ -1379,7 +1379,16 @@ def main():
                     except Exception:
                         last_csv_row = None
 
-                chosen = last_closed if isinstance(last_closed, dict) else last_csv_row
+                # Never replay the last historical CSV row on every heartbeat.
+                # Only a close observed by this sync cycle may update the live
+                # loss-pause streak.
+                sync_added_close = (
+                    isinstance(history_sync, dict)
+                    and int(history_sync.get('synced', 0) or 0) > 0
+                )
+                chosen = last_closed if isinstance(last_closed, dict) else (
+                    last_csv_row if sync_added_close else None
+                )
                 if chosen:
                     _res = (
                         chosen.get('result')
