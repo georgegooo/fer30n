@@ -1,0 +1,1857 @@
+{
+  "version": "phase3.0",
+  "per_strategy": {
+    "SMC": {
+      "strategy": "SMC",
+      "total_trades": 2447,
+      "wins": 535,
+      "losses": 1912,
+      "win_rate": 0.2186350633428688,
+      "avg_profit": 20.218112149532715,
+      "avg_loss": 2.226108786610883,
+      "expectancy": 2.681,
+      "recent_results": [
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 6.11,
+          "session": "ASIA",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -29.62,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 15.0,
+          "session": "LONDON",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "OFF_HOURS",
+          "regime": "TRENDING"
+        }
+      ],
+      "recent_win_rate": 0.09,
+      "best_session": "ASIA",
+      "best_regime": "UNKNOWN",
+      "dna_score": 50.55
+    },
+    "MICRO": {
+      "strategy": "MICRO",
+      "total_trades": 4162,
+      "wins": 61,
+      "losses": 4101,
+      "win_rate": 0.014656415185007208,
+      "avg_profit": 5.358688524590164,
+      "avg_loss": 0.6647793221165554,
+      "expectancy": -0.5765,
+      "recent_results": [
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": 0.0,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        },
+        {
+          "win": false,
+          "profit": -29.96,
+          "session": "NEWYORK",
+          "regime": "RANGING"
+        }
+      ],
+      "recent_win_rate": 0.0,
+      "best_session": "NEWYORK",
+      "best_regime": "RANGING",
+      "dna_score": 21.26
+    },
+    "MANUAL": {
+      "strategy": "MANUAL",
+      "total_trades": 137,
+      "wins": 131,
+      "losses": 6,
+      "win_rate": 0.9562043795620438,
+      "avg_profit": 11.1926717557252,
+      "avg_loss": 22.386666666666667,
+      "expectancy": 9.722,
+      "recent_results": [
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.72,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 0.69,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 13.56,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -31.8,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -31.8,
+          "session": "LONDON",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": false,
+          "profit": -35.2,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        },
+        {
+          "win": true,
+          "profit": 143.49,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
+        }
+      ],
+      "recent_win_rate": 0.97,
+      "best_session": "LONDON",
+      "best_regime": "UNKNOWN",
+      "dna_score": 97.65
+    }
+  },
+  "last_ranked_at": 0,
+  "total_updates": 7076,
+  "last_updated": 1787264721.3362184,
+  "_cleanup_note": "V9 cleanup: removed test-only entries (TEST_STRAT, WEAK_STRAT) not in official STRATEGY_TO_MAGIC list"
+}

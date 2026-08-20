@@ -1,0 +1,16 @@
+{
+  "date": "2026-08-20",
+  "used_micro": 1,
+  "used_reduced": 0,
+  "used_full": 0,
+  "used_total": 1,
+  "remaining_micro": 59,
+  "remaining_reduced": 30,
+  "remaining_full": 20,
+  "remaining_total": 49,
+  "daily_max_trades": 50,
+  "micro_lot_cap": 0.02,
+  "reduced_lot_cap": 0.15,
+  "full_lot_cap": 0.15,
+  "testing_mode": false
+}

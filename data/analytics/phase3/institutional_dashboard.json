@@ -1,0 +1,387 @@
+{
+  "version": "phase3.0",
+  "generated_at": "2026-08-19T15:42:36.976191+00:00",
+  "mode": "SHADOW",
+  "tabs": {
+    "portfolio_analytics": {
+      "tab": "PORTFOLIO_ANALYTICS",
+      "generated_at": "2026-08-19T15:42:36.976207+00:00",
+      "error": "cannot import name '_state' from 'core.portfolio_risk_authority' (/home/claude/audit/FER3ON-FINAL-build1-MERGED-rearch-cert6/project/core/portfolio_risk_authority.py)",
+      "portfolio_brain": {
+        "component": "PORTFOLIO_BRAIN",
+        "mode": "SHADOW",
+        "enabled": true,
+        "live_authority": false,
+        "strategy_weights": {
+          "SCALP": 0.3,
+          "SMC": 0.3,
+          "SWING": 0.2,
+          "DAILY": 0.15,
+          "MICRO": 0.05
+        },
+        "max_exposure_pct": 0.6,
+        "diversity_target": 3,
+        "capital_pressure_warn": 0.8
+      }
+    },
+    "risk_analytics": {
+      "tab": "RISK_ANALYTICS",
+      "generated_at": "2026-08-19T15:42:36.976221+00:00",
+      "loss_limits": {
+        "daily_used": 0.0,
+        "weekly_used": 0.0,
+        "daily_limit": 3.0,
+        "weekly_limit": 12.0,
+        "daily_remaining": 3.0,
+        "weekly_remaining": 12.0,
+        "consecutive_losses": 0,
+        "source": "mt5_live_sync"
+      },
+      "risk_config": {
+        "max_daily_risk_pct": 3.0,
+        "risk_per_trade_pct": 0.75,
+        "max_lot": 0.06,
+        "max_open_trades": 4,
+        "hard_risk_max_per_trade": 0.5
+      },
+      "ml_safety": {
+        "component": "ML_SAFETY_FRAMEWORK",
+        "mode": "SHADOW",
+        "enabled": true,
+        "live_block": false,
+        "last_health_score": 50.0,
+        "total_predictions": 14949,
+        "total_resolved": 6632,
+        "drift_alerts_count": 326,
+        "retrain_recommendations": 320,
+        "baseline_accuracy": 0.5
+      }
+    },
+    "strategy_dna": {
+      "tab": "STRATEGY_DNA",
+      "generated_at": "2026-08-19T15:42:36.976570+00:00",
+      "rankings": [
+        {
+          "strategy": "MANUAL",
+          "dna_score": 97.65,
+          "win_rate": 0.9562043795620438,
+          "total_trades": 137,
+          "expectancy": 9.722,
+          "health": "STRONG"
+        },
+        {
+          "strategy": "SMC",
+          "dna_score": 65.01,
+          "win_rate": 0.22516835016835016,
+          "total_trades": 2376,
+          "expectancy": 3.2164,
+          "health": "STABLE"
+        },
+        {
+          "strategy": "MICRO",
+          "dna_score": 21.26,
+          "win_rate": 0.014656415185007208,
+          "total_trades": 4162,
+          "expectancy": -0.5765,
+          "health": "WEAK"
+        }
+      ],
+      "status": {
+        "component": "STRATEGY_DNA",
+        "mode": "SHADOW",
+        "enabled": true,
+        "live_influence": false,
+        "total_updates": 7005,
+        "strategies_tracked": 3,
+        "rankings": [
+          {
+            "strategy": "MANUAL",
+            "dna_score": 97.65,
+            "win_rate": 0.9562043795620438,
+            "total_trades": 137,
+            "expectancy": 9.722,
+            "health": "STRONG"
+          },
+          {
+            "strategy": "SMC",
+            "dna_score": 65.01,
+            "win_rate": 0.22516835016835016,
+            "total_trades": 2376,
+            "expectancy": 3.2164,
+            "health": "STABLE"
+          },
+          {
+            "strategy": "MICRO",
+            "dna_score": 21.26,
+            "win_rate": 0.014656415185007208,
+            "total_trades": 4162,
+            "expectancy": -0.5765,
+            "health": "WEAK"
+          }
+        ]
+      },
+      "brain_rankings": [
+        {
+          "strategy": "SMC",
+          "trades": 17,
+          "win_rate": 41.18,
+          "profit": -43.81,
+          "score": 27.51
+        },
+        {
+          "strategy": "SCALP",
+          "trades": 70,
+          "win_rate": 61.43,
+          "profit": -829.61,
+          "score": 18.11
+        }
+      ]
+    },
+    "session_intelligence": {
+      "tab": "SESSION_INTELLIGENCE",
+      "generated_at": "2026-08-19T15:42:36.978443+00:00",
+      "adaptive_shadow": {
+        "component": "ADAPTIVE_SHADOW_CALIBRATION",
+        "mode": "SHADOW_ADVISORY_ONLY",
+        "shadow_only": true,
+        "cannot_change": [
+          "core_trading_logic",
+          "direction_logic",
+          "execution_logic",
+          "default_thresholds_live",
+          "entry_conditions",
+          "risk_ratios"
+        ],
+        "confidence_suggestions_enabled": true,
+        "session_pref_enabled": true,
+        "strategy_ranking_enabled": true,
+        "suggestions_file": "data/analytics/phase3/adaptive_shadow/adaptive_suggestions.json",
+        "notice": "Advisory only. No live threshold changes in Phase 3."
+      },
+      "adaptive_suggestions": {
+        "generated_at": "2026-08-19T15:42:36.935967+00:00",
+        "mode": "SHADOW_ADVISORY_ONLY",
+        "important_notice": "These are RECOMMENDATIONS ONLY. No changes are applied automatically. Human review and explicit approval required before any live activation.",
+        "cannot_change_in_phase3": [
+          "core_trading_logic",
+          "direction_logic",
+          "execution_logic",
+          "default_thresholds_live",
+          "entry_conditions",
+          "risk_ratios"
+        ],
+        "confidence_suggestions": [
+          {
+            "suggestion_type": "confidence_floor_raise",
+            "current_value": "30-40",
+            "suggested_value": "Raise floor above 30",
+            "reason": "Win rate 0.0% below 35% in bucket 30-40",
+            "confidence": 0.5,
+            "data_sample_size": 25,
+            "approved_for_live": false,
+            "timestamp": 1787154156.935843
+          }
+        ],
+        "session_preferences": {
+          "ASIA": {
+            "win_rate": 0.0,
+            "total_trades": 25,
+            "total_profit": -125.0,
+            "recommended": false,
+            "advisory_note": "Weak session (0.0% WR)"
+          }
+        },
+        "strategy_rankings": [
+          {
+            "strategy": "MICRO",
+            "win_rate": 0.0,
+            "total_trades": 25,
+            "total_profit": -125.0,
+            "shadow_rank_score": 0.0,
+            "advisory_note": "Review performance",
+            "approved_for_live": false,
+            "suggested_rank": 1
+          }
+        ],
+        "total_analyzed": 25
+      }
+    },
+    "regime_intelligence": {
+      "tab": "REGIME_INTELLIGENCE",
+      "generated_at": "2026-08-19T15:42:36.978507+00:00",
+      "gold_context_config": {
+        "component": "GOLD_CONTEXT_LAYER",
+        "mode": "SHADOW",
+        "enabled": true,
+        "live_influence": false,
+        "hard_block_allowed": false,
+        "max_positive_influence": 8.0,
+        "max_negative_influence": -8.0,
+        "factor_weights": {
+          "dxy_trend": 0.2,
+          "real_yields": 0.2,
+          "cpi_pressure": 0.15,
+          "nfp_momentum": 0.1,
+          "fomc_stance": 0.15,
+          "geopolitical": 0.1,
+          "rate_differential": 0.1
+        },
+        "note": "Modifier only — never standalone entry condition or hard blocker"
+      }
+    },
+    "phase3_status": {
+      "tab": "PHASE3_SHADOW_STATUS",
+      "generated_at": "2026-08-19T15:42:36.978517+00:00",
+      "phase3_enabled": true,
+      "mode": "SHADOW",
+      "live_authority": false,
+      "components": {
+        "final_brain": {
+          "component": "FINAL_BRAIN",
+          "mode": "SHADOW",
+          "live_authority": false,
+          "total_shadow_cycles": 18470,
+          "approval_accuracy": 0.5606,
+          "false_rejection_rate": 0.3347826086956522,
+          "false_rejections": 77,
+          "avoided_losers": 0,
+          "readiness_score": 72.38,
+          "live_ready": false,
+          "requirements": {
+            "shadow_cycles_required": 200,
+            "shadow_cycles_done": 18470,
+            "false_reject_max": 0.1,
+            "current_false_reject": 0.3347826086956522
+          }
+        },
+        "portfolio_brain": {
+          "component": "PORTFOLIO_BRAIN",
+          "mode": "SHADOW",
+          "enabled": true,
+          "live_authority": false,
+          "strategy_weights": {
+            "SCALP": 0.3,
+            "SMC": 0.3,
+            "SWING": 0.2,
+            "DAILY": 0.15,
+            "MICRO": 0.05
+          },
+          "max_exposure_pct": 0.6,
+          "diversity_target": 3,
+          "capital_pressure_warn": 0.8
+        },
+        "ml_safety": {
+          "component": "ML_SAFETY_FRAMEWORK",
+          "mode": "SHADOW",
+          "enabled": true,
+          "live_block": false,
+          "last_health_score": 50.0,
+          "total_predictions": 14949,
+          "total_resolved": 6632,
+          "drift_alerts_count": 326,
+          "retrain_recommendations": 320,
+          "baseline_accuracy": 0.5
+        },
+        "strategy_dna": {
+          "component": "STRATEGY_DNA",
+          "mode": "SHADOW",
+          "enabled": true,
+          "live_influence": false,
+          "total_updates": 7005,
+          "strategies_tracked": 3,
+          "rankings": [
+            {
+              "strategy": "MANUAL",
+              "dna_score": 97.65,
+              "win_rate": 0.9562043795620438,
+              "total_trades": 137,
+              "expectancy": 9.722,
+              "health": "STRONG"
+            },
+            {
+              "strategy": "SMC",
+              "dna_score": 65.01,
+              "win_rate": 0.22516835016835016,
+              "total_trades": 2376,
+              "expectancy": 3.2164,
+              "health": "STABLE"
+            },
+            {
+              "strategy": "MICRO",
+              "dna_score": 21.26,
+              "win_rate": 0.014656415185007208,
+              "total_trades": 4162,
+              "expectancy": -0.5765,
+              "health": "WEAK"
+            }
+          ]
+        },
+        "gold_context": {
+          "component": "GOLD_CONTEXT_LAYER",
+          "mode": "SHADOW",
+          "enabled": true,
+          "live_influence": false,
+          "hard_block_allowed": false,
+          "max_positive_influence": 8.0,
+          "max_negative_influence": -8.0,
+          "factor_weights": {
+            "dxy_trend": 0.2,
+            "real_yields": 0.2,
+            "cpi_pressure": 0.15,
+            "nfp_momentum": 0.1,
+            "fomc_stance": 0.15,
+            "geopolitical": 0.1,
+            "rate_differential": 0.1
+          },
+          "note": "Modifier only — never standalone entry condition or hard blocker"
+        },
+        "adaptive_shadow": {
+          "component": "ADAPTIVE_SHADOW_CALIBRATION",
+          "mode": "SHADOW_ADVISORY_ONLY",
+          "shadow_only": true,
+          "cannot_change": [
+            "core_trading_logic",
+            "direction_logic",
+            "execution_logic",
+            "default_thresholds_live",
+            "entry_conditions",
+            "risk_ratios"
+          ],
+          "confidence_suggestions_enabled": true,
+          "session_pref_enabled": true,
+          "strategy_ranking_enabled": true,
+          "suggestions_file": "data/analytics/phase3/adaptive_shadow/adaptive_suggestions.json",
+          "notice": "Advisory only. No live threshold changes in Phase 3."
+        }
+      },
+      "final_brain_readiness": {
+        "component": "FINAL_BRAIN",
+        "mode": "SHADOW",
+        "live_authority": false,
+        "total_shadow_cycles": 18470,
+        "approval_accuracy": 0.5606,
+        "false_rejection_rate": 0.3347826086956522,
+        "false_rejections": 77,
+        "avoided_losers": 0,
+        "readiness_score": 72.38,
+        "live_ready": false,
+        "requirements": {
+          "shadow_cycles_required": 200,
+          "shadow_cycles_done": 18470,
+          "false_reject_max": 0.1,
+          "current_false_reject": 0.3347826086956522
+        }
+      },
+      "estimated_cycles_remaining": 0,
+      "readiness_pct": 72.38,
+      "system_health": {
+        "overall_score": 72.48,
+        "overall_status": "OK",
+        "phase3_readiness": 90.0,
+        "warnings_count": 1,
+        "alerts_count": 0,
+        "component_count": 7
+      }
+    }
+  }
+}

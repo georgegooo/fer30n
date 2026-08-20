@@ -1,0 +1,10 @@
+{
+  "ticket": 56732105578,
+  "close_ticket": 56732105578,
+  "result": "LOSS",
+  "profit": -10.4,
+  "exit_price": 4197.0,
+  "closed_volume": 0.01,
+  "status": "CLOSED",
+  "closed_at": "2026-06-12T23:32:10.255346+00:00"
+}

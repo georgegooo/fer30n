@@ -1,0 +1,4518 @@
+{
+    "filter_stats": {
+        "WAIT": {
+            "total": 2,
+            "false_rejections": 2,
+            "strategy": "UNKNOWN",
+            "session": "UNKNOWN"
+        },
+        "FINAL_BRAIN": {
+            "total": 58,
+            "false_rejections": 58,
+            "strategy": "UNKNOWN",
+            "session": "UNKNOWN"
+        }
+    },
+    "history": [
+        {
+            "timestamp": "2026-06-14T06:08:17.086317+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:08:32.840499+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:08:43.117479+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:08:58.266925+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:09:08.724649+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:09:34.130197+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:09:59.593598+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:10:24.851467+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:10:50.094172+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:11:15.317738+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:11:40.633491+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:12:05.991968+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:12:31.220251+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:12:56.520657+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:13:21.779526+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:13:47.114734+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:14:12.369506+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:14:37.611184+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:15:02.865895+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:15:28.138295+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:15:53.399740+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:16:18.696302+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:16:44.055355+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:17:09.415223+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:17:34.786628+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:18:00.045904+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:18:25.307390+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:18:50.567335+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:19:15.836476+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:19:41.139684+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:20:06.523059+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:20:31.950668+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:20:57.187045+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:21:22.430743+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:21:47.771506+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:22:13.033364+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:22:39.058575+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:23:04.315258+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:23:29.576337+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T06:23:54.830433+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:21:22.477069+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:22:13.309354+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:22:38.983788+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:23:04.246312+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:23:29.527778+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:23:54.747513+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:25:46.643345+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:26:14.783739+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:26:39.984120+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:27:05.291763+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:27:31.499877+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:27:56.813295+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:28:22.034230+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:28:47.261012+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:29:12.456145+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:29:37.669266+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:30:02.897159+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:30:28.103889+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:30:53.299406+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:31:18.578695+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:31:43.789069+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:32:09.014708+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:32:34.222947+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:32:59.430804+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:33:24.706297+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:33:49.925771+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:34:15.156310+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:34:40.356502+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:35:05.608381+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:35:30.841869+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:35:56.151460+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:36:21.440627+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:36:46.678302+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:37:11.925867+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:37:37.250716+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:38:02.494242+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:38:27.772739+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:38:53.031029+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:39:18.305595+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:39:43.522080+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:40:08.735799+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:40:33.937659+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:40:59.210914+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:41:24.405938+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:41:49.640806+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:42:14.834948+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:42:40.056045+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T07:43:05.280466+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "ASIA",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:18:35.920926+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:19:51.992036+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:20:00.848343+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:20:01.419536+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:21:07.479082+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:21:37.102016+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:22:22.826773+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:22:52.954456+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:23:38.235726+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:24:08.512272+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:24:53.616720+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:25:23.943701+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:26:11.791249+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:26:39.375223+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:27:27.180693+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:27:54.721375+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:28:42.527491+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:29:10.172588+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:29:58.730413+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:30:22.291377+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:30:25.544587+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:31:14.062375+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:31:37.751645+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:31:40.917723+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:32:29.442473+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:32:53.090502+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:32:56.368414+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:33:44.757156+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:34:08.435844+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:34:11.810360+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:34:48.019077+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:35:00.256115+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:35:24.652721+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:35:27.298023+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:36:03.339144+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:36:15.544592+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:36:20.249884+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:36:40.189984+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:37:18.749542+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:37:30.865371+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:37:35.703727+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:37:55.515776+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:38:34.176763+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:38:46.177587+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:38:51.049999+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:39:10.835803+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:39:50.202169+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:40:01.461160+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:40:06.405869+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:40:27.468957+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:41:05.827256+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:41:17.481943+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:41:21.776575+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:41:42.884743+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:41:55.191007+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:42:21.569108+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:42:28.018524+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:42:32.814547+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:42:37.223807+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:42:58.207967+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:43:36.950291+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:43:40.323966+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:43:43.532859+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:43:48.142095+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:43:53.374752+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:44:13.495929+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:44:52.304237+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:44:55.618400+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:44:58.853826+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:45:03.446076+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:45:10.337635+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:45:23.372759+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:45:28.835719+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:07.708012+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:11.032442+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:14.408162+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:19.039086+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:25.746827+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:39.436796+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:46:44.491397+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:47:23.508795+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:47:27.623601+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:47:30.665404+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:47:36.533903+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:47:41.989713+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:47:56.652132+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:48:01.597721+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:48:39.284731+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:48:43.394215+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:48:46.961680+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:48:52.967749+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:48:57.431681+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:49:12.490708+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:49:19.414027+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:49:55.141483+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:49:59.030280+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:53:04.349674+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:54:19.960773+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:55:15.562951+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:55:35.788843+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:56:31.025379+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:56:51.320632+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:56:55.697096+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:57:46.705977+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:58:06.908736+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:58:11.065208+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:59:02.120914+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:59:22.254478+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T09:59:26.372093+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:00:17.501394+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:00:24.613222+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:00:37.613951+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:00:41.690772+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:01:32.844071+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:01:40.032472+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:01:53.008648+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:01:57.045218+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:02:48.141756+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:02:55.440264+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:03:08.344550+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:03:12.382213+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:04:03.467729+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:04:10.808943+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:04:23.685168+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:04:27.845423+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:07:23.391349+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:08:08.345224+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:09:24.194400+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:10:39.608047+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T10:11:55.003736+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "LONDON",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:26:53.536133+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:28:09.364714+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:29:24.746061+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:29:32.845607+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:30:41.063606+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:30:48.166857+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:31:44.643436+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:31:57.644425+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:32:03.534678+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:33:00.498117+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:33:14.676877+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:33:19.653753+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:33:27.308000+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:34:15.992663+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:34:33.770897+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:34:35.339860+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:34:44.615689+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:35:22.323585+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:35:32.430795+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:35:49.548113+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:35:52.286758+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:36:00.807894+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:36:38.033693+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:36:50.684376+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:37:10.548482+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:37:17.428159+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:37:23.733683+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:37:54.026230+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:38:08.384518+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:38:30.247177+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:38:31.937039+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:38:33.691296+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:38:39.763199+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:39:09.726245+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:39:24.703536+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:39:45.811610+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:39:47.346122+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:39:49.083352+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:39:55.298280+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:40:25.670471+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:40:40.032082+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:41:01.133624+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:41:02.629802+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:41:04.422679+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:41:10.677231+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:41:41.089447+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:41:55.360830+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:42:16.475736+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:42:18.001683+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:42:19.815070+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:42:26.110275+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:42:56.430057+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:43:10.674089+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:43:31.856673+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:43:33.565913+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:43:35.167500+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:43:41.519151+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:44:11.761356+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:44:25.997636+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:44:47.303118+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:44:48.902992+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:44:50.485097+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:44:56.923835+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:45:27.133953+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:45:41.292427+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:46:02.926372+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:46:04.248888+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:46:05.824054+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:46:42.510745+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:46:58.964091+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:47:18.330007+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:47:19.701202+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:47:21.313002+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:47:57.921388+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:48:14.400913+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:48:33.875394+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:48:37.765547+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:49:13.541727+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:49:29.908478+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:49:49.365714+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:49:52.218859+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:49:53.216754+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:50:29.004191+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:50:45.411558+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:51:04.987651+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:51:07.698470+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:51:08.673412+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:51:44.596986+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:52:02.363551+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:52:20.542443+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:52:23.253356+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:52:24.273906+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:53:00.195574+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:53:17.894452+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:53:36.155827+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:53:38.821317+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:53:40.156172+00:00",
+            "factor": 0.8,
+            "false_rejection_rate": 100.0,
+            "missed_opportunity_score": 0.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:53:44.798522+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:54:15.493914+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:54:33.256358+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:54:51.525331+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:54:54.156002+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:54:55.469117+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:55:00.397246+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:55:30.786585+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:55:42.906036+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:55:48.639954+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:56:06.882956+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:56:09.478841+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:56:10.771349+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:56:15.776133+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:56:46.386182+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:56:58.358840+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:57:03.995745+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:57:06.125531+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:57:22.282909+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:57:24.850946+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:57:26.142966+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:57:31.155103+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:01.882205+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:13.944409+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:19.340735+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:21.500248+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:38.294755+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:40.795508+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:41.892721+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:46.779304+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:58:58.606358+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:18.197825+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:29.475059+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:34.922338+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:37.036147+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:53.786190+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:56.406619+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T13:59:57.374965+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:02.820336+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:03.957929+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:14.108726+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:33.548742+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:44.918197+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:50.254194+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:00:52.478533+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:09.139662+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:11.906543+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:12.736087+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:18.352594+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:19.371379+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:29.473333+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:48.964848+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:01:52.207340+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:00.298596+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:05.685381+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:08.433354+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:24.469383+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:27.276336+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:28.055210+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:34.003168+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:34.818996+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:02:44.848064+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:04.335997+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:04.844636+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:07.563767+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:15.695989+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:21.042569+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:23.894171+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:39.832489+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:42.638826+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:43.379551+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:49.466961+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:03:50.194378+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:00.241604+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:19.709779+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:20.359567+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:22.938343+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:31.101774+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:36.369704+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:39.288763+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:55.168525+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:57.970258+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:04:58.686737+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:04.900764+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:05.572889+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:15.639596+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:35.134545+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:35.988362+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:38.333518+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:46.523553+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:51.722134+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:05:54.662032+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:10.514815+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:13.306312+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:13.996091+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:20.423701+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:20.945370+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:31.013317+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:50.508704+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:51.371686+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:06:53.796265+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:07:01.950623+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:07:07.102365+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:07:10.082662+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:09:35.778300+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:10:51.302444+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:11:22.410175+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:12:37.894432+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:13:53.329613+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:15:08.780040+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:16:24.224874+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:17:39.639514+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:18:55.094803+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:20:10.513127+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:21:25.954136+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:22:06.708117+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:22:41.443975+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:23:22.513025+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:23:38.645531+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:23:56.880425+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:24:37.892532+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:24:54.062962+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:25:12.337907+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:25:53.726135+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:26:10.299606+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:26:28.145865+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:27:09.526348+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:27:26.009011+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:27:44.033329+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:28:25.056880+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:28:41.840365+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:28:59.539665+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:29:40.514128+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:29:57.526593+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:30:15.035388+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:30:55.950370+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:31:13.066133+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:31:30.533626+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:32:11.410970+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:32:28.548198+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:32:45.949255+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:33:26.816697+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:33:44.029998+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:34:01.345113+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:34:42.246641+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:34:59.542790+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:35:16.756715+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:35:57.940951+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:36:14.892289+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:36:32.138523+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:37:13.357912+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:37:30.288126+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:37:47.631145+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:38:28.795689+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:38:45.670513+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:39:03.804561+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:39:44.230674+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:40:01.820990+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:40:21.505275+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:40:59.781366+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:41:17.269144+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:41:37.179385+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:42:15.239833+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:42:33.866674+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:42:52.914466+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:43:30.691926+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:43:49.419484+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:44:08.435402+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:44:46.171482+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:45:04.841468+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:45:23.833654+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:46:01.544151+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:46:20.264525+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:46:39.366265+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:47:16.932943+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:47:35.638072+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:47:54.774805+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:48:32.346219+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:48:51.022956+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:49:10.262476+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:49:47.736964+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:50:06.490970+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:50:25.799857+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 100.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:51:03.179576+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        },
+        {
+            "timestamp": "2026-06-14T14:51:22.168103+00:00",
+            "factor": 1.0,
+            "false_rejection_rate": 0.0,
+            "missed_opportunity_score": 50.0,
+            "strategy": "SMC",
+            "session": "NEWYORK",
+            "regime": "RANGING"
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-08-20T19:51:04.910971+00:00",
+  "mode": "SHADOW_ADVISORY_ONLY",
+  "important_notice": "These are RECOMMENDATIONS ONLY. No changes are applied automatically. Human review and explicit approval required before any live activation.",
+  "cannot_change_in_phase3": [
+    "core_trading_logic",
+    "direction_logic",
+    "execution_logic",
+    "default_thresholds_live",
+    "entry_conditions",
+    "risk_ratios"
+  ],
+  "confidence_suggestions": [],
+  "session_preferences": {},
+  "strategy_rankings": [],
+  "total_analyzed": 0
+}

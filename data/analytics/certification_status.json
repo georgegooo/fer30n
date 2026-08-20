@@ -1,0 +1,90 @@
+{
+  "tracked_metrics": [
+    "Win Rate",
+    "Profit Factor",
+    "Max Drawdown",
+    "Expectancy",
+    "Recovery Factor",
+    "Sharpe Ratio"
+  ],
+  "closed_trade_count": 0,
+  "bot_trade_count": 0,
+  "manual_trade_count": 0,
+  "overall_metrics": {
+    "total_trades": 0,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "max_drawdown": 0.0,
+    "expectancy": 0.0,
+    "recovery_factor": 0.0,
+    "sharpe_ratio": 0.0,
+    "net_profit": 0
+  },
+  "account_metrics": {
+    "total_trades": 0,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "max_drawdown": 0.0,
+    "expectancy": 0.0,
+    "recovery_factor": 0.0,
+    "sharpe_ratio": 0.0,
+    "net_profit": 0
+  },
+  "bot_metrics": {
+    "total_trades": 0,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "max_drawdown": 0.0,
+    "expectancy": 0.0,
+    "recovery_factor": 0.0,
+    "sharpe_ratio": 0.0,
+    "net_profit": 0
+  },
+  "manual_metrics": {
+    "total_trades": 0,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "max_drawdown": 0.0,
+    "expectancy": 0.0,
+    "recovery_factor": 0.0,
+    "sharpe_ratio": 0.0,
+    "net_profit": 0
+  },
+  "levels": [
+    {
+      "name": "100 Trade Certification",
+      "required_trades": 100,
+      "progress_trades": 0,
+      "progress_pct": 0.0,
+      "completed": false,
+      "metrics": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0.0,
+        "expectancy": 0.0,
+        "recovery_factor": 0.0,
+        "sharpe_ratio": 0.0,
+        "net_profit": 0
+      }
+    },
+    {
+      "name": "200 Trade Certification",
+      "required_trades": 200,
+      "progress_trades": 0,
+      "progress_pct": 0.0,
+      "completed": false,
+      "metrics": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "profit_factor": 0.0,
+        "max_drawdown": 0.0,
+        "expectancy": 0.0,
+        "recovery_factor": 0.0,
+        "sharpe_ratio": 0.0,
+        "net_profit": 0
+      }
+    }
+  ],
+  "source_file": "data/history/trades.csv"
+}

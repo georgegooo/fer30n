@@ -1,0 +1,29 @@
+{
+  "pending": [
+    {
+      "id": "eda42ca1-58b",
+      "timestamp": "2026-07-27T00:47:49.591100+00:00",
+      "eval_after": 1785114169.591106,
+      "symbol": "V7-INTEGRATION",
+      "strategy": "INTEGRATION",
+      "direction": "BUY",
+      "confidence": 66.0,
+      "setup_score": 78.0,
+      "regime": "TRENDING",
+      "session": "LONDON",
+      "liquidity_bias": "BUY",
+      "structure_bias": "BUY",
+      "entry_price": 1000.0,
+      "verdict": "REJECT",
+      "rejection_reason": "FINAL_BRAIN",
+      "evaluated": false
+    }
+  ],
+  "evaluated": [],
+  "stats": {
+    "total_rejections": 0,
+    "false_rejections": 0,
+    "false_rejection_rate": 0.0,
+    "missed_opportunity_score": 50.0
+  }
+}
