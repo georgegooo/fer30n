@@ -28,6 +28,18 @@ Data Quality
 
 ## 2. المرحلة صفر: التثبيت والتنظيف المعماري
 
+### 2.0 أولوية أمنية قبل أي توسعة
+
+قبل تنفيذ أي طبقة Entry/Exit أو Opportunity Allocation، يجب إصلاح كل مسارات الحماية التي تسمح بالاستمرار عند فشلها. فشل `kill-switch` أو `risk authority` أو التحقق النهائي من SL يجب أن ينتج:
+
+```text
+SAFE_REJECT
+```
+
+ولا يجوز أن ينتج `allow trade` أو استمرارًا صامتًا. أخطاء التحليلات والـ dashboard يمكن أن تبقى non-fatal، لكن مكونات الحماية الأساسية يجب أن تكون fail-closed.
+
+هذا الإصلاح هو أول commit تشغيلي، مع اختبار regression يثبت أن exception داخل `should_block_trade()` يمنع التنفيذ.
+
 ### 2.1 توحيد مسارات الاستراتيجيات
 
 المسار الحالي ليس موحدًا بالكامل؛ SMC يمر عبر `DecisionContext` و`unified_decide`، بينما SCALP وSWING وMICRO لها مسارات مستقلة.
@@ -116,6 +128,8 @@ EXECUTION_NOT_READY
 INVALID_SIGNAL
 ```
 
+يجب ربط Phase 3 الحالي بهذه السلطة بدل إنشاء سلطة Shadow بديلة: Phase 3 يقدم evidence واقتراحًا استشاريًا، أما القرار التنفيذي النهائي فيصدر من Authority الموحدة فقط.
+
 ### 2.4 SL/TP مصدر حقيقة واحد
 
 يظل `adaptive_sl_tp_engine` مصدرًا للسياق وATR فقط. يصبح `sl_tp_finalizer` مصدر الخطة النهائية الوحيدة.
@@ -132,7 +146,23 @@ adaptive_sl_tp_engine
 
 بعد `sl_tp_finalizer` لا يجوز لأي وحدة إعادة حساب الأسعار أو المسافات.
 
-### 2.5 Position Manager واحد
+### 2.5 بوابة تحقق اتصال المسار الحي
+
+كل مرحلة تنفيذية لا تعتبر مكتملة بمجرد إنشاء ملف أو class. يجب أن تثبت كل مرحلة:
+
+```text
+implementation exists
++ live caller exists
++ runtime log proves invocation
++ focused regression test passes
++ no duplicate writer/decision path exists
+```
+
+يجب تنفيذ هذا الفحص في نهاية كل Phase، وليس تأجيله إلى مرحلة Demo. أي وحدة غير موصولة بالمسار الحي تبقى `NOT_WIRED` ولا تدخل في ادعاءات الجاهزية.
+
+`account_scope.py` لا يدخل ضمن الأولويات الأولى إلا بعد إثبات أنه موصول بالمسار الحالي ويؤثر في نطاق الحساب/البيانات المقصود.
+
+### 2.6 Position Manager واحد
 
 هناك مسارات متعددة للتريلينج وTP. يجب إنشاء مدير موحد:
 
@@ -185,7 +215,10 @@ Build provisional entry/SL plan
 ```text
 SL_SOFT_LIMIT = $10
 SL_HARD_LIMIT = $15
+MAX_SL_DISTANCE_DOLLARS = $30  # safety ceiling only, not a target
 ```
+
+`SL_HARD_LIMIT` هو حد استراتيجية الدخول الفعلي، بينما `MAX_SL_DISTANCE_DOLLARS` هو سقف أمان مطلق على مستوى التنفيذ. لا يجوز أن تستخدم طبقة adaptive أو retry قيمة `$30` كخيار طبيعي؛ إذا تجاوزت الخطة `$15` ترفض أو تنتظر Retest أفضل، ولا يصل التنفيذ إلى `$30` إلا كحاجز أخير يمنع قيمة أكبر بسبب خلل أو حالة طارئة.
 
 القواعد:
 
@@ -210,6 +243,8 @@ SL_HARD_LIMIT
 MAX_SL_DISTANCE_DOLLARS
 actual risk budget
 ```
+
+إذا كان broker minimum أكبر من `SL_HARD_LIMIT`، لا يسمح retry بفتح الصفقة؛ لأن السقف المطلق ليس تصريحًا بتجاوز حد الاستراتيجية.
 
 إذا تطلب الوسيط مسافة أكبر من الحدود، تكون النتيجة:
 
@@ -501,6 +536,38 @@ PROTECTION
 
 ## 9. المرحلة السابعة: Shadow Counterfactual
 
+### 9.0 التكامل مع Phase 3 Shadow الحالي
+
+المشروع يحتوي بالفعل على Phase 3 Shadow، بما فيه Portfolio Brain وStrategy DNA وFinal Brain وGold Context. لا يتم إنشاء نظام Shadow بديل معزول.
+
+يظل لكل نظام سؤال مختلف:
+
+```text
+Phase 3:
+هل كانت طبقة Shadow ستوافق أو ترفض القرار؟
+
+Counterfactual:
+ماذا حدث للسعر لو تم استخدام خطة دخول/SL/TP افتراضية؟
+```
+
+يرتبط السجلان عبر:
+
+```text
+signal_id
+decision_snapshot_id
+build_id
+```
+
+ويجب أن يظهر في التقرير الفرق بين:
+
+```text
+shadow_decision
+counterfactual_market_result
+actual_execution_result
+```
+
+لا تدخل نتائج Phase 3 أو Counterfactual في `adaptive_learning` أو sizing الحي قبل اعتماد صريح ومرور اختبار خارج العينة.
+
 ### 9.1 سجل الفرصة
 
 ملف مقترح:
@@ -712,6 +779,16 @@ execution/multi_tp.py
 - توثيق المسارات الفعلية.
 - تثبيت العقود.
 - لا تغيير في التداول.
+- حصر Phase 3 Shadow الحالي ومصادر سجلاته.
+- تحديد كل caller حي لكل وحدة قبل اعتبارها جاهزة.
+- تأجيل `account_scope.py` حتى يثبت اتصاله بالمسار الحالي.
+
+### Phase 0.1: Safety gate hardening
+
+- إصلاح `kill-switch` من fail-open إلى fail-closed.
+- جعل فشل `risk authority` أو SL validation ينتج `SAFE_REJECT`.
+- إضافة regression tests للـ exception paths.
+- تشغيل اختبار live-path smoke يثبت أن أمر التنفيذ لا يصل إلى `order_send` بعد فشل الحماية.
 
 ### Phase 1: Contracts and lifecycle ledger
 
@@ -723,7 +800,8 @@ execution/multi_tp.py
 
 - تمرير كل الاستراتيجيات عبر القرار الموحد.
 - نقل risk approval بعد حساب الخطر الفعلي.
-- تحويل حماية الأخطاء الأساسية إلى fail-closed.
+- توثيق أن Phase 3 استشاري ولا يملك صلاحية تنفيذ.
+- التأكد أن القرار النهائي الواحد يفسر سبب الرفض بدل ظهور `EXECUTE` ثم `KILL_SWITCH_BLOCK`.
 
 ### Phase 3: Single SL/TP finalization
 
@@ -739,6 +817,7 @@ execution/multi_tp.py
 
 ### Phase 5: Shadow opportunities
 
+- دمج السجل مع Phase 3 الحالي عبر `signal_id` و`decision_snapshot_id` و`build_id`، لا إنشاء Shadow pipeline منفصل.
 - تسجيل الفرص المرفوضة.
 - حساب MFE/MAE وTP1/TP2 الافتراضيين.
 - بناء Opportunity Cost report.
@@ -776,6 +855,8 @@ execution/multi_tp.py
 - عدم تجاوز الحد اليومي أو portfolio exposure.
 - retry لا يتجاوز hard cap.
 - فشل risk component يؤدي إلى `SAFE_REJECT`.
+- exception داخل kill-switch يؤدي إلى `SAFE_REJECT` ولا يصل إلى `order_send`.
+- ظهور سبب نهائي واحد للرفض، دون تعارض بين `Final Decision` و`KILL_SWITCH_BLOCK`.
 
 ### اختبارات SL/TP
 
@@ -797,6 +878,14 @@ execution/multi_tp.py
 - Shadow result لا يكتب في trades.csv.
 - MAE/MFE محسوبان مع السبريد وترتيب SL/TP.
 - الصفقة التاريخية لا تعاد معالجتها كصفقة جديدة.
+- Phase 3 decision وCounterfactual result مرتبطان بنفس `signal_id` و`decision_snapshot_id`.
+
+### اختبارات اتصال المسار الحي
+
+- كل وحدة جديدة لها caller حي معروف.
+- runtime log يثبت استدعاء الوحدة في المسار المتوقع.
+- لا توجد وحدة جديدة غير موصولة يتم احتسابها كأنها مفعلة.
+- كل Phase يمر بـ smoke test مستقل قبل الانتقال إلى المرحلة التالية.
 
 ### اختبارات المقارنة
 
@@ -850,6 +939,7 @@ Profit Factor > 1.1
 
 ```text
 Contracts
+-> Safety Gate Hardening
 -> Unified Authority
 -> Risk Contract
 -> Single SLTP Finalizer
