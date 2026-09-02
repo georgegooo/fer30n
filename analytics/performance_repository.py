@@ -27,7 +27,7 @@ from analytics.truth_layer import (
     breakdown_by_session,
     breakdown_by_regime,
 )
-from core.settings import PHASE2_RUNTIME_INFLUENCE
+from core.settings import PHASE2_RUNTIME_INFLUENCE, BUILD_ID
 
 # Hard guard: if someone accidentally sets this True, blow up early.
 assert not PHASE2_RUNTIME_INFLUENCE, (
@@ -41,14 +41,19 @@ assert not PHASE2_RUNTIME_INFLUENCE, (
 # =============================================================================
 
 def get_all_trades() -> List[TradeRecord]:
-    """Return all closed trades from the Truth Layer."""
+    """Return only current-build trades for active analytics consumers."""
+    return filter_trades(load_all_trades(), build_id=BUILD_ID)
+
+
+def get_all_trades_including_legacy() -> List[TradeRecord]:
+    """Return the complete archive explicitly for historical audit reports."""
     return load_all_trades()
 
 
 def get_overall_metrics(trades: Optional[List[TradeRecord]] = None) -> Metrics:
     """Overall portfolio metrics across all trades."""
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return compute_metrics(trades)
 
 
@@ -57,7 +62,7 @@ def get_session_breakdown(
 ) -> Dict[str, Metrics]:
     """Per-session metrics keyed by session name (upper-case)."""
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return breakdown_by_session(trades)
 
 
@@ -66,7 +71,7 @@ def get_regime_breakdown(
 ) -> Dict[str, Metrics]:
     """Per-regime metrics keyed by regime name (upper-case)."""
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return breakdown_by_regime(trades)
 
 
@@ -75,7 +80,7 @@ def get_strategy_breakdown(
 ) -> Dict[str, Metrics]:
     """Per-strategy metrics keyed by strategy name (upper-case)."""
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return breakdown_by_strategy(trades)
 
 
@@ -84,7 +89,7 @@ def get_trades_for_session(
     trades: Optional[List[TradeRecord]] = None,
 ) -> List[TradeRecord]:
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return filter_trades(trades, session=session)
 
 
@@ -93,7 +98,7 @@ def get_trades_for_regime(
     trades: Optional[List[TradeRecord]] = None,
 ) -> List[TradeRecord]:
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return filter_trades(trades, regime=regime)
 
 
@@ -102,7 +107,7 @@ def get_trades_for_strategy(
     trades: Optional[List[TradeRecord]] = None,
 ) -> List[TradeRecord]:
     if trades is None:
-        trades = load_all_trades()
+        trades = get_all_trades()
     return filter_trades(trades, strategy=strategy)
 
 

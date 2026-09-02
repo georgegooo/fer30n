@@ -30,24 +30,24 @@ class ContextMemory:
     # KEY BUILDER
     # =========================================
 
-    def _key(self, session, signal, regime, atr):
+    def _key(self, session, signal, regime, atr, strategy="UNKNOWN"):
         bucket = (
             "low"  if atr < 5  else
             "high" if atr > 12 else
             "mid"
         )
-        return f"{session}|{signal}|{regime}|{bucket}"
+        return f"{str(strategy or 'UNKNOWN').upper()}|{session}|{signal}|{regime}|{bucket}"
 
     # =========================================
     # GET SCORE ADJUSTMENT (-10 → +10)
     # =========================================
 
-    def get_score(self, session, signal, regime, atr):
+    def get_score(self, session, signal, regime, atr, strategy="UNKNOWN"):
         """
         يعيد تعديل النقاط بناءً على الأداء التاريخي.
         القيمة: -10 إلى +10 (تُضاف لـ quality_score)
         """
-        key   = self._key(session, signal, regime, atr)
+        key   = self._key(session, signal, regime, atr, strategy)
         entry = self._data.get(key)
 
         if not entry:
@@ -85,12 +85,12 @@ class ContextMemory:
     # UPDATE AFTER TRADE CLOSE
     # =========================================
 
-    def update(self, session, signal, regime, atr, result):
+    def update(self, session, signal, regime, atr, result, strategy="UNKNOWN"):
         """
         يُستدعى عند إغلاق صفقة لتحديث السياق.
         result: "WIN" | "LOSS"
         """
-        key = self._key(session, signal, regime, atr)
+        key = self._key(session, signal, regime, atr, strategy)
 
         if key not in self._data:
             self._data[key] = {"wins": 0, "losses": 0}

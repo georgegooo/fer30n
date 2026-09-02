@@ -26,6 +26,7 @@ class ContextualMemory:
         execution_quality: float,
         outcome: str,
         setup_type: str,
+        strategy: str = "UNKNOWN",
         notes: str = "",
     ) -> Dict[str, Any]:
         episode = {
@@ -38,6 +39,7 @@ class ContextualMemory:
             "execution_quality": round(float(execution_quality), 3),
             "outcome": (outcome or "UNKNOWN").upper(),
             "setup_type": (setup_type or "UNKNOWN").upper(),
+            "strategy": (strategy or "UNKNOWN").upper(),
             "notes": notes,
         }
         self.episodes.append(episode)
@@ -53,6 +55,8 @@ class ContextualMemory:
         session: str,
         recovery_state: str,
         execution_quality: float,
+        setup_type: str = "UNKNOWN",
+        strategy: str = "UNKNOWN",
     ) -> Dict[str, Any]:
         if not self.episodes:
             return {"score": 0.0, "matched_episodes": []}
@@ -65,6 +69,8 @@ class ContextualMemory:
             "session": (session or "UNKNOWN").upper(),
             "recovery_state": (recovery_state or "NONE").upper(),
             "execution_quality": round(float(execution_quality), 3),
+            "setup_type": (setup_type or "UNKNOWN").upper(),
+            "strategy": (strategy or "UNKNOWN").upper(),
         }
 
         scored = []
@@ -79,6 +85,10 @@ class ContextualMemory:
             if episode.get("liquidity_structure") == query["liquidity_structure"]:
                 score += 0.15
             if episode.get("session") == query["session"]:
+                score += 0.10
+            if episode.get("setup_type") == query["setup_type"]:
+                score += 0.10
+            if episode.get("strategy") == query["strategy"]:
                 score += 0.10
             if episode.get("recovery_state") == query["recovery_state"]:
                 score += 0.05

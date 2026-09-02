@@ -41,6 +41,8 @@ class MetaAIOrchestrator:
         candle_score: float = 0.0,
         liquidity_bias: str = "NEUTRAL",
         structure_bias: str = "NEUTRAL",
+        strategy: str = "UNKNOWN",
+        setup_type: str = "UNKNOWN",
     ) -> Dict[str, Any]:
 
         # =========================================================
@@ -252,6 +254,8 @@ class MetaAIOrchestrator:
             session=session,
             recovery_state=recovery,
             execution_quality=execution_quality,
+            strategy=strategy,
+            setup_type=setup_type,
         )
 
         # =========================================================

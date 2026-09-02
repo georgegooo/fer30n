@@ -175,32 +175,32 @@ def _compute_approval_score(inp: FinalBrainInput) -> float:
     # 1) جودة الإعداد الأساسية (40% من الوزن)
     quality_contribution = float(inp.quality_score or 0) * 0.40
     score += quality_contribution
-    reasons.append(f"Quality={inp.quality_score:.1f} → +{quality_contribution:.1f}")
+    reasons.append(f"Quality={float(inp.quality_score or 0):.1f} → +{quality_contribution:.1f}")
 
     # 2) الثقة (25% من الوزن)
     confidence_contribution = float(inp.confidence_pct or 0) * 0.25
     score += confidence_contribution
-    reasons.append(f"Confidence={inp.confidence_pct:.1f} → +{confidence_contribution:.1f}")
+    reasons.append(f"Confidence={float(inp.confidence_pct or 0):.1f} → +{confidence_contribution:.1f}")
 
     # 3) Portfolio Brain (15% من الوزن)
     portfolio_contribution = float(inp.portfolio_brain_score or 50) * 0.15
     score += portfolio_contribution
-    reasons.append(f"PortfolioBrain={inp.portfolio_brain_score:.1f} → +{portfolio_contribution:.1f}")
+    reasons.append(f"PortfolioBrain={float(inp.portfolio_brain_score or 50):.1f} → +{portfolio_contribution:.1f}")
 
     # 4) Gold Context (10% من الوزن)
     gold_contribution = float(inp.gold_context_score or 50) * 0.10
     score += gold_contribution
-    reasons.append(f"GoldContext={inp.gold_context_score:.1f} → +{gold_contribution:.1f}")
+    reasons.append(f"GoldContext={float(inp.gold_context_score or 50):.1f} → +{gold_contribution:.1f}")
 
     # 5) ML Health (5% من الوزن)
     ml_contribution = float(inp.ml_health_score or 50) * 0.05
     score += ml_contribution
-    reasons.append(f"MLHealth={inp.ml_health_score:.1f} → +{ml_contribution:.1f}")
+    reasons.append(f"MLHealth={float(inp.ml_health_score or 50):.1f} → +{ml_contribution:.1f}")
 
     # 6) Strategy DNA Rank (5% من الوزن)
     dna_contribution = float(inp.strategy_dna_rank or 50) * 0.05
     score += dna_contribution
-    reasons.append(f"StrategyDNA={inp.strategy_dna_rank:.1f} → +{dna_contribution:.1f}")
+    reasons.append(f"StrategyDNA={float(inp.strategy_dna_rank or 50):.1f} → +{dna_contribution:.1f}")
 
     return min(100.0, max(0.0, score))
 

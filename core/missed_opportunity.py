@@ -120,6 +120,8 @@ def record_rejection(
     entry_price=0.0,
     verdict="REJECT",
     rejection_reason="FINAL_BRAIN",
+    entry_timing="UNKNOWN",
+    sl_diagnostic="UNKNOWN",
 ):
     """Store a rejected/WAIT setup for later evaluation."""
     if not V7_MISSED_OPPORTUNITY_ENABLED:
@@ -141,6 +143,8 @@ def record_rejection(
         "entry_price": round(float(entry_price or 0), 2),
         "verdict": verdict,
         "rejection_reason": str(rejection_reason or "FINAL_BRAIN").upper(),
+        "entry_timing": str(entry_timing or "UNKNOWN").upper(),
+        "sl_diagnostic": str(sl_diagnostic or "UNKNOWN").upper(),
         "evaluated": False,
     }
 
