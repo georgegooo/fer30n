@@ -1,28 +1,28 @@
 # Certification Status
 
-- Total closed trades: **0**
-- Bot trades: **0**
+- Total closed trades: **30**
+- Bot trades: **30**
 - Manual trades: **0**
 
 ## Bot performance
 
-- Win Rate: **0.0%**
-- Profit Factor: **0.0**
-- Max Drawdown: **0.0**
-- Expectancy: **0.0**
-- Recovery Factor: **0.0**
-- Sharpe Ratio: **0.0**
-- Net Profit: **0**
+- Win Rate: **53.33%**
+- Profit Factor: **0.641**
+- Max Drawdown: **289.63**
+- Expectancy: **-4.697**
+- Recovery Factor: **-0.487**
+- Sharpe Ratio: **-0.183**
+- Net Profit: **-140.91**
 
 ## Account total
 
-- Win Rate: **0.0%**
-- Profit Factor: **0.0**
-- Max Drawdown: **0.0**
-- Expectancy: **0.0**
-- Recovery Factor: **0.0**
-- Sharpe Ratio: **0.0**
-- Net Profit: **0**
+- Win Rate: **53.33%**
+- Profit Factor: **0.641**
+- Max Drawdown: **289.63**
+- Expectancy: **-4.697**
+- Recovery Factor: **-0.487**
+- Sharpe Ratio: **-0.183**
+- Net Profit: **-140.91**
 
 ## Levels
 
@@ -30,22 +30,22 @@
 
 ### 100 Trade Certification
 
-- Progress: **0 / 100** (0.0%)
+- Progress: **30 / 100** (30.0%)
 - Completed: **NO**
-- Win Rate: **0.0%**
-- Profit Factor: **0.0**
-- Max Drawdown: **0.0**
-- Expectancy: **0.0**
-- Recovery Factor: **0.0**
-- Sharpe Ratio: **0.0**
+- Win Rate: **53.33%**
+- Profit Factor: **0.641**
+- Max Drawdown: **289.63**
+- Expectancy: **-4.697**
+- Recovery Factor: **-0.487**
+- Sharpe Ratio: **-0.183**
 
 ### 200 Trade Certification
 
-- Progress: **0 / 200** (0.0%)
+- Progress: **30 / 200** (15.0%)
 - Completed: **NO**
-- Win Rate: **0.0%**
-- Profit Factor: **0.0**
-- Max Drawdown: **0.0**
-- Expectancy: **0.0**
-- Recovery Factor: **0.0**
-- Sharpe Ratio: **0.0**
+- Win Rate: **53.33%**
+- Profit Factor: **0.641**
+- Max Drawdown: **289.63**
+- Expectancy: **-4.697**
+- Recovery Factor: **-0.487**
+- Sharpe Ratio: **-0.183**

@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import threading
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -224,6 +225,7 @@ _last_analysis_time = 0.0
 # =============================================================================
 _last_trade_time: dict = {}  # strategy -> unix timestamp of last opened trade
 _logged_exit_actions: set[tuple[int, str, str]] = set()
+_off_hours_lock = threading.RLock()
 
 
 def _cooldown_active_for(strategy: str) -> bool:

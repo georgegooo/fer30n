@@ -1,87 +1,15 @@
 {
   "version": "phase3.0",
-  "total_predictions": 710,
+  "total_predictions": 719,
   "total_resolved": 46,
   "correct_predictions": 44,
   "last_health_score": 50.0,
   "last_drift_magnitude": 0.0,
   "drift_alerts_count": 0,
   "retrain_recommendations": 0,
-  "last_check": 1788370481.8354058,
+  "last_check": 1788371102.4335408,
   "baseline_accuracy": null,
   "prediction_history": [
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788360736.341451
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788360797.593417
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788360858.2422602
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788361519.2741401
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788361579.922745
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788361640.5469868
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788361701.2299626
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788361761.8370364
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1788361822.5810084
-    },
     {
       "prediction_score": 50.0,
       "actual_outcome": null,
@@ -1609,6 +1537,78 @@
       "session": "NEWYORK",
       "regime": "TRENDING",
       "timestamp": 1788370481.7851744
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370542.6156485
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370603.4609106
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370724.2326937
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370784.873986
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370845.5480716
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370906.097132
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788370966.8410068
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788371027.4324994
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "TRENDING",
+      "timestamp": 1788371102.1522276
     }
   ]
 }

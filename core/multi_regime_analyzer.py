@@ -81,7 +81,7 @@ class MultiDimensionalRegimeAnalyzer:
         Args:
             rates_data: بيانات الأسعار (OHLCV)
         """
-        self.rates = rates_data or []
+        self.rates = list(rates_data) if rates_data is not None else []
         
         # معاملات التحليل
         self.trend_periods = [20, 50]  # EMA periods

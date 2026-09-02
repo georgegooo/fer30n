@@ -7,38 +7,38 @@
     "Recovery Factor",
     "Sharpe Ratio"
   ],
-  "closed_trade_count": 0,
-  "bot_trade_count": 0,
+  "closed_trade_count": 30,
+  "bot_trade_count": 30,
   "manual_trade_count": 0,
   "overall_metrics": {
-    "total_trades": 0,
-    "win_rate": 0.0,
-    "profit_factor": 0.0,
-    "max_drawdown": 0.0,
-    "expectancy": 0.0,
-    "recovery_factor": 0.0,
-    "sharpe_ratio": 0.0,
-    "net_profit": 0
+    "total_trades": 30,
+    "win_rate": 53.33,
+    "profit_factor": 0.641,
+    "max_drawdown": 289.63,
+    "expectancy": -4.697,
+    "recovery_factor": -0.487,
+    "sharpe_ratio": -0.183,
+    "net_profit": -140.91
   },
   "account_metrics": {
-    "total_trades": 0,
-    "win_rate": 0.0,
-    "profit_factor": 0.0,
-    "max_drawdown": 0.0,
-    "expectancy": 0.0,
-    "recovery_factor": 0.0,
-    "sharpe_ratio": 0.0,
-    "net_profit": 0
+    "total_trades": 30,
+    "win_rate": 53.33,
+    "profit_factor": 0.641,
+    "max_drawdown": 289.63,
+    "expectancy": -4.697,
+    "recovery_factor": -0.487,
+    "sharpe_ratio": -0.183,
+    "net_profit": -140.91
   },
   "bot_metrics": {
-    "total_trades": 0,
-    "win_rate": 0.0,
-    "profit_factor": 0.0,
-    "max_drawdown": 0.0,
-    "expectancy": 0.0,
-    "recovery_factor": 0.0,
-    "sharpe_ratio": 0.0,
-    "net_profit": 0
+    "total_trades": 30,
+    "win_rate": 53.33,
+    "profit_factor": 0.641,
+    "max_drawdown": 289.63,
+    "expectancy": -4.697,
+    "recovery_factor": -0.487,
+    "sharpe_ratio": -0.183,
+    "net_profit": -140.91
   },
   "manual_metrics": {
     "total_trades": 0,
@@ -54,35 +54,35 @@
     {
       "name": "100 Trade Certification",
       "required_trades": 100,
-      "progress_trades": 0,
-      "progress_pct": 0.0,
+      "progress_trades": 30,
+      "progress_pct": 30.0,
       "completed": false,
       "metrics": {
-        "total_trades": 0,
-        "win_rate": 0.0,
-        "profit_factor": 0.0,
-        "max_drawdown": 0.0,
-        "expectancy": 0.0,
-        "recovery_factor": 0.0,
-        "sharpe_ratio": 0.0,
-        "net_profit": 0
+        "total_trades": 30,
+        "win_rate": 53.33,
+        "profit_factor": 0.641,
+        "max_drawdown": 289.63,
+        "expectancy": -4.697,
+        "recovery_factor": -0.487,
+        "sharpe_ratio": -0.183,
+        "net_profit": -140.91
       }
     },
     {
       "name": "200 Trade Certification",
       "required_trades": 200,
-      "progress_trades": 0,
-      "progress_pct": 0.0,
+      "progress_trades": 30,
+      "progress_pct": 15.0,
       "completed": false,
       "metrics": {
-        "total_trades": 0,
-        "win_rate": 0.0,
-        "profit_factor": 0.0,
-        "max_drawdown": 0.0,
-        "expectancy": 0.0,
-        "recovery_factor": 0.0,
-        "sharpe_ratio": 0.0,
-        "net_profit": 0
+        "total_trades": 30,
+        "win_rate": 53.33,
+        "profit_factor": 0.641,
+        "max_drawdown": 289.63,
+        "expectancy": -4.697,
+        "recovery_factor": -0.487,
+        "sharpe_ratio": -0.183,
+        "net_profit": -140.91
       }
     }
   ],
