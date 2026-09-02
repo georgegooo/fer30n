@@ -14,6 +14,12 @@ try:
 except Exception:
     _BUILD_ID = None
 
+try:
+    from core.account_scope import get_cached_account_id as _get_account_id
+except Exception:
+    def _get_account_id():
+        return ""
+
 DNA_FILE = "data/trade_dna.json"
 DNA_V2 = "data/trade_dna_v2.json"
 
@@ -150,6 +156,10 @@ def record_trade_dna(
         # [BRAIN-SCOPE] وسم كل سجل جديد بالبيلد عشان الفلترة تعتمد على
         # build_id مباشرة بدل الاستنتاج من التاريخ.
         "build_id": _BUILD_ID or "",
+        # [FER3ON-FIX-2026-08-28] نفس منطق build_id بالظبط، بس لمحور الحساب
+        # مش الكود — يحمي من اختلاط بيانات حساب MT5 قديم لو الحساب اتغيّر
+        # من غير ما البيلد يتغيّر (build_scope.py وحدها مش كفاية لده).
+        "account_id": _get_account_id(),
         "ticket": ticket,
         "strategy": strategy,
         "signal": signal,

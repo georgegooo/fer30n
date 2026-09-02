@@ -120,7 +120,8 @@ class AdaptiveSLTPEngineTests(unittest.TestCase):
         self.assertEqual(len(result["tp_tiers"]), 3)
         first_tier = result["tp_tiers"][0]
         self.assertEqual(first_tier["label"], "TP1")
-        self.assertEqual(first_tier["close_pct"], 0.5)
+        from core.settings import MULTI_TP_PROFILE
+        self.assertEqual(first_tier["close_pct"], MULTI_TP_PROFILE["SMC"]["tp1_pct"])
         self.assertGreater(first_tier["price"], 2000.0)
 
     def test_broker_stop_level_is_guard_not_primary_basis(self):

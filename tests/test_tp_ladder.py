@@ -22,14 +22,14 @@ class TestTplLadder(unittest.TestCase):
     def test_compute_tp_prices_buy_sell(self):
         result = compute_tp_prices(entry_price=2000.0, sl_distance=10.0, direction='BUY', strategy='SMC')
         self.assertTrue(result['enabled'])
-        self.assertEqual(result['levels'][0]['price'], 2010.0)
-        self.assertEqual(result['levels'][1]['price'], 2018.0)
-        self.assertEqual(result['levels'][2]['price'], 2026.0)
+        self.assertEqual(result['levels'][0]['price'], 2015.0)
+        self.assertEqual(result['levels'][1]['price'], 2025.0)
+        self.assertEqual(result['levels'][2]['price'], 2040.0)
 
         result = compute_tp_prices(entry_price=2000.0, sl_distance=10.0, direction='SELL', strategy='SMC')
-        self.assertEqual(result['levels'][0]['price'], 1990.0)
-        self.assertEqual(result['levels'][1]['price'], 1982.0)
-        self.assertEqual(result['levels'][2]['price'], 1974.0)
+        self.assertEqual(result['levels'][0]['price'], 1985.0)
+        self.assertEqual(result['levels'][1]['price'], 1975.0)
+        self.assertEqual(result['levels'][2]['price'], 1960.0)
 
     def test_compute_tp_prices_disabled(self):
         if not MULTI_TP_ENABLED:

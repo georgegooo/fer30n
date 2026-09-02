@@ -8,6 +8,7 @@ from core.data_integrity import (
     ensure_csv_schema,
 )
 from core.settings import BUILD_ID
+from core.account_scope import get_cached_account_id
 
 CSV_FILE = HISTORY_FILE
 
@@ -46,6 +47,7 @@ def log_trade(trade_number, signal, lot, profit, **extra):
         "profit": profit,
         "result": extra.get("result") or ("LOSS" if profit < 0 else "WIN"),
         "build_id": BUILD_ID,
+        "account_id": get_cached_account_id(),
         **extra,
     }
     append_csv_row(CSV_FILE, HISTORY_COLUMNS, row)

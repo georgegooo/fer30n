@@ -15,10 +15,11 @@ from core.data_integrity import (
     upsert_csv_row,
 )
 from core.risk_manager import register_loss, register_win
-from core.portfolio_risk_authority import record_trade_close
+from core.portfolio_risk_authority import record_trade_close, record_trade_partial_close
 from analytics.truth_layer import TradeRecord, append_trade
 from core.trade_identity import resolve_trade_identity
 from core.settings import BUILD_ID
+from core.account_scope import get_cached_account_id
 
 # =========================================
 # FILE
@@ -134,9 +135,15 @@ def sync_mt5_history():
         # before 2024-01-01, or opened by a different terminal/history not
         # covered by this history_deals_get() call).
         open_price_by_position = {}
+        open_volume_by_position = {}
+        closed_volume_by_position = {}
         for _d in deals:
             if getattr(_d, "entry", None) == 0:
                 open_price_by_position[_d.position_id] = _d.price
+                open_volume_by_position[_d.position_id] = (
+                    open_volume_by_position.get(_d.position_id, 0.0)
+                    + float(getattr(_d, "volume", 0.0) or 0.0)
+                )
 
         new_rows = []
         synced_history = 0
@@ -307,6 +314,7 @@ def sync_mt5_history():
                             "quality_score": 0,
                             "brain_score": 0,
                             "build_id": BUILD_ID,
+                            "account_id": get_cached_account_id(),
                         },
                     )
                 if ticket_str not in history_existing_tickets:
@@ -420,7 +428,25 @@ def sync_mt5_history():
                 # subsequent trade with PER_STRATEGY_MAX_OPEN_HIT forever,
                 # even with zero real open positions on the account.
                 try:
-                    record_trade_close(ticket=close_ticket, profit=round(float(deal.profit or 0), 4))
+                    position_id = getattr(deal, "position_id", None)
+                    close_volume = float(getattr(deal, "volume", 0.0) or 0.0)
+                    closed_volume_by_position[position_id] = (
+                        closed_volume_by_position.get(position_id, 0.0)
+                        + close_volume
+                    )
+                    opened_volume = open_volume_by_position.get(position_id, 0.0)
+                    is_partial = (
+                        opened_volume > 0.0
+                        and closed_volume_by_position[position_id] < opened_volume - 1e-9
+                    )
+                    if is_partial:
+                        record_trade_partial_close(
+                            ticket=close_ticket,
+                            volume_closed=close_volume,
+                            profit=round(float(deal.profit or 0), 4),
+                        )
+                    else:
+                        record_trade_close(ticket=close_ticket, profit=round(float(deal.profit or 0), 4))
                 except Exception as error:
                     print(f"⚠️ record_trade_close failed for ticket={deal.ticket}: {error}")
 

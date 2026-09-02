@@ -21,6 +21,7 @@
 from __future__ import annotations
 
 import time
+import threading
 from typing import Any, Dict, Optional
 
 from core.mt5_compat import MT5_AVAILABLE, mt5
@@ -70,11 +71,14 @@ from core.liquidity_intelligence import get_liquidity_bias
 # Shared per-strategy cooldown + daily-count state (separate from SMC's,
 # which lives in main.py — kept here so each runner is self-contained and
 # importable/testable without importing main.py).
+# THREAD SAFETY FIX #4: Protect _daily_count and _last_trade_time with lock
+# to prevent race conditions when SCALP/SWING/MICRO runners execute in parallel.
 # =============================================================================
 
 _last_trade_time: Dict[str, float] = {}
 _daily_count: Dict[str, int] = {}
 _daily_count_day: Optional[str] = None
+_runner_lock = threading.RLock()  # NEW: Reentrant lock for concurrent runners
 
 
 def _today_key() -> str:
@@ -83,6 +87,7 @@ def _today_key() -> str:
 
 
 def _reset_daily_if_needed() -> None:
+    """Reset daily counters if date changed. MUST be called under _runner_lock."""
     global _daily_count_day, _daily_count
     today = _today_key()
     if _daily_count_day != today:
@@ -91,19 +96,58 @@ def _reset_daily_if_needed() -> None:
 
 
 def _cooldown_active(strategy: str, cooldown_sec: float) -> bool:
-    last = _last_trade_time.get(strategy, 0.0)
-    return (time.time() - last) < cooldown_sec
+    """Check if strategy cooldown is still active. Thread-safe."""
+    with _runner_lock:  # NEW: Lock before reading shared state
+        last = _last_trade_time.get(strategy, 0.0)
+        return (time.time() - last) < cooldown_sec
 
 
 def _register_trade(strategy: str) -> None:
-    _reset_daily_if_needed()
-    _last_trade_time[strategy] = time.time()
-    _daily_count[strategy] = _daily_count.get(strategy, 0) + 1
+    """Record that a trade was opened for this strategy. Thread-safe."""
+    global _last_trade_time, _daily_count
+    with _runner_lock:  # NEW: Lock before modifying shared state
+        _reset_daily_if_needed()
+        _last_trade_time[strategy] = time.time()
+        _daily_count[strategy] = _daily_count.get(strategy, 0) + 1
 
 
 def _daily_count_for(strategy: str) -> int:
-    _reset_daily_if_needed()
-    return _daily_count.get(strategy, 0)
+    """Get current day's trade count for strategy. Thread-safe."""
+    with _runner_lock:  # NEW: Lock before reading shared state
+        _reset_daily_if_needed()
+        return _daily_count.get(strategy, 0)
+
+
+def _calculate_exec_grade(quality_score: float, strategy: str = 'SMC') -> str:
+    """
+    [FER3ON-FIX-2026-09-02] حساب exec_grade ديناميكياً
+    بدل من الثابت 'B' سابقاً
+    
+    الصيغة:
+      - A+/A: جودة عالية (> 75%)
+      - B+/B: جودة جيدة (55-75%)
+      - C+/C: جودة متوسطة (35-55%)
+      - D/F: جودة منخفضة (< 35%)
+    """
+    try:
+        quality = float(quality_score or 50)
+        
+        if quality > 85:
+            return 'A+'
+        elif quality > 75:
+            return 'A'
+        elif quality > 65:
+            return 'B+'
+        elif quality > 55:
+            return 'B'
+        elif quality > 45:
+            return 'C+'
+        elif quality > 35:
+            return 'C'
+        else:
+            return 'D'
+    except Exception:
+        return 'B'  # قيمة افتراضية آمنة
 
 
 def _build_order_request_generic(signal: str, lot: float, sl_dist: float, tp_dist: float, atr: float = None, strategy: str = 'SCALP'):
@@ -137,6 +181,8 @@ def _build_order_request_generic(signal: str, lot: float, sl_dist: float, tp_dis
         point=point,
         strategy=strategy,
         atr=atr,
+        market_regime=None,
+        confidence=1.0,
     )
     sl_dist = final['sl_dist']
     tp_dist = final['tp_dist']
@@ -187,7 +233,8 @@ def _build_order_request_generic(signal: str, lot: float, sl_dist: float, tp_dis
 def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist: float,
              risk_percent: float, quality_score: float, session: str, market_regime: str,
              atr: float, magic: int, rates=None, tp_tiers=None,
-             structure_analysis: dict = None, liquidity: dict = None):
+             structure_analysis: dict = None, liquidity: dict = None,
+             risk_decision=None):
     """Shared tail-end: build request, call execute_trade, record on success.
 
     V7 INTEGRATION (core/v7_integration.py — Execution Intelligence): يحسب
@@ -205,10 +252,19 @@ def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist:
     # of only being bounded by the (direction-blind) MAX_OPEN_TRADES count.
     # Checks LIVE MT5 positions on the symbol, so it is inherently
     # cross-strategy — a SCALP long and a SWING long both count together.
+    # [SAFETY-1]: positions_get() returning None means MT5 state unknown.
+    # Fail-closed: treat None as a hard block, never assume zero positions.
     # =========================================================================
     if mt5 is not None:
         try:
-            positions = mt5.positions_get(symbol=SYMBOL) or []
+            positions = mt5.positions_get(symbol=SYMBOL)
+            # FER3ON FINAL [SAFETY-1]: positions_get() returned None means MT5 state is unknown.
+            # This is not "safe to proceed" — it's "data unavailable, must not trade".
+            # Fail-closed: treat None as a hard block, never assume zero positions.
+            if positions is None:
+                print(f'🛑 {strategy} POSITION_CHECK_FAILED | MT5 state unknown, blocking trade (fail-closed)')
+                return {'opened': False, 'reason': 'POSITION_CHECK_FAILED'}
+            
             same_direction_count = 0
             for pos in positions:
                 if signal == 'BUY' and pos.type == mt5.POSITION_TYPE_BUY:
@@ -222,7 +278,8 @@ def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist:
                 )
                 return {'opened': False, 'reason': 'MAX_SAME_DIRECTION_REACHED'}
         except Exception as exc:
-            print(f'⚠️ SAME_DIRECTION_CHECK_FAILED (non-fatal, allowing): {exc}')
+            print(f'🛑 {strategy} SAME_DIRECTION_CHECK_FAILED (fail-closed): {exc}')
+            return {'opened': False, 'reason': 'POSITION_STATE_UNAVAILABLE'}
 
     # V7: velocity bonus — fail-safe كامل، لا يمنع الصفقة أبدًا عند أي خطأ
     v7_confidence_bonus = 0.0
@@ -259,6 +316,14 @@ def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist:
         _liq_bias = liquidity.get('bias')
         _liq_map_dir = 'UP' if _liq_bias == 'BUY' else 'DOWN' if _liq_bias == 'SELL' else 'NEUTRAL'
 
+    # HIGH FIX #6: Validate SL/TP before building request
+    if sl_dist is None or float(sl_dist or 0) <= 0:
+        print(f'🛑 {strategy} SL/TP_VALIDATION_FAILED | Invalid SL distance: {sl_dist}')
+        return {'opened': False, 'reason': 'INVALID_SL_DISTANCE'}
+    if tp_dist is None or float(tp_dist or 0) <= 0:
+        print(f'🛑 {strategy} SL/TP_VALIDATION_FAILED | Invalid TP distance: {tp_dist}')
+        return {'opened': False, 'reason': 'INVALID_TP_DISTANCE'}
+
     request = _build_order_request_generic(signal, lot, sl_dist, tp_dist, atr=atr, strategy=strategy)
     result = execute_trade(
         request=request,
@@ -268,8 +333,8 @@ def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist:
         sl_dist=sl_dist,
         tp_dist=tp_dist,
         rr_ratio=round(tp_dist / sl_dist, 2) if sl_dist else 0,
-        risk_percent=risk_percent,
-        exec_grade='B',
+        risk_percent=float(getattr(risk_decision, 'final_risk_percent', risk_percent) or risk_percent),
+        exec_grade=_calculate_exec_grade(quality_score, strategy),
         final_brain={'final_score': quality_score},
         quality_score=quality_score,
         confidence={'pct': quality_score},
@@ -318,23 +383,52 @@ def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist:
     return {'opened': False, 'reason': 'EXECUTION_FAILED'}
 
 
-def _account_balance() -> float:
+def _account_balance() -> float | None:
     from core.settings import BASE_ACCOUNT_BALANCE
     try:
         account = mt5.account_info() if mt5 is not None else None
         bal = float(getattr(account, 'balance', 0) or 0)
-        return bal if bal > 0 else float(BASE_ACCOUNT_BALANCE)
+        return bal if bal > 0 else None
     except Exception:
-        return float(BASE_ACCOUNT_BALANCE)
+        return None
 
 
 def _position_counts(strategy_key: str) -> tuple:
+    """Return (current_count, total_count) for position evaluation.
+    
+    [SAFETY-1]: If positions_get() fails or returns None, this returns (0,0)
+    which allows the position limit check to pass, but the trade will be
+    blocked downstream by POSITION_CHECK_FAILED in the _execute() path.
+    """
     try:
         positions = mt5.positions_get(symbol=SYMBOL) if mt5 is not None else []
         positions = positions or []
         return len(positions), len(positions)
     except Exception:
-        return 0, 0
+        return None, None
+
+
+def _allocator_gate(*, strategy: str, quality_score: float,
+                    confidence_pct: float, market_regime: str,
+                    session: str) -> tuple[bool, float, str]:
+    """Apply the opportunity allocator independently per strategy."""
+    try:
+        from core.opportunity_allocator import rank_opportunity
+        rank = rank_opportunity(
+            quality_score=float(quality_score),
+            confidence_pct=float(confidence_pct),
+            market_regime=market_regime,
+            session=session,
+            smc_strength=0.0,
+            mtf_strength=0,
+            execution_grade='B',
+            daily_bias_alignment=False,
+        )
+        if rank.should_reject:
+            return False, 0.0, f'ALLOCATOR_REJECT:{rank.reasoning}'
+        return True, float(rank.risk_adjustment), rank.reasoning
+    except Exception as exc:
+        return False, 0.0, f'ALLOCATOR_CHECK_FAILED:{type(exc).__name__}'
 
 
 # =============================================================================
@@ -395,12 +489,24 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
     sl_dist = adaptive['sl_distance']
     tp_dist = adaptive['tp_distance']
 
+    allowed, allocator_multiplier, allocator_reason = _allocator_gate(
+        strategy='SCALP', quality_score=quality_score, confidence_pct=quality_score,
+        market_regime=market_regime, session=session,
+    )
+    if not allowed:
+        return {'opened': False, 'reason': allocator_reason}
+    risk_percent *= allocator_multiplier
+
     current_positions, total_positions = _position_counts('SCALP')
+    if current_positions is None or total_positions is None:
+        return {'opened': False, 'reason': 'POSITION_STATE_UNAVAILABLE'}
     pos_limit = evaluate_position_limits(strategy='SCALP', current_positions=current_positions, total_positions=total_positions)
     if not pos_limit.get('allowed', True):
         return {'opened': False, 'reason': pos_limit.get('reason')}
 
     balance = _account_balance()
+    if balance is None:
+        return {'opened': False, 'reason': 'ACCOUNT_BALANCE_UNAVAILABLE'}
     loss_limits = get_loss_limits_status(balance=balance)
     if loss_limits.get('daily_used', 0) >= loss_limits.get('daily_limit', 0):
         return {'opened': False, 'reason': 'DAILY_LOSS_CAPPED'}
@@ -421,7 +527,7 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
 
     lot, _, _ = calculate_smart_lot(
         balance=balance,
-        risk_percent=risk_percent,
+        risk_percent=float(getattr(risk_decision, 'final_risk_percent', risk_percent) or risk_percent),
         sl_dist=sl_dist,
         symbol=SYMBOL,
         quality_score=quality_score,
@@ -466,6 +572,7 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
         risk_percent=risk_percent, quality_score=quality_score, session=session,
         market_regime=market_regime, atr=atr, magic=SCALP_MAGIC, rates=rates,
         tp_tiers=tp_tiers, structure_analysis=structure_analysis,
+        risk_decision=risk_decision,
     )
 
 
@@ -523,7 +630,17 @@ def run_swing_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
     sl_dist = adaptive['sl_distance']
     tp_dist = adaptive['tp_distance']
 
+    allowed, allocator_multiplier, allocator_reason = _allocator_gate(
+        strategy='SWING', quality_score=quality_score, confidence_pct=quality_score,
+        market_regime=market_regime, session=session,
+    )
+    if not allowed:
+        return {'opened': False, 'reason': allocator_reason}
+    risk_percent = BASE_RISK_SWING * allocator_multiplier
+
     current_positions, total_positions = _position_counts('SWING')
+    if current_positions is None or total_positions is None:
+        return {'opened': False, 'reason': 'POSITION_STATE_UNAVAILABLE'}
     # AUDIT FIX: was strategy='DAILY' -- a copy-paste leftover that checked
     # SWING's own position count against DAILY's limit instead of SWING's
     # (compare run_scalp_cycle/run_micro_cycle above, which correctly pass
@@ -534,11 +651,11 @@ def run_swing_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
         return {'opened': False, 'reason': pos_limit.get('reason')}
 
     balance = _account_balance()
+    if balance is None:
+        return {'opened': False, 'reason': 'ACCOUNT_BALANCE_UNAVAILABLE'}
     loss_limits = get_loss_limits_status(balance=balance)
     if loss_limits.get('daily_used', 0) >= loss_limits.get('daily_limit', 0):
         return {'opened': False, 'reason': 'DAILY_LOSS_CAPPED'}
-
-    risk_percent = BASE_RISK_SWING
 
     risk_decision = evaluate_risk(
         strategy='SWING',
@@ -556,7 +673,7 @@ def run_swing_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
 
     lot, _, _ = calculate_smart_lot(
         balance=balance,
-        risk_percent=risk_percent,
+        risk_percent=float(getattr(risk_decision, 'final_risk_percent', risk_percent) or risk_percent),
         sl_dist=sl_dist,
         symbol=SYMBOL,
         quality_score=quality_score,
@@ -597,6 +714,7 @@ def run_swing_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
         risk_percent=risk_percent, quality_score=quality_score, session=session,
         market_regime=market_regime, atr=atr, magic=SWING_MAGIC, rates=rates,
         tp_tiers=tp_tiers, structure_analysis=structure_analysis,
+        risk_decision=risk_decision,
     )
 
 
@@ -667,12 +785,25 @@ def run_micro_cycle(*, session: str, market_regime: str = 'UNKNOWN', confidence_
     sl_dist = adaptive['sl_distance']
     tp_dist = adaptive['tp_distance']
 
+    micro_quality = min(100.0, quality_score * 10.0)
+    allowed, allocator_multiplier, allocator_reason = _allocator_gate(
+        strategy='MICRO', quality_score=micro_quality,
+        confidence_pct=confidence_pct, market_regime=market_regime, session=session,
+    )
+    if not allowed:
+        return {'opened': False, 'reason': allocator_reason}
+    risk_percent = BASE_RISK_MICRO * allocator_multiplier
+
     current_positions, total_positions = _position_counts('MICRO')
+    if current_positions is None or total_positions is None:
+        return {'opened': False, 'reason': 'POSITION_STATE_UNAVAILABLE'}
     pos_limit = evaluate_position_limits(strategy='MICRO', current_positions=current_positions, total_positions=total_positions)
     if not pos_limit.get('allowed', True):
         return {'opened': False, 'reason': pos_limit.get('reason')}
 
     balance = _account_balance()
+    if balance is None:
+        return {'opened': False, 'reason': 'ACCOUNT_BALANCE_UNAVAILABLE'}
     loss_limits = get_loss_limits_status(balance=balance)
     if loss_limits.get('daily_used', 0) >= loss_limits.get('daily_limit', 0):
         return {'opened': False, 'reason': 'DAILY_LOSS_CAPPED'}
@@ -681,8 +812,6 @@ def run_micro_cycle(*, session: str, market_regime: str = 'UNKNOWN', confidence_
     # 0-9, see micro_trading_engine.py), not a 0-100 composite like
     # SCALP/SWING/SMC. Applying the same 40-85 adaptive_floor scale to it
     # would be a category error, so it's deliberately not gated here.
-    risk_percent = BASE_RISK_MICRO
-
     risk_decision = evaluate_risk(
         strategy='MICRO',
         direction=signal,
@@ -699,7 +828,7 @@ def run_micro_cycle(*, session: str, market_regime: str = 'UNKNOWN', confidence_
 
     lot, _, _ = calculate_smart_lot(
         balance=balance,
-        risk_percent=risk_percent,
+        risk_percent=float(getattr(risk_decision, 'final_risk_percent', risk_percent) or risk_percent),
         sl_dist=sl_dist,
         symbol=SYMBOL,
         quality_score=quality_score,
@@ -744,6 +873,7 @@ def run_micro_cycle(*, session: str, market_regime: str = 'UNKNOWN', confidence_
         risk_percent=risk_percent, quality_score=quality_score, session=session,
         market_regime=market_regime, atr=atr, magic=MICRO_MAGIC, rates=rates,
         tp_tiers=tp_tiers, structure_analysis=structure_analysis,
+        risk_decision=risk_decision,
     )
 
 

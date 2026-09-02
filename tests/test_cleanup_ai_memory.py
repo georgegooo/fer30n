@@ -6,20 +6,12 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "scripts" / "cleanup_ai_memory.py"
 
-# Minimal but schema-accurate row builder -- only the fields the script's
-# own triage logic reads are meaningful; the rest just need to exist so
-# DictWriter doesn't choke.
-COLUMNS = [
-    "date", "ticket", "strategy", "signal", "result", "profit", "atr",
-    "market_regime", "hour", "spread", "session", "quality_score",
-    "confidence_score", "confidence_pct", "exec_grade", "rr_ratio",
-    "choch_state", "choch_strength", "liq_map_score", "liq_map_dir",
-    "mtf_strength", "mtf_structural", "entry_price", "exit_price",
-    "sl_dist", "tp_dist", "tp_tiers", "magic", "volume", "brain_score",
-    "master_score", "dna_score", "history_score", "knowledge_score",
-    "news_score", "decision_reason", "conflict_report",
-    "master_breakdown", "decision_snapshot_id",
-]
+sys.path.insert(0, str(REPO_ROOT))
+from core.data_integrity import AI_MEMORY_COLUMNS as COLUMNS  # noqa: E402
+# [FER3ON-FIX-2026-08-28] كانت نسخة منفصلة مكررة يدويًا هنا (بالظبط الخطأ
+# اللي الاختبار ده بيحمي منه للسكريبت نفسه) — كل ما الscheme الحقيقي
+# يتغيّر (زي إضافة account_id) كانت بتقدّم من غير قصد. استوردناها من
+# المصدر الحقيقي عشان تتزامن تلقائيًا للأبد.
 
 
 def _row(ticket, result, exec_grade):
@@ -40,7 +32,8 @@ def _write_ai_memory(path: Path, rows):
 def _run(cwd, *args):
     return subprocess.run(
         [sys.executable, str(SCRIPT), *args],
-        cwd=str(cwd), capture_output=True, text=True, timeout=30,
+        cwd=str(cwd), capture_output=True, text=True, encoding="utf-8",
+        errors="replace", timeout=30,
     )
 
 

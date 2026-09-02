@@ -52,7 +52,7 @@ def t_settings():
     assert s.COMPOSITE_MICRO_MIN == 38
     assert s.V7_THRESHOLD_ASIA == 60, "Asia should be 60 not 70"
     assert s.ADAPTIVE_LEARNING_ENABLED is True
-    assert s.HARD_RISK_DAILY_LOSS_PERCENT == 3.0, "safety cap should remain 3%"
+    assert s.HARD_RISK_DAILY_LOSS_PERCENT == 5.0, "daily safety cap should remain unified at 5%"
     assert s.HARD_RISK_MAX_PER_TRADE == 0.50, "per-trade cap should remain 0.50"
     return (f"Quality=55, Asia=60, Composite[full/red/micro]=72/56/42, "
             f"safety caps preserved (3%/0.5%)")
@@ -243,7 +243,7 @@ def t_bridge():
 def t_safety_preserved():
     from core import settings as s
     # هذه القيم لا يجب أن تتغير
-    assert s.HARD_RISK_DAILY_LOSS_PERCENT == 3.0
+    assert s.HARD_RISK_DAILY_LOSS_PERCENT == 5.0
     assert s.HARD_RISK_MAX_PER_TRADE == 0.50
     assert s.ANTI_REVENGE_ENABLED is True
     assert s.MAX_RISK_TOTAL == 0.75

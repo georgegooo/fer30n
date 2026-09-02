@@ -28,7 +28,8 @@ def _write_fake_csv(path: Path, n=400, seed=1):
 def _run_gate(*extra_args):
     result = subprocess.run(
         [sys.executable, str(GATE_SCRIPT), *extra_args],
-        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO_ROOT), capture_output=True, text=True, encoding="utf-8",
+        errors="replace", timeout=60,
     )
     return result
 

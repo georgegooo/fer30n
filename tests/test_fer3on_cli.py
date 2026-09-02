@@ -8,7 +8,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 def _run_cli(*args):
     return subprocess.run(
         [sys.executable, "-m", "fer3on", *args],
-        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
+        cwd=str(REPO_ROOT), capture_output=True, text=True, encoding="utf-8",
+        errors="replace", timeout=60,
     )
 
 
@@ -65,7 +66,8 @@ def test_cleanup_memory_delegates(tmp_path):
     env = {**os.environ, "PYTHONPATH": str(REPO_ROOT)}
     result = subprocess.run(
         [sys.executable, "-m", "fer3on", "cleanup-memory"],
-        cwd=str(tmp_path), capture_output=True, text=True, timeout=30, env=env,
+        cwd=str(tmp_path), capture_output=True, text=True, encoding="utf-8",
+        errors="replace", timeout=30, env=env,
     )
     assert "تنظيف ai_memory.csv" in result.stdout
     assert "فارغ أصلًا" in result.stdout

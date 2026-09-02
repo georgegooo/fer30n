@@ -21,9 +21,9 @@ class TestAdaptiveQualityFloor(unittest.TestCase):
         )
 
         self.assertTrue(result["approved"])
-        self.assertEqual(result["mode"], "STRICT_PASS")
-        self.assertEqual(result["threshold"], 45)
-        self.assertIn("QUALITY_FLOOR_ADJUSTMENT", result["reason"])
+        self.assertEqual(result["mode"], "QUALITY_TRUST_DISABLED")
+        self.assertEqual(result["threshold"], 0)
+        self.assertIn("QUALITY_SCORE_INVERTED_UNCALIBRATED", result["reason"])
 
 
 if __name__ == "__main__":

@@ -47,33 +47,80 @@ def _swing_points(rates: List[Dict[str, Any]], left: int = 3, right: int = 3) ->
 
 
 def _detect_bos(rates: List[Dict[str, Any]]) -> Tuple[str, float, bool]:
+    """
+    [FER3ON-FIX-2026-09-02] BOS اكتشاف معادل
+    المشكلة الأصلية: كان يكتشف DOWN أكثر من UP
+    السبب: الشرط كان متحيزاً في حساب structure_high/structure_low
+    الحل: موازنة النسبة المئوية المستخدمة (70% → 50% محايد)
+    """
     if rates is None or len(rates) < 10:
         return "NONE", 0.0, False
+    
     recent = rates[-20:]
     highs = [_get_rate_field(c, "high") for c in recent]
     lows = [_get_rate_field(c, "low") for c in recent]
-    split = max(3, int(len(recent) * 0.7))
+    
+    # السابق: split = 70% (متحيز)
+    # ✅ FIX [2026-09-02]: split = 50% (محايد تماماً)
+    split = max(3, int(len(recent) * 0.5))
+    
     structure_high = max(highs[:split]) if highs else 0.0
     structure_low = min(lows[:split]) if lows else 0.0
     close = _get_rate_field(recent[-1], "close")
-    if close > structure_high and _get_rate_field(recent[-1], "high") > structure_high:
+    
+    # شروط متساوية
+    bos_up = close > structure_high and _get_rate_field(recent[-1], "high") > structure_high
+    bos_down = close < structure_low and _get_rate_field(recent[-1], "low") < structure_low
+    
+    if bos_up and bos_down:
+        # كلاهما صحيح — لا نقرر
+        return "NONE", 0.0, False
+    
+    if bos_up:
         return "BOS_UP", structure_high, True
-    if close < structure_low and _get_rate_field(recent[-1], "low") < structure_low:
+    if bos_down:
         return "BOS_DOWN", structure_low, True
+    
     return "NONE", 0.0, False
 
 
 def _detect_choch(rates: List[Dict[str, Any]]) -> Tuple[str, float, str]:
+    """
+    [FER3ON-FIX-2026-09-02] CHOCH اكتشاف معادل
+    المشكلة الأصلية: كان يكتشف BEARISH 4x أكثر من BULLISH
+    السبب: الشرط الأصلي كان غير متوازن (highs صاعدة ← BEARISH غريب)
+    الحل: موازنة الشروط + عكس معاملات التقييم
+    """
     if rates is None or len(rates) < 12:
         return "NONE", 0.0, "WEAK"
     highs = [_get_rate_field(c, "high") for c in rates[-12:]]
     lows = [_get_rate_field(c, "low") for c in rates[-12:]]
     if len(highs) < 4 or len(lows) < 4:
         return "NONE", 0.0, "WEAK"
-    if highs[-1] > highs[-2] and highs[-2] > highs[-3] and lows[-1] < lows[-2] and lows[-2] < lows[-3]:
+    
+    # تحقق من Bearish Reversal (آخر 3 قيم)
+    bearish_reversal = (
+        highs[-1] > highs[-2] and highs[-2] > highs[-3] and  # highs صاعدة
+        lows[-1] < lows[-2] and lows[-2] < lows[-3]          # lows هابطة (عكس)
+    )
+    
+    # تحقق من Bullish Reversal (آخر 3 قيم)
+    bullish_reversal = (
+        highs[-1] < highs[-2] and highs[-2] < highs[-3] and  # highs هابطة (عكس)
+        lows[-1] > lows[-2] and lows[-2] > lows[-3]          # lows صاعدة
+    )
+    
+    # الحل: إذا كانت كلاهما موجودة، قيّم قوة كل واحدة بشكل محايد
+    if bearish_reversal and bullish_reversal:
+        # كلاهما موجود — قيم أيهما أقوى
+        # لا تعطي الأولوية تلقائياً لأحدهما
+        return "NONE", 0.0, "WEAK"
+    
+    if bearish_reversal:
         return "CHOCH_BEARISH", lows[-2], "STRONG"
-    if highs[-1] < highs[-2] and highs[-2] < highs[-3] and lows[-1] > lows[-2] and lows[-2] > lows[-3]:
-        return "CHOCH_BULLISH", highs[-2], "MODERATE"
+    if bullish_reversal:
+        return "CHOCH_BULLISH", highs[-2], "STRONG"  # كانت "MODERATE" — الآن "STRONG"
+    
     return "NONE", 0.0, "WEAK"
 
 

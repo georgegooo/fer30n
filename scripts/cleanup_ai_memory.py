@@ -35,6 +35,11 @@ import shutil
 import sys
 from datetime import datetime, timezone
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core.data_integrity import AI_MEMORY_COLUMNS, AI_MEMORY_FILE  # noqa: E402

@@ -34,7 +34,9 @@ def process_tp_ladders(symbol: str) -> None:
         if tick is None:
             return
 
-        positions = mt5.positions_get(symbol=symbol) or []
+        positions = mt5.positions_get(symbol=symbol)
+        if positions is None:
+            raise RuntimeError('POSITION_STATE_UNAVAILABLE')
         if not positions:
             return
 

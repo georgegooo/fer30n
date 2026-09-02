@@ -2,11 +2,15 @@ import os
 from typing import Dict, Any
 
 from core.data_integrity import HISTORY_COLUMNS, HISTORY_FILE, read_csv_records
-from core.settings import ANALYTICS_DIR
+from core.settings import ANALYTICS_DIR, BUILD_ID
 
 
 def analyze_trades():
-    trades = read_csv_records(HISTORY_FILE, HISTORY_COLUMNS)
+    raw_trades = read_csv_records(HISTORY_FILE, HISTORY_COLUMNS)
+    trades = [
+        row for row in raw_trades
+        if str(row.get("build_id", "") or "").strip() == str(BUILD_ID)
+    ]
     if not trades:
         return "📈 No trades recorded yet"
 

@@ -14,6 +14,16 @@ import os, json, csv
 from datetime import datetime, timezone
 from testing.statistics import full_stats_analysis, format_stats_report
 
+# =========================================
+# PHASE 5 — OPPORTUNITY ALLOCATOR INTEGRATION
+# =========================================
+try:
+    from core.opportunity_allocator import rank_opportunity
+    _ALLOCATOR_AVAILABLE = True
+except Exception as _alloc_err:
+    _ALLOCATOR_AVAILABLE = False
+    print(f"⚠️ Opportunity allocator import warning: {_alloc_err}")
+
 BACKTEST_DIR = "data/backtests"
 
 
@@ -50,7 +60,7 @@ def _generate_backtest_signal(rates, idx, atr_mult_sl=1.2, atr_mult_tp=3.0):
       - RSI extremes (للتوقيت)
       - ATR-based SL/TP
 
-    يُعيد: signal, entry, sl, tp أو None
+    يُعيد: signal, entry, sl, tp, quality, confidence أو None
     """
     if idx < 55: return None
 
@@ -82,19 +92,63 @@ def _generate_backtest_signal(rates, idx, atr_mult_sl=1.2, atr_mult_tp=3.0):
 
     price = closes[-1]
 
+    # =========================================================
+    # PHASE 5 — QUALITY & CONFIDENCE CALCULATION
+    # (for opportunity allocator ranking)
+    # =========================================================
+    # Quality: how aligned is price with the trend
+    ema_distance = abs(price - e21) / atr if atr > 0 else 0
+    quality_from_trend = min(100, max(0, 100 - ema_distance * 5))  # closer = better
+    
+    # RSI as confidence signal
+    if rsi > 30 and rsi < 70:
+        rsi_confidence = 50 + abs(rsi - 50)  # farther from 50 = more extreme = more confident
+    else:
+        rsi_confidence = 50
+    
+    # Trend strength (EMA spread)
+    ema_spread = abs(e9 - e21) / price * 100 if price > 0 else 0
+    trend_strength = min(100, ema_spread * 50)  # wider spread = stronger trend
+    
+    # Combined quality score
+    quality_score = round((quality_from_trend * 0.5 + trend_strength * 0.5), 1)
+    confidence_pct = round((rsi_confidence * 0.7 + trend_strength * 0.3), 1)
+
     if e9 > e21 and rsi > 30 and rsi < 65:
         entry = price
         sl    = round(entry - atr*atr_mult_sl, 2)
         tp    = round(entry + atr*atr_mult_tp, 2)
         if tp-entry > entry-sl:
-            return {"signal":"BUY","entry":entry,"sl":sl,"tp":tp,"atr":atr}
+            return {
+                "signal": "BUY",
+                "entry": entry,
+                "sl": sl,
+                "tp": tp,
+                "atr": atr,
+                "quality_score": quality_score,
+                "confidence_pct": confidence_pct,
+                "rsi": rsi,
+                "e9": e9,
+                "e21": e21,
+            }
 
     elif e9 < e21 and rsi < 70 and rsi > 35:
         entry = price
         sl    = round(entry + atr*atr_mult_sl, 2)
         tp    = round(entry - atr*atr_mult_tp, 2)
         if entry-tp > sl-entry:
-            return {"signal":"SELL","entry":entry,"sl":sl,"tp":tp,"atr":atr}
+            return {
+                "signal": "SELL",
+                "entry": entry,
+                "sl": sl,
+                "tp": tp,
+                "atr": atr,
+                "quality_score": quality_score,
+                "confidence_pct": confidence_pct,
+                "rsi": rsi,
+                "e9": e9,
+                "e21": e21,
+            }
 
     return None
 
@@ -127,6 +181,41 @@ def run_backtest(rates, symbol="XAUUSD", initial_balance=10000,
         tp      = sig["tp"]
         atr     = sig["atr"]
         signal  = sig["signal"]
+        quality_score = sig.get("quality_score", 50)
+        confidence_pct = sig.get("confidence_pct", 50)
+
+        # =========================================================
+        # PHASE 5 — APPLY OPPORTUNITY ALLOCATOR
+        # Rank signal and apply sizing multiplier
+        # =========================================================
+        allocator_grade = "NONE"
+        lot_multiplier = 1.0
+        should_reject = False
+        
+        if _ALLOCATOR_AVAILABLE:
+            try:
+                rank = rank_opportunity(
+                    quality_score=quality_score,
+                    confidence_pct=confidence_pct,
+                    market_regime="TRENDING",  # Simplified for backtest
+                    session="LONDON",           # Simplified for backtest
+                    smc_strength=5.0,          # Default
+                    mtf_strength=5,            # Default
+                    execution_grade="B+",       # Simplified
+                    daily_bias_alignment=True, # Simplified
+                )
+                
+                allocator_grade = rank.grade
+                lot_multiplier = rank.lot_multiplier
+                should_reject = rank.should_reject
+                
+                if should_reject:
+                    # Allocator rejected this opportunity as too weak
+                    continue
+                    
+            except Exception as _alloc_err:
+                # If allocator fails, proceed with full sizing (fail-open for backtest)
+                pass
 
         sl_dist = abs(entry - sl)
         tp_dist = abs(tp - entry)
@@ -139,8 +228,13 @@ def run_backtest(rates, symbol="XAUUSD", initial_balance=10000,
             continue
 
         # حجم اللوت (تبسيط للـ backtest)
+        # Apply allocator sizing multiplier
         risk_amount = balance * risk_pct / 100
         lot = round(risk_amount / (sl_dist * 100), 2)
+        lot = max(0.01, min(lot, 5.0))
+        
+        # Apply allocator multiplier
+        lot = round(lot * lot_multiplier, 2)
         lot = max(0.01, min(lot, 5.0))
 
         result, exit_price, bars = _simulate_trade(rates, sl, tp, rates, idx)
@@ -171,6 +265,10 @@ def run_backtest(rates, symbol="XAUUSD", initial_balance=10000,
             "lot":       lot,
             "atr":       round(atr,2),
             "balance":   round(balance,2),
+            "quality_score": quality_score,
+            "confidence_pct": confidence_pct,
+            "allocator_grade": allocator_grade,
+            "lot_multiplier": lot_multiplier,
         })
 
     # حساب الإحصاءات

@@ -19,6 +19,7 @@ from core.portfolio_risk_authority import (
     evaluate_risk,
     record_trade_open,
     record_trade_close,
+    record_trade_partial_close,
     __test_reset__,
 )
 
@@ -108,6 +109,26 @@ class AuthorityIsolationTests(unittest.TestCase):
         self.assertTrue(d.approved)
         # Headroom = 1.5 - 1.4 = 0.1
         self.assertLessEqual(d.final_risk_percent, 1.5)
+
+    def test_07_partial_close_reduces_remaining_exposure(self):
+        record_trade_open(
+            ticket=777,
+            strategy="SMC",
+            direction="BUY",
+            lot=0.10,
+            risk_percent=1.0,
+            entry_price=2000.0,
+            sl=1990.0,
+            tp=2020.0,
+        )
+        record_trade_partial_close(ticket=777, volume_closed=0.04, profit=8.0)
+
+        state = get_portfolio_state()
+        remaining = next(t for t in state.open_trades if t["ticket"] == 777)
+        self.assertAlmostEqual(remaining["lot"], 0.06)
+        self.assertAlmostEqual(remaining["risk_percent"], 0.6)
+        self.assertEqual(len(state.open_trades), 1)
+        self.assertAlmostEqual(state.daily_pnl, 8.0)
 
 
 def run_all():

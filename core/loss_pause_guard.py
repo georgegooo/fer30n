@@ -21,6 +21,7 @@ from __future__ import annotations
 import json
 import os
 import time
+import threading
 from typing import Optional
 
 
@@ -42,6 +43,10 @@ except Exception:  # fallback when import fails
 
 # مسار التخزين الدائم لحالة الـ guard
 _STATE_PATH = os.path.join('data', 'memory', 'loss_pause_guard.json')
+
+# HIGH FIX #8: Thread-safe pause guard — prevent race when SMC & runners
+# both check evaluate_loss_pause() and decide to activate pause simultaneously
+_pause_guard_lock = threading.RLock()
 
 
 def _ensure_state_dir() -> None:
@@ -245,6 +250,10 @@ def evaluate_loss_pause(snapshot_or_symbol, market_regime: Optional[str] = None)
     """
     فحص ما إذا كان التداول مسموحاً الآن.
 
+    HIGH FIX #8: Protected by _pause_guard_lock to prevent race conditions
+    when multiple strategies (SMC, SCALP, SWING, MICRO) call evaluate_loss_pause()
+    in parallel and both try to activate/update pause state.
+
     Returns:
       {
         'trading_allowed': bool,
@@ -255,6 +264,12 @@ def evaluate_loss_pause(snapshot_or_symbol, market_regime: Optional[str] = None)
         'regime_active_for_pause': bool,
       }
     """
+    with _pause_guard_lock:  # HIGH FIX #8: Lock entire evaluation
+        return _evaluate_loss_pause_impl(snapshot_or_symbol, market_regime)
+
+
+def _evaluate_loss_pause_impl(snapshot_or_symbol, market_regime: Optional[str] = None) -> dict:
+    """Implementation of loss pause evaluation. MUST be called under _pause_guard_lock."""
     if not LOSS_PAUSE_ENABLED:
         return {
             'trading_allowed': True,

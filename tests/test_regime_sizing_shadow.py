@@ -42,10 +42,10 @@ def test_multiplier_never_below_floor():
     assert info["multiplier"] == 0.5
 
 
-def test_replay_no_ranking_file_degrades_gracefully():
+def test_replay_no_ranking_file_degrades_gracefully(monkeypatch, tmp_path):
+    import analytics.regime_sizing_shadow as shadow
+    monkeypatch.setattr(shadow, "_RANKING_PATH", str(tmp_path / "missing.json"))
     result = replay_regime_aware_sizing(trades=[_FakeTrade(ticket=1)], ranking=None)
-    # ranking=None triggers _load_ranking() which reads real disk path;
-    # in the test sandbox that file won't exist.
     assert result["status"] in ("NO_RANKING_FILE",)
 
 

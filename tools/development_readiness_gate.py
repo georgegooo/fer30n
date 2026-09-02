@@ -27,10 +27,15 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from core.ai_memory import load_memory_records
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 from core.settings import BACKUP_DIR  # noqa: F401  (kept for parity with other tools' import style)
 
 CI_BASELINE_PATH = "data/analytics/ci_shadow_backtest_baseline.json"

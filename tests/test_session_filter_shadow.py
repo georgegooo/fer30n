@@ -19,7 +19,9 @@ def _ranking(sessions):
     return {"generated_at": "now", "total_trades_analysed": 0, "sessions": sessions}
 
 
-def test_no_ranking_file_degrades_gracefully():
+def test_no_ranking_file_degrades_gracefully(monkeypatch, tmp_path):
+    import analytics.session_filter_shadow as shadow
+    monkeypatch.setattr(shadow, "_RANKING_PATH", str(tmp_path / "missing.json"))
     result = replay_session_hard_filter(trades=[_FakeTrade(ticket=1)], ranking=None)
     assert result["status"] == "NO_RANKING_FILE"
 

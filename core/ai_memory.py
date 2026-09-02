@@ -9,6 +9,7 @@ from core.data_integrity import (
     ensure_csv_schema,
     read_csv_records,
 )
+from core.account_scope import get_cached_account_id
 
 
 # =========================================
@@ -162,6 +163,7 @@ def save_trade_memory(
         "result": result,
         "profit": round(float(profit or 0), 2),
         "hour": hour,
+        "account_id": get_cached_account_id(),
     }
 
     for field, value in _field_values.items():

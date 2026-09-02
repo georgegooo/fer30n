@@ -51,8 +51,8 @@ class TestAdaptiveArchitecture(unittest.TestCase):
         )
 
         self.assertTrue(result["approved"])
-        self.assertEqual(result["mode"], "EXECUTE_MICRO")
-        self.assertEqual(result["risk_multiplier"], 0.50)
+        self.assertEqual(result["mode"], "QUALITY_TRUST_DISABLED")
+        self.assertEqual(result["risk_multiplier"], 1.00)
 
     def test_regime_switching_maps_to_strategy(self):
         from core.market_regime import get_strategy_for_regime
@@ -94,8 +94,8 @@ class TestAdaptiveArchitecture(unittest.TestCase):
         )
 
         self.assertTrue(result["approved"])
-        self.assertEqual(result["mode"], "EXECUTE_MICRO")
-        self.assertEqual(result["risk_multiplier"], 0.50)
+        self.assertEqual(result["mode"], "QUALITY_TRUST_DISABLED")
+        self.assertEqual(result["risk_multiplier"], 1.00)
 
     def test_trade_dna_formula_uses_requested_components(self):
         from brain.trade_dna import calculate_trade_dna_score
