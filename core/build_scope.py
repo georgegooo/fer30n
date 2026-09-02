@@ -30,6 +30,12 @@ except Exception:  # pragma: no cover - بيئة بدون settings
     _BUILD_ID = None
     _DEPLOYED_AT = None
 
+try:
+    from core.account_scope import get_cached_account_id as _get_current_account_id
+except Exception:  # pragma: no cover - بيئة بدون account_scope
+    def _get_current_account_id():
+        return ""
+
 LEGACY_LABELS = {"LEGACY_PRE_BUILD1", "SYNTHETIC_BOOTSTRAP"}
 
 # حد أدنى للعينة قبل الوثوق بإحصائية متعلمة من البيلد الحالي —
@@ -50,11 +56,10 @@ def _cutoff():
         return None
 
 
-def is_current_build_row(row, date_field="date"):
-    """True لو الصف أنتجه البيلد الحالي (أو لو مفيش سياق بيلد أصلًا)."""
-    if not isinstance(row, dict):
-        return False
-
+def _is_current_build(row, date_field):
+    """الفحص الأصلي بالحرف (build_id أو fallback بالتاريخ) — بدون أي علاقة
+    بالحساب. مفصول في دالة مستقلة عشان is_current_build_row تقدر تضيف فحص
+    الحساب فوقه من غير ما تكرر أو تكسر أي مسار من المسارات الموجودة."""
     build_id = str(row.get("build_id", "") or "").strip()
     if build_id:
         return bool(_BUILD_ID) and build_id == str(_BUILD_ID)
@@ -72,6 +77,33 @@ def is_current_build_row(row, date_field="date"):
     except Exception:
         return False
     return dt >= cutoff
+
+
+def _is_current_account(row):
+    """
+    [FER3ON-FIX-2026-08-28] فحص إضافي مستقل عن فحص البيلد. المشكلة اللي
+    ده بيحلها: تغيير حساب MT5 من غير ما البيلد يتغيّر (نفس الكود، حساب
+    ديمو تاني) — build_id بتاع صفوف الحساب القديم بيفضل يطابق البيلد
+    الحالي بالظبط، فمفيش فلترة تستبعدهم غير دي.
+
+    نفس فلسفة فحص build_id بالحرف: لو الصف مالوش account_id خالص (بيانات
+    قديمة اتسجلت قبل الإضافة دي) لا نستبعد حاجة — تراجع (backward compat)
+    مش كسر. الاستبعاد بيحصل بس لو الصف *فيه* account_id صريح ومختلف عن
+    الحساب الحالي.
+    """
+    account_id = str(row.get("account_id", "") or "").strip()
+    if not account_id:
+        return True
+    current = _get_current_account_id()
+    return bool(current) and account_id == str(current)
+
+
+def is_current_build_row(row, date_field="date"):
+    """True لو الصف أنتجه البيلد الحالي *وعلى الحساب الحالي* (أو لو مفيش
+    سياق بيلد/حساب أصلًا)."""
+    if not isinstance(row, dict):
+        return False
+    return _is_current_build(row, date_field) and _is_current_account(row)
 
 
 def filter_current_build_rows(rows, date_field="date"):

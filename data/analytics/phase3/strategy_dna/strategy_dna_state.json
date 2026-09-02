@@ -3,20 +3,14 @@
   "per_strategy": {
     "SMC": {
       "strategy": "SMC",
-      "total_trades": 2376,
+      "total_trades": 2377,
       "wins": 535,
-      "losses": 1841,
-      "win_rate": 0.22516835016835016,
+      "losses": 1842,
+      "win_rate": 0.22507362221287336,
       "avg_profit": 20.218112149532715,
-      "avg_loss": 1.724345464421511,
-      "expectancy": 3.2164,
+      "avg_loss": 1.7397231270358318,
+      "expectancy": 3.2024,
       "recent_results": [
-        {
-          "win": true,
-          "profit": 29.76,
-          "session": "ASIA",
-          "regime": "UNKNOWN"
-        },
         {
           "win": true,
           "profit": 29.76,
@@ -610,12 +604,18 @@
           "profit": 15.0,
           "session": "LONDON",
           "regime": "TRENDING"
+        },
+        {
+          "win": false,
+          "profit": -30.05,
+          "session": "NEWYORK",
+          "regime": "UNKNOWN"
         }
       ],
-      "recent_win_rate": 0.8,
+      "recent_win_rate": 0.79,
       "best_session": "ASIA",
       "best_regime": "TRENDING",
-      "dna_score": 65.01
+      "dna_score": 64.8
     },
     "MICRO": {
       "strategy": "MICRO",
@@ -1851,7 +1851,7 @@
     }
   },
   "last_ranked_at": 0,
-  "total_updates": 7005,
-  "last_updated": 1787154156.9401824,
+  "total_updates": 7006,
+  "last_updated": 1787269370.5394034,
   "_cleanup_note": "V9 cleanup: removed test-only entries (TEST_STRAT, WEAK_STRAT) not in official STRATEGY_TO_MAGIC list"
 }

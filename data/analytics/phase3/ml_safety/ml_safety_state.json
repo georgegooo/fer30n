@@ -1,887 +1,15 @@
 {
   "version": "phase3.0",
-  "total_predictions": 14949,
-  "total_resolved": 6632,
+  "total_predictions": 15058,
+  "total_resolved": 6633,
   "correct_predictions": 734,
   "last_health_score": 50.0,
   "last_drift_magnitude": 1.0,
-  "drift_alerts_count": 326,
-  "retrain_recommendations": 320,
-  "last_check": 1787154156.9554935,
+  "drift_alerts_count": 329,
+  "retrain_recommendations": 323,
+  "last_check": 1787276427.106562,
   "baseline_accuracy": 0.5,
   "prediction_history": [
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137561.0484781
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137621.5754268
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137682.0031822
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137742.4692607
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137802.9556878
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137863.479139
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137924.0149353
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787137984.443689
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138044.892102
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138105.343151
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138165.7869334
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138226.2251873
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138286.6135316
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138347.0498033
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138407.487117
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138467.942555
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138588.4454782
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138648.8530798
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138709.312734
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138769.7825174
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138830.330698
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138890.818455
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787138951.2949622
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139011.916195
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139072.397574
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139132.95546
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139193.3560832
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139253.81982
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139314.513808
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139375.008676
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139435.5218143
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139495.9447317
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139556.391979
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139616.8580778
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139677.2998192
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787139977.849968
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140038.3320842
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140098.817625
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140159.3507097
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140219.811038
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140280.5359344
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140341.1666381
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140401.6457362
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140462.115976
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140522.5877483
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140583.060807
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140643.6564853
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140704.1848915
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140764.6704798
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140825.3264482
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140885.7767546
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787140946.3361444
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141006.6888578
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141067.064262
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141127.5170805
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141187.9464865
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141248.417771
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141308.8428054
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141369.3035672
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141429.744019
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141490.241035
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141550.8121002
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141611.2229383
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141671.671036
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141732.090997
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141912.6054714
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787141973.1151671
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142033.5930054
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142094.0122805
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142154.4306524
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142214.8455513
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142275.297799
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142937.2344813
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787142997.7856402
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143058.4534638
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143119.21201
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143179.9049037
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143240.3995876
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143300.926367
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143361.3676493
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143421.8256721
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "RANGING",
-      "timestamp": 1787143482.2594943
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143542.717497
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143603.2037733
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143663.6306615
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143724.1048832
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143784.560622
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143845.1957233
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143905.732169
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787143966.163607
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787144026.5539894
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "LONDON",
-      "regime": "TRENDING",
-      "timestamp": 1787144086.9995043
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787144749.7729597
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787144810.3318937
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787144871.057177
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787144931.6169398
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787144992.3207107
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145052.7467146
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145113.4235525
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145173.8337777
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145234.4963856
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145294.9012604
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145355.535655
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145415.9982355
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145476.4554744
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145536.9096532
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145597.3671317
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145657.8416052
-    },
-    {
-      "prediction_score": 50.0,
-      "actual_outcome": null,
-      "strategy": "SMC",
-      "session": "NEWYORK",
-      "regime": "TRENDING",
-      "timestamp": 1787145718.358212
-    },
     {
       "prediction_score": 50.0,
       "actual_outcome": null,
@@ -1609,6 +737,878 @@
       "session": "UNKNOWN",
       "regime": "UNKNOWN",
       "timestamp": 1787154156.9552326
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269370.403097
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269431.2446826
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269491.777487
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269552.3047237
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269612.8530867
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269673.8671994
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269734.5520709
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269795.5368435
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269889.5209198
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787269972.2703626
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270032.9323282
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270093.42597
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270154.185742
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270214.7876136
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270275.7287288
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270336.4248462
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "TRENDING",
+      "timestamp": 1787270396.912022
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787270457.445275
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787270517.950184
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787270578.5331693
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787270639.0897782
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787270702.1521206
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787270882.8236172
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271063.4564102
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271184.180796
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271245.1354825
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271305.7664754
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271369.8442662
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271430.6082916
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271491.7407842
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271552.3868842
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271614.656132
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271675.5732632
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271736.0905185
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271796.606038
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271857.171877
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271919.746061
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787271980.4381828
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272042.5581682
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272103.1640713
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272163.7897742
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272224.2982247
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272284.9393342
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272345.5122626
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272406.051005
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272466.614251
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272527.115044
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272587.6947274
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272648.4364126
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272708.942401
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272769.5010622
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272830.1422627
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272890.8031888
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787272951.3785613
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273011.9279885
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273072.6527457
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273133.4611042
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273200.7068274
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273263.9477978
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273324.5543325
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273385.0924487
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273445.6856713
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273506.5018744
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273570.1864243
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273630.8117006
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273691.422868
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273751.9954185
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273812.5760589
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273873.2204392
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273933.7621737
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787273994.3220727
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274055.095274
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274115.7003996
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274176.389195
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274237.02997
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274298.3496244
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274358.879698
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274420.525007
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274481.2400694
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274542.378873
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274603.558099
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274666.181857
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274728.8743591
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274790.4008992
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787274971.0301414
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275031.6030636
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275092.0836365
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275152.5410547
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275214.1408515
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275275.871237
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275336.419335
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275396.8550134
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275457.3363402
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275517.769206
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275578.2887785
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275638.843282
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275700.239183
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275760.8220963
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275821.349093
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275881.873794
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787275942.712383
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276003.19505
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276063.6703882
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276124.3871024
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276184.905043
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276245.4814384
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276305.9892182
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276366.544769
+    },
+    {
+      "prediction_score": 50.0,
+      "actual_outcome": null,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "TRENDING",
+      "timestamp": 1787276427.0852284
     }
   ]
 }

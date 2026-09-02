@@ -125,6 +125,7 @@ def calculate_adaptive_sl_tp(
     structure_analysis: Optional[Dict[str, Any]] = None,
     final_brain: Optional[Any] = None,
     strategy_dna: Optional[Any] = None,
+    exposure_modifier: float = 1.0,
 ) -> Dict[str, Any]:
     """Return adaptive SL/TP values using ATR as the primary driver.
 
@@ -203,7 +204,18 @@ def calculate_adaptive_sl_tp(
 
     if max_sl is None:
         max_sl = 1500.0
-    max_sl_value = max(float(max_sl), safety_floor)
+    from core.sl_risk_policy import resolve_sl_cap
+    sl_policy = resolve_sl_cap(
+        strategy=strategy,
+        market_regime=market_regime,
+        confidence=confidence,
+        exposure_modifier=exposure_modifier,
+    )
+    # A missing min_sl means a legacy standalone calculation. Keep its
+    # historical fallback behaviour; production callers pass min_sl.
+    policy_max_sl = sl_policy["effective_cap"] if min_sl else float(max_sl)
+    max_sl_value = min(float(max_sl), policy_max_sl)
+    max_sl_value = max(max_sl_value, safety_floor)
 
     structure_candidates: Dict[str, float] = {}
     base_context = structure_context or {}
@@ -386,6 +398,7 @@ def calculate_adaptive_sl_tp(
         "broker_stop_level": round(float(broker_stop_level or 0.0), 2),
         "broker_stop_fallback": round(float(broker_stop_fallback or 0.0), 2),
         "safety_floor": round(float(safety_floor), 2),
+        "sl_policy": sl_policy,
     }
     print(
         "📐 ADAPTIVE SL ENGINE"

@@ -21,11 +21,11 @@ class RiskConsistencyTests(unittest.TestCase):
     def test_01_settings_is_source_of_truth(self):
         # V3.5 unified values; settings.py overrides legacy config.
         self.assertGreaterEqual(core.settings.HARD_RISK_DAILY_LOSS_PERCENT, 1.0)
-        self.assertLessEqual(core.settings.HARD_RISK_DAILY_LOSS_PERCENT, 5.0)
+        self.assertEqual(core.settings.HARD_RISK_DAILY_LOSS_PERCENT, 5.0)
         self.assertGreaterEqual(core.settings.RISK_PER_TRADE_PERCENT, 0.25)
         self.assertLessEqual(core.settings.RISK_PER_TRADE_PERCENT, 1.0)
         self.assertLessEqual(core.settings.MIN_EFFECTIVE_RISK_PERCENT, 1.0)
-        self.assertLessEqual(core.settings.MAX_RISK_PER_DAY_PERCENT, 3.0)
+        self.assertEqual(core.settings.MAX_RISK_PER_DAY_PERCENT, 5.0)
         self.assertEqual(core.settings.MAX_RISK_PER_DAY_PERCENT,
                          core.settings.MAX_DAILY_RISK)
 

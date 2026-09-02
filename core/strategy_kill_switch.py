@@ -35,61 +35,76 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
+try:
+    from core.settings import KILL_SWITCH_GRACE_ENABLED, KILL_SWITCH_MIN_TRADES_BEFORE_BLOCK
+except Exception:  # pragma: no cover
+    # Fallback defaults if import fails (should not happen in normal operation)
+    pass
+
 # ============================================================================
-# ثوابت مبنية على البيانات الفعلية (تُراجَع أسبوعيًا)
+# READ ALL VALUES FROM CORE.SETTINGS (Single Source of Truth)
 # ============================================================================
+# [FER3ON-2026-08-31] All kill-switch configuration is now centralized in
+# core/settings.py. This module reads those values directly and applies only
+# the decision logic, not configuration.
 
-# [FER3ON-FIX-2026-08-20] معطّل مؤقتًا بناءً على طلب المستخدم: ASIA
-# (00:00-08:00 UTC) + NEWYORK (13:00-18:00 UTC) = 13 من 24 ساعة (~54% من
-# اليوم) كانوا ممنوعين بالكامل على SMC و MICRO في نفس الوقت — يعني نص
-# اليوم تقريبًا بلا أي فرصة تداول لأي من الاستراتيجيتين دول، مهما كانت
-# جودة الإشارة. البيانات اللي بنت القرار ده (تحت) اتسابت زي ما هي كمرجع.
-# الـ kill-switch بتاع حدود الخسارة اليومية/الأسبوعية (قسم 4/5 تحت) لسه
-# شغال 100% ولسه هيوقف أي استراتيجية لو رجعت تخسر بنفس الشكل في الجلستين
-# دول — يعني الحماية من النزيف المالي لسه موجودة، بس مبقتش بلوك استباقي
-# قبل ما نشوف نتيجة فعلية.
-# لإعادة التفعيل: رجّع SESSION_BLOCK_ENABLED = True.
-SESSION_BLOCK_ENABLED: bool = False
+try:
+    from core import settings as _settings
 
-# جلسات ممنوعة تمامًا للبوت (Net loss << 0 عبر 30+ صفقة) — القيم الأصلية
-# محفوظة هنا حتى لو الفحص متوقف مؤقتًا (SESSION_BLOCK_ENABLED=False فوق)
-BLOCKED_SESSIONS_BY_STRATEGY: Dict[str, set] = {
-    "SMC":   {"ASIA", "NEWYORK"},     # SMC خسر -174$ في ASIA و -139$ في NEWYORK
-    "MICRO": {"ASIA", "NEWYORK"},     # MICRO خسر -83$ في ASIA و -66$ في NEWYORK
-    "SCALP": set(),                    # لا بيانات كافية
-    "DAILY": set(),                    # لا بيانات كافية
-}
+    # Session-level blocks
+    SESSION_BLOCK_ENABLED: bool = _settings.KILL_SWITCH_SESSION_BLOCK_ENABLED
+    BLOCKED_SESSIONS_BY_STRATEGY: Dict[str, set] = _settings.KILL_SWITCH_BLOCKED_SESSIONS
 
-# أنظمة سوق ممنوعة (البوت يخسر بها بشكل ممنهج)
-BLOCKED_REGIMES_BY_STRATEGY: Dict[str, set] = {
-    "SMC":   {"RANGING"},              # SMC في RANGING صعب — نمنعه مؤقتًا
-    "MICRO": {"RANGING", "TRENDING"},  # MICRO لا يعمل في أي منهما
-    "SCALP": set(),
-    "DAILY": set(),
-}
+    # Regime-level blocks
+    BLOCKED_REGIMES_BY_STRATEGY: Dict[str, set] = _settings.KILL_SWITCH_BLOCKED_REGIMES
 
-# حدود Kill-switch (خسارة يومية/أسبوعية)
-DAILY_LOSS_LIMIT_BY_STRATEGY: Dict[str, float] = {
-    "SMC":   50.0,   # لو خسرت 50$ في يوم → إيقاف لباقي اليوم
-    "MICRO": 30.0,
-    "SCALP": 40.0,
-    "DAILY": 80.0,
-}
+    # Daily and weekly loss limits
+    DAILY_LOSS_LIMIT_BY_STRATEGY: Dict[str, float] = _settings.KILL_SWITCH_DAILY_LOSS_LIMITS
+    WEEKLY_LOSS_LIMIT_BY_STRATEGY: Dict[str, float] = _settings.KILL_SWITCH_WEEKLY_LOSS_LIMITS
 
-WEEKLY_LOSS_LIMIT_BY_STRATEGY: Dict[str, float] = {
-    "SMC":   120.0,
-    "MICRO": 80.0,
-    "SCALP": 100.0,
-    "DAILY": 200.0,
-}
+    # Resume and grace period settings
+    RESUME_AFTER_WINS: int = _settings.KILL_SWITCH_RESUME_AFTER_WINS
+    MIN_TRADES_FOR_DAILY_BLOCK: int = _settings.KILL_SWITCH_MIN_TRADES_FOR_DAILY_BLOCK
+    MIN_TRADES_FOR_WEEKLY_BLOCK: int = _settings.KILL_SWITCH_MIN_TRADES_FOR_WEEKLY_BLOCK
+    KILL_SWITCH_GRACE_ENABLED: bool = _settings.KILL_SWITCH_GRACE_ENABLED
 
-# حد أدنى لعدد الصفقات المتتالية الرابحة لاستئناف استراتيجية موقوفة
-RESUME_AFTER_WINS: int = 2
+    # Execution grade requirements
+    STRICT_EXEC_GRADE_STRATEGIES: set = _settings.KILL_SWITCH_STRICT_EXEC_GRADE_STRATEGIES
+    ALLOWED_EXEC_GRADES: set = _settings.KILL_SWITCH_ALLOWED_EXEC_GRADES
 
-# تحقق exec_grade=B معكوس → نطلب A/A+/ELITE فقط لـ SMC/MICRO مؤقتًا
-STRICT_EXEC_GRADE_STRATEGIES: set = {"SMC", "MICRO"}
-ALLOWED_EXEC_GRADES: set = {"A", "A+", "ELITE"}
-# ملاحظة: exec_grade=SYNC هو صفقات يدوية/مزامنة، ليست من البوت
+except Exception:  # pragma: no cover
+    # Fallback if settings import fails
+    SESSION_BLOCK_ENABLED: bool = False
+    BLOCKED_SESSIONS_BY_STRATEGY: Dict[str, set] = {
+        "SMC":   {"ASIA", "NEWYORK"},
+        "MICRO": {"ASIA", "NEWYORK"},
+        "SCALP": set(),
+        "DAILY": set(),
+    }
+    BLOCKED_REGIMES_BY_STRATEGY: Dict[str, set] = {
+        "SMC":   {"RANGING"},
+        "MICRO": {"RANGING", "TRENDING"},
+        "SCALP": set(),
+        "DAILY": set(),
+    }
+    DAILY_LOSS_LIMIT_BY_STRATEGY: Dict[str, float] = {
+        "SMC":   50.0,
+        "MICRO": 30.0,
+        "SCALP": 40.0,
+        "DAILY": 80.0,
+    }
+    WEEKLY_LOSS_LIMIT_BY_STRATEGY: Dict[str, float] = {
+        "SMC":   120.0,
+        "MICRO": 80.0,
+        "SCALP": 100.0,
+        "DAILY": 200.0,
+    }
+    RESUME_AFTER_WINS: int = 2
+    MIN_TRADES_FOR_DAILY_BLOCK: int = 3
+    MIN_TRADES_FOR_WEEKLY_BLOCK: int = 5
+    KILL_SWITCH_GRACE_ENABLED: bool = True
+    STRICT_EXEC_GRADE_STRATEGIES: set = {"SMC", "MICRO"}
+    ALLOWED_EXEC_GRADES: set = {"A", "A+", "ELITE"}
 
 TRADES_CSV_PATH = "data/history/trades.csv"
 KILL_STATE_PATH = "data/analytics/kill_switch_state.json"
@@ -99,8 +114,26 @@ KILL_STATE_PATH = "data/analytics/kill_switch_state.json"
 # قراءة الحالة من الملف
 # ============================================================================
 
+def _current_account_id() -> str:
+    """يعيد رقم الحساب الحالي كـstring أو "" لو غير متاح."""
+    try:
+        from core.account_scope import get_cached_account_id
+
+        return str(get_cached_account_id() or "")
+    except Exception:
+        return ""
+
+
 def _read_recent_trades(hours: int = 168) -> list[dict]:
-    """قراءة صفقات آخر N ساعات من trades.csv"""
+    """قراءة صفقات آخر N ساعات من trades.csv، مفلترة على البيلد والحساب الحاليين.
+
+    [FER3ON-FIX-2026-08-31] قبل الإصلاح: صفقات من حساب قديم كانت ما زالت
+    تُحسب في الـweekly_pnl/ daily_pnl للحساب الجديد لأن الفلترة الزمنية/الـ
+    build-only كانت لا تكفي عندما يتغير الحساب نفسه دون تغيير build_id.
+    بعد الإصلاح: نستبعد أي صف له account_id ومختلف عن الحساب الحالي، مع
+    الاحتفاظ بالتوافق للخلف لصفوف فراغ account_id (غير المعرّفة) ما لم تنشأ
+    ضمن build/تاريخ غير الحالي.
+    """
     path = Path(TRADES_CSV_PATH)
     if not path.exists():
         return []
@@ -118,6 +151,27 @@ def _read_recent_trades(hours: int = 168) -> list[dict]:
                     continue
     except OSError:
         return []
+    try:
+        from core.build_scope import filter_current_build_rows
+
+        trades = filter_current_build_rows(trades, date_field="date")
+    except Exception:
+        # لو الاستيراد فشل لأي سبب، نرجع لسلوك ما قبل الإصلاح بدل ما نكسر
+        # الـkill-switch بالكامل — فشل الفلترة أهون من فشل الحماية.
+        pass
+
+    current_account = _current_account_id()
+    if current_account:
+        filtered_by_account: list[dict] = []
+        for row in trades:
+            account_id = str(row.get("account_id", "") or "").strip()
+            if not account_id:
+                # للصفوف القديمة/غير المعرّفة حسابها، نحتفظ بها فقط لو كانت
+                # بالفعل ضمن build الحالي/وقت الحالي بعد الفلترة أعلاه.
+                filtered_by_account.append(row)
+            elif account_id == current_account:
+                filtered_by_account.append(row)
+        trades = filtered_by_account
     return trades
 
 
@@ -151,6 +205,17 @@ def _consecutive_wins(trades: list[dict], strategy: str) -> int:
     return wins
 
 
+def _strategy_trade_count(trades: list[dict], strategy: str) -> int:
+    count = 0
+    for t in trades:
+        if str(t.get("strategy", "")).upper() != strategy.upper():
+            continue
+        if str(t.get("result", "")).upper() not in {"WIN", "LOSS"}:
+            continue
+        count += 1
+    return count
+
+
 # ============================================================================
 # البوابة الرئيسية — تُستدعى قبل فتح كل صفقة
 # ============================================================================
@@ -181,16 +246,18 @@ def should_block_trade(
 
     # 3) exec_grade مشدد للاستراتيجيات الخاسرة
     if strat in STRICT_EXEC_GRADE_STRATEGIES and grade and grade not in ALLOWED_EXEC_GRADES:
-        # نسمح إذا كان الأداء الأسبوعي الأخير موجب (تعافي)
+        # [FER3ON-FIX-2026-08-31] نفس grace period للحساب الجديد: لا نطبق
+        # حظر exec_grade قبل وجود بيانات كافية على الحساب الفعلي.
         weekly = _read_recent_trades(hours=168)
-        if _sum_pnl(weekly, strat) < 0:
+        if _strategy_trade_count(weekly, strat) >= MIN_TRADES_FOR_WEEKLY_BLOCK and _sum_pnl(weekly, strat) < 0:
             return True, f"KILL_SWITCH_EXEC_GRADE_{strat}_{grade}_below_A"
 
     # 4) حد الخسارة اليومية
     today = _read_recent_trades(hours=24)
     daily_pnl = _sum_pnl(today, strat)
     daily_limit = DAILY_LOSS_LIMIT_BY_STRATEGY.get(strat, 100.0)
-    if daily_pnl <= -daily_limit:
+    daily_trade_count = _strategy_trade_count(today, strat)
+    if daily_trade_count >= MIN_TRADES_FOR_DAILY_BLOCK and daily_pnl <= -daily_limit:
         wins_now = _consecutive_wins(today, strat)
         if wins_now < RESUME_AFTER_WINS:
             return True, (
@@ -202,7 +269,8 @@ def should_block_trade(
     weekly = _read_recent_trades(hours=168)
     weekly_pnl = _sum_pnl(weekly, strat)
     weekly_limit = WEEKLY_LOSS_LIMIT_BY_STRATEGY.get(strat, 200.0)
-    if weekly_pnl <= -weekly_limit:
+    weekly_trade_count = _strategy_trade_count(weekly, strat)
+    if weekly_trade_count >= MIN_TRADES_FOR_WEEKLY_BLOCK and weekly_pnl <= -weekly_limit:
         wins_now = _consecutive_wins(weekly, strat)
         if wins_now < RESUME_AFTER_WINS:
             return True, (

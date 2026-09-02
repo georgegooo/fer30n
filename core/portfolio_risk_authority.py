@@ -36,6 +36,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
+import threading
 
 from core.settings import (
     MAX_RISK_TOTAL,
@@ -84,6 +85,21 @@ class PortfolioState:
 
 
 _STATE = PortfolioState()
+_STATE_LOCK = threading.RLock()  # Reentrant lock for thread-safe access
+
+
+def _with_state_lock(fn):
+    """Decorator to ensure thread-safe access to _STATE.
+    
+    FER3ON ARCHITECTURE FIX #4: Race Condition Prevention
+    Multiple strategies (SMC, SCALP, SWING, MICRO) may call evaluate_risk()
+    and record_trade_* simultaneously, causing _STATE.open_trades to become
+    inconsistent. This lock serializes all state modifications.
+    """
+    def wrapper(*args, **kwargs):
+        with _STATE_LOCK:
+            return fn(*args, **kwargs)
+    return wrapper
 
 
 def _now_utc_str() -> str:
@@ -196,6 +212,7 @@ def evaluate_risk(
 ) -> RiskDecision:
     """
     Single entry point for Portfolio Risk Authority.
+    THREAD-SAFE: Uses _STATE_LOCK to serialize access.
 
     Inputs:
       - strategy:        SCALP | DAILY | SWING | SMC | MICRO | UNKNOWN
@@ -209,6 +226,19 @@ def evaluate_risk(
       RiskDecision.approved=True  → proceed to Execution.
       RiskDecision.approved=False → blocked, rejection_reason explains why.
     """
+    with _STATE_LOCK:  # FIX #4: Thread-safe access
+        return _evaluate_risk_impl(strategy, direction, requested_risk_percent, ml_advice_boost, ml_advice_enabled, candidate_meta)
+
+
+def _evaluate_risk_impl(
+    strategy: str,
+    direction: str,
+    requested_risk_percent: float,
+    ml_advice_boost: float = 0.0,
+    ml_advice_enabled: bool = True,
+    candidate_meta: Optional[Dict[str, Any]] = None,
+) -> RiskDecision:
+    """Internal implementation (called under _STATE_LOCK)."""
     decision = RiskDecision()
     decision.notes.append("PortfolioRiskAuthority:v3.5")
 
@@ -228,12 +258,9 @@ def evaluate_risk(
     # -------- Hard-stop / emergency -----------------------------------------
     if _STATE.emergency_stop:
         decision.notes.append(f"EMERGENCY_STOP_ACTIVE:{_STATE.emergency_reason}")
-        if _STATE.emergency_reason in PORTFOLIO_RISK_AUTHORITY_CAN_REJECT:
-            decision.rejection_reason = f"EMERGENCY_STOP:{_STATE.emergency_reason}"
-            decision.portfolio_snapshot = _snapshot()
-            return decision
-        # If emergency reason is not in allow-list → ignore (fail-open).
-        decision.notes.append("EMERGENCY_REASON_NOT_BLOCKABLE")
+        decision.rejection_reason = f"EMERGENCY_STOP:{_STATE.emergency_reason or 'UNKNOWN'}"
+        decision.portfolio_snapshot = _snapshot()
+        return decision
 
     # -------- Daily loss limit -----------------------------------------------
     daily_loss_limit_amount = _STATE.day_start_balance * (HARD_RISK_DAILY_LOSS_PERCENT / 100.0)
@@ -372,6 +399,23 @@ def record_trade_open(
     tp: float,
     meta: Optional[Dict[str, Any]] = None,
 ) -> None:
+    """THREAD-SAFE: Record a newly opened trade."""
+    with _STATE_LOCK:  # FIX #4: Thread-safe access
+        _record_trade_open_impl(ticket, strategy, direction, lot, risk_percent, entry_price, sl, tp, meta)
+
+
+def _record_trade_open_impl(
+    ticket: int,
+    strategy: str,
+    direction: str,
+    lot: float,
+    risk_percent: float,
+    entry_price: float,
+    sl: float,
+    tp: float,
+    meta: Optional[Dict[str, Any]] = None,
+) -> None:
+    """Internal implementation (called under _STATE_LOCK)."""
     _STATE.open_trades.append({
         "ticket": int(ticket),
         "strategy": strategy.upper(),
@@ -387,6 +431,13 @@ def record_trade_open(
 
 
 def record_trade_close(*, ticket: int, profit: float) -> None:
+    """THREAD-SAFE: Record trade closure and update daily PnL."""
+    with _STATE_LOCK:  # FIX #4: Thread-safe access
+        _record_trade_close_impl(ticket, profit)
+
+
+def _record_trade_close_impl(ticket: int, profit: float) -> None:
+    """Internal implementation (called under _STATE_LOCK)."""
     """Update daily loss + drawdown metrics from a closed trade."""
     open_trades = [t for t in _STATE.open_trades if t.get("ticket") != ticket]
     closed = next((t for t in _STATE.open_trades if t.get("ticket") == ticket), None)
@@ -413,6 +464,37 @@ def record_trade_close(*, ticket: int, profit: float) -> None:
     if _STATE.daily_loss_amount >= daily_loss_limit_amount and not _STATE.emergency_stop:
         _STATE.emergency_stop = True
         _STATE.emergency_reason = "DAILY_LOSS_LIMIT"
+
+
+def record_trade_partial_close(*, ticket: int, volume_closed: float, profit: float) -> None:
+    """THREAD-SAFE: Record partial close with remaining exposure."""
+    with _STATE_LOCK:  # FIX #4: Thread-safe access
+        _record_trade_partial_close_impl(ticket, volume_closed, profit)
+
+
+def _record_trade_partial_close_impl(ticket: int, volume_closed: float, profit: float) -> None:
+    """Internal implementation (called under _STATE_LOCK)."""
+    """Account for a partial close while retaining the remaining exposure."""
+    closed = next((t for t in _STATE.open_trades
+                   if int(t.get("ticket", -1)) == int(ticket)), None)
+    if not closed:
+        return
+    original_lot = max(_safe_float(closed.get("lot")), 0.0)
+    volume = min(max(_safe_float(volume_closed), 0.0), original_lot)
+    if original_lot <= 0.0 or volume <= 0.0:
+        return
+    remaining_ratio = max(0.0, 1.0 - (volume / original_lot))
+    closed["lot"] = round(original_lot * remaining_ratio, 8)
+    closed["risk_percent"] = round(
+        _safe_float(closed.get("risk_percent")) * remaining_ratio, 8
+    )
+    p = _safe_float(profit)
+    _STATE.daily_pnl += p
+    _STATE.weekly_pnl += p
+    if p < 0:
+        _STATE.daily_loss_amount += abs(p)
+    if _STATE.daily_pnl > _STATE.drawdown_peak_pnl:
+        _STATE.drawdown_peak_pnl = _STATE.daily_pnl
 
 
 # =============================================================================
@@ -445,10 +527,19 @@ def reconcile_with_live_positions(live_positions) -> Dict[str, int]:
     .price_open, .sl, .tp, .type (0=BUY, 1=SELL).
 
     Returns {"removed": n, "imported": m}.
+    
+    HIGH FIX #9: Robust error handling for import module failures.
     """
-    from core.trade_identity import strategy_from_magic
+    try:
+        from core.trade_identity import strategy_from_magic
+    except ImportError as import_err:
+        print(f'🛑 RECONCILE_CRITICAL: trade_identity module unavailable - {import_err}')
+        print('⚠️ Reconciliation blocked to prevent position state divergence')
+        raise RuntimeError(f'RECONCILE_IMPORT_FAILED: {import_err}')
 
-    live_positions = list(live_positions or [])
+    if live_positions is None:
+        raise RuntimeError('POSITION_STATE_UNAVAILABLE')
+    live_positions = list(live_positions)
     live_by_ticket = {int(getattr(p, "ticket", -1)): p for p in live_positions}
 
     before = len(_STATE.open_trades)

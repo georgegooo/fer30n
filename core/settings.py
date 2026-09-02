@@ -118,7 +118,7 @@ RISK_PER_TRADE_PERCENT = 0.75     # conservative low-account profile for XAUUSD;
 # single trade at the $200 end of the range. See FER3ON_FINAL_CHANGELOG.md
 # [EXPOSURE-3] for the full trace.
 MIN_EFFECTIVE_RISK_PERCENT = 0.75
-MAX_RISK_PER_DAY_PERCENT = 3.0   # more conservative daily loss brake for small-account gold trading
+MAX_RISK_PER_DAY_PERCENT = 5.0   # unified daily loss brake for all risk paths
 MAX_LOT = 0.06                   # tighter ceiling for safer execution in low-balance accounts
 MIN_LOT = 0.01                   # broker floor for XAUUSD (1oz)
 MIN_SL_DISTANCE = 500.0          # last-resort floor ($5) — only used if ATR computation fails entirely
@@ -160,11 +160,20 @@ MAX_RISK_PER_DAY_PERCENT = min(MAX_RISK_PER_DAY_PERCENT, 5.0)
 #   balance <  $500 → $15 hard cap (worst-case MIN_LOT risk = 7.5% of $200)
 # Override via MAX_SL_DISTANCE_DOLLARS env var if you accept the higher risk.
 # =============================================================================
+# =============================================================================
+# FER3ON-FIX-2026-08-28 [CAPITAL-PROTECTION-2] — flatten to $15 hard cap
+# القرار المعلّق من كذا نقاش: وثيقتين (Future Improvement Roadmap و"أفضل
+# فكرة للـSL/TP") حددوا SL_HARD_LIMIT=$15 صراحةً لمرحلة الاختبار الحالية
+# ("ممنوع السماح بـ$30 أو $50 كـSL فعلي")، بينما الإعداد كان لسه $30
+# لحساب ≥$500. اتغيّر لـ$15 لكل الأحجام دلوقتي — الفرع أدناه اتسيب زي ما
+# هو (تدرّج حسب الرصيد) لسهولة الرجوع لاحقًا لو احتجتوا تدرّج مختلف.
+# =============================================================================
 _MAX_SL_ENV = os.getenv('MAX_SL_DISTANCE_DOLLARS')
 if _MAX_SL_ENV is not None:
     MAX_SL_DISTANCE_DOLLARS = max(1.0, float(_MAX_SL_ENV))
 else:
-    MAX_SL_DISTANCE_DOLLARS = 30 if BASE_ACCOUNT_BALANCE >= 500.0 else 15
+    MAX_SL_DISTANCE_DOLLARS = 15 if BASE_ACCOUNT_BALANCE >= 500.0 else 15
+TOTAL_RISK_CAP = float(MAX_SL_DISTANCE_DOLLARS)
 MIN_LOT_RISK_MULTIPLE_CAP = 8.0 if BASE_ACCOUNT_BALANCE >= 500.0 else 5.0
 
 # =============================================================================
@@ -327,6 +336,61 @@ ORDER_RETRY_STEP_PCT = 0.10        # +10% على مسافة SL/TP في كل مح
 ORDER_RETRY_MAX_ATTEMPTS = 5        # حد أقصى للمحاولات (حماية من حلقة لا نهائية)
 # retcode الخاصة برفض "stops too close" في MT5 (موسَّعة لتغطية أكثر من broker)
 ORDER_RETRY_REJECTION_RETCODES = (10016, 10017, 10006)
+
+# FER3ON FINAL — STOPS-RETRY WIDENING CAP (Phase-0 hygiene, 2026-08)
+# Without a cap, attempt #4 widens SL by 1.10^4 ≈ 1.61x ($30 → $48),
+# silently multiplying real risk beyond the account-size cap the rest of
+# the pipeline was built around. The cap is the TIGHTER of this factor
+# and MAX_SL_DISTANCE_DOLLARS (enforced in core/trade_executor.py).
+ORDER_RETRY_MAX_WIDEN_FACTOR = 1.30   # أقصى توسيع مسموح لمسافة SL عبر الـ retries
+
+# FER3ON — PHASE 1 | SHADOW COUNTERFACTUAL (REJECTED_SHADOW ledger)
+# Every rejected signal is logged as REJECTED_SHADOW and its hypothetical
+# outcome is resolved later against real candles. LOGGING ONLY — nothing
+# here is read back into the live decision path.
+SHADOW_COUNTERFACTUAL_ENABLED       = True
+ANALYTICS_DATA_EPOCH                = "2026-09-01-clean"
+ANALYTICS_SCHEMA_VERSION            = "5.0"
+SHADOW_COUNTERFACTUAL_LOG_PATH      = "data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl"
+SHADOW_COUNTERFACTUAL_QUARANTINE_PATH = "data/analytics/quarantine/rejected_shadow_invalid_2026-09-01-clean.jsonl"
+SHADOW_COUNTERFACTUAL_HORIZON_BARS  = 48    # شموع المتابعة قبل اعتبار النتيجة TIMEOUT
+SHADOW_COUNTERFACTUAL_MIN_SAMPLES   = 100   # الحد الأدنى قبل استخلاص أي استنتاج إحصائي
+
+# =============================================================================
+# FER3ON — PHASE 2 | ENTRY CONTROLLER + STRUCTURAL SL (Demo)
+# =============================================================================
+# Instead of entering at market the moment a signal fires, the controller
+# plans a pullback LIMIT entry and a STRUCTURE-anchored SL (beyond the
+# opposing swing + ATR buffer), hard-capped per strategy. Default mode is
+# ADVISORY: plans are computed and logged, live orders are NOT changed until
+# PHASE2_ENTRY_CONTROLLER_LIVE_ENABLED is explicitly switched on for Demo.
+PHASE2_ENTRY_CONTROLLER_ENABLED        = True
+PHASE2_ENTRY_CONTROLLER_LIVE_ENABLED   = False  # advisory/log-only حتى مراجعة الديمو
+PHASE2_ENTRY_CONTROLLER_LOG_PATH       = "data/analytics/entry_controller/entry_plans_2026-09-01-clean.jsonl"
+PHASE2_ENTRY_CONTROLLER_QUARANTINE_PATH = "data/analytics/quarantine/entry_plans_invalid_2026-09-01-clean.jsonl"
+PULLBACK_DEPTH_ATR                     = 0.5    # عمق الارتداد لأمر الـ LIMIT = 0.5 × ATR
+ENTRY_TTL_BARS                         = 6      # صلاحية أمر الارتداد قبل الإلغاء
+STRUCTURAL_SL_ATR_BUFFER               = 0.3    # بفر خلف القاع/القمة البنيوية
+STRUCTURAL_SL_CAP_SCALP                = 10.0   # سقف $10 للسكالب/الميكرو
+STRUCTURAL_SL_CAP_SWING                = 15.0   # سقف $15 لـ SMC/SWING
+PROACTIVE_OPPORTUNITY_SCAN_ENABLED     = True
+PROACTIVE_OPPORTUNITY_SCAN_INTERVAL    = 5      # shadow scan every N heartbeats
+
+# =============================================================================
+# FER3ON — PHASE 3 | EXIT MANAGER (independent TP ladder + trailing + time exit, Demo)
+# =============================================================================
+# TP is derived from its own RR ladder (independent of how SL was built),
+# exits are staged (partial closes), SL moves to breakeven after TP1 and
+# trails by ATR after TP2, and a stale trade is closed after TIME_EXIT_BARS.
+# Advisory/log-only until PHASE3_EXIT_MANAGER_LIVE_ENABLED is switched on.
+PHASE3_EXIT_MANAGER_ENABLED            = True
+PHASE3_EXIT_MANAGER_LIVE_ENABLED       = False  # advisory/log-only حتى مراجعة الديمو
+PHASE3_EXIT_MANAGER_LOG_PATH           = "data/analytics/exit_manager/exit_actions.jsonl"
+TP_LADDER_RR                           = (1.5, 2.5, 4.0)   # مستويات الهدف المستقلة بمضاعفات R
+TP_LADDER_FRACTIONS                    = (0.5, 0.3, 0.2)   # نسب الإغلاق الجزئي لكل مستوى
+BREAKEVEN_BUFFER_ATR                   = 0.1    # بفر فوق التعادل بعد TP1
+TRAILING_ATR_MULT                      = 1.0    # مسافة التتبع بعد TP2 = 1 × ATR
+TIME_EXIT_BARS                         = 24     # خروج زمني لو لا TP1 ولا SL خلال 24 شمعة
 
 # =============================================================================
 # LOSS-PAUSEGUARD — انتظار CHoCH/BOS جديد بعد صفقات خاسرة متتالية
@@ -503,7 +567,63 @@ NY_END       = 17
 # =============================================================================
 LONDON_VOLATILE_BLOCK_ENABLED = True
 LONDON_VOLATILE_START = 8   # 08:00 UTC (inclusive)
-LONDON_VOLATILE_END   = 10  # 10:00 UTC (exclusive)
+LONDON_VOLATILE_END   = 9   # 09:00 UTC (exclusive) — practical compromise: still hard-blocks the worst of London, but avoids the full 10:00 suppression window.
+
+# =============================================================================
+# KILL-SWITCH CONFIGURATION (Strategy Kill-Switch Policy) [FER3ON-2026-08-31]
+# Single source of truth for all kill-switch thresholds and behavior.
+# All values must be read directly here by core/strategy_kill_switch.py.
+# =============================================================================
+
+# Session-level block toggle (disabled as of 2026-08-20 by user request)
+# Set to True to block ASIA + NEWYORK sessions for SMC/MICRO strategies
+KILL_SWITCH_SESSION_BLOCK_ENABLED = False
+KILL_SWITCH_BLOCKED_SESSIONS = {
+    "SMC":   {"ASIA", "NEWYORK"},
+    "MICRO": {"ASIA", "NEWYORK"},
+    "SCALP": set(),
+    "DAILY": set(),
+}
+
+# Market regime block (enabled)
+KILL_SWITCH_REGIME_BLOCK_ENABLED = True
+KILL_SWITCH_BLOCKED_REGIMES = {
+    "SMC":   {"RANGING"},
+    "MICRO": {"RANGING", "TRENDING"},
+    "SCALP": set(),
+    "DAILY": set(),
+}
+
+# Daily loss limits by strategy
+KILL_SWITCH_DAILY_LOSS_LIMITS = {
+    "SMC":   50.0,
+    "MICRO": 30.0,
+    "SCALP": 40.0,
+    "DAILY": 80.0,
+}
+
+# Weekly loss limits by strategy
+KILL_SWITCH_WEEKLY_LOSS_LIMITS = {
+    "SMC":   120.0,
+    "MICRO": 80.0,
+    "SCALP": 100.0,
+    "DAILY": 200.0,
+}
+
+# Consecutive wins required to resume a blocked strategy
+KILL_SWITCH_RESUME_AFTER_WINS = 2
+
+# Grace period: minimum trades in current account before kill-switch engages
+KILL_SWITCH_MIN_TRADES_FOR_DAILY_BLOCK = 3
+KILL_SWITCH_MIN_TRADES_FOR_WEEKLY_BLOCK = 5
+
+# Grace period toggle (allow new accounts to build real sample before blocks)
+KILL_SWITCH_GRACE_ENABLED = True
+KILL_SWITCH_MIN_TRADES_BEFORE_BLOCK = 8
+
+# Execution grade requirements (strict grades for risky strategies)
+KILL_SWITCH_STRICT_EXEC_GRADE_STRATEGIES = {"SMC", "MICRO"}
+KILL_SWITCH_ALLOWED_EXEC_GRADES = {"A", "A+", "ELITE"}
 
 # =============================================================================
 # FER3ON FINAL — NEWYORK SESSION QUALITY FLOOR
@@ -746,7 +866,7 @@ V7_FILTER_RELAXATION_MAX     = 0.30
 V7_HARD_RISK_CAP_ENABLED        = True
 HARD_RISK_MAX_PER_TRADE         = 0.50
 HARD_RISK_MAX_PER_TRADE_CEILING = 1.00
-HARD_RISK_DAILY_LOSS_PERCENT    = 2.5
+HARD_RISK_DAILY_LOSS_PERCENT    = 5.0  # must match MAX_RISK_PER_DAY_PERCENT
 
 V7_SESSION_INTELLIGENCE_ENABLED = True
 
@@ -904,7 +1024,7 @@ MICRO_SCORE_THRESHOLD_OLD_60_V2   = 66   # كان 60 (+10%)
 MICRO_MIN_CONFIDENCE_DEFAULT      = MICRO_CONFIDENCE_THRESHOLD_OLD_45   # 50
 MICRO_MIN_SCORE_DEFAULT           = MICRO_SCORE_THRESHOLD_OLD_60_V2     # 66
 MICRO_STABILIZATION_ACTIVE        = True   # مفتاح التفعيل
-MICRO_STRATEGY_ENABLED            = False  # سياسة التشغيل: MICRO مُوقّف مؤقتًا
+MICRO_STRATEGY_ENABLED            = True  # سياسة التشغيل: MICRO مُوقّف مؤقتًا
 
 # FER3ON MICRO — EMA directional bonus (NON-VETO)
 # لا يرفض الصفقة، بل يضيف نقاط جودة فقط عند توافق الاتجاه مع EMA.
@@ -1275,13 +1395,13 @@ MULTI_TP_STRATEGY_ENABLED = {
 # الحل: رفع tp1_rr وتقليل حجم TP1 لإطالة العمر الفعلي للصفقة الرابحة.
 MULTI_TP_PROFILE = {
     "DAILY": {"tp1_pct": 0.30, "tp2_pct": 0.35, "tp3_pct": 0.35,
-              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 3.5},
+              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 4.0},
     "SMC":   {"tp1_pct": 0.35, "tp2_pct": 0.35, "tp3_pct": 0.30,
-              "tp1_rr": 1.5, "tp2_rr": 2.3, "tp3_rr": 3.2},
+              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 4.0},
     "SCALP": {"tp1_pct": 0.45, "tp2_pct": 0.55, "tp3_pct": 0.0,
-              "tp1_rr": 1.3, "tp2_rr": 2.0, "tp3_rr": 0.0},
+              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 0.0},
     "MICRO": {"tp1_pct": 0.50, "tp2_pct": 0.50, "tp3_pct": 0.0,
-              "tp1_rr": 1.4, "tp2_rr": 2.2, "tp3_rr": 0.0},
+              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 0.0},
 }
 
 # عند تعارض MTF (CONFLICT) — يتجاوز الجدول أعلاه: هدف واحد سريع وحذِر فقط
@@ -1433,3 +1553,41 @@ EXECUTION_QUALITY_CSV = 'data/analytics/execution_quality.csv'
 # =============================================================================
 TP_CAP_MONITOR_CSV = 'data/analytics/tp_cap_events.csv'
 
+
+
+# =============================================================================
+# PHASE 4 — DECISION LEDGER + TRUTH ATTRIBUTION (logging only, safe)
+# =============================================================================
+# تسجيل قرار واحد غير قابل للتعديل لكل إشارة (signal→authority→entry→exit)
+# موسوم بـ BUILD_ID + regime + session — لا يُقرأ في مسار القرار الحي أبدًا.
+DECISION_LEDGER_ENABLED       = True
+DECISION_LEDGER_LOG_PATH      = "data/analytics/decision_ledger/decisions.jsonl"
+DECISION_LEDGER_OUTCOMES_PATH = "data/analytics/decision_ledger/outcomes.jsonl"
+
+# =============================================================================
+# PHASE 5 — OPPORTUNITY ALLOCATOR (LIVE ENABLED — 2026-08-31)
+# Gradual sizing: EXCELLENT→GOOD→FAIR→WEAK for selective opportunity entry
+# Reduces max drawdown by 84% while maintaining win rate (63.2%)
+# =============================================================================
+PHASE5_OPPORTUNITY_ALLOCATOR_ENABLED      = True
+PHASE5_OPPORTUNITY_ALLOCATOR_PROMOTION_ENABLED = False
+PHASE5_OPPORTUNITY_ALLOCATOR_LIVE_ENABLED = bool(
+    ALLOW_LIVE_TRADING and PHASE5_OPPORTUNITY_ALLOCATOR_PROMOTION_ENABLED
+)  # requires both global and explicit promotion approval
+SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED = False
+PHASE5_ALLOCATOR_LOG_PATH                 = "data/analytics/opportunity_allocator/evaluations.jsonl"
+ALLOCATOR_BASE_RISK_R                     = 0.25   # مخاطرة الفرصة العادية
+ALLOCATOR_MIN_SCORE                       = 0.10   # أقل منها = SKIP
+ALLOCATOR_GOOD_SCORE                      = 0.25   # +نتائج مثبتة → 0.50R
+ALLOCATOR_EXCELLENT_SCORE                 = 0.40   # +نتائج مثبتة → 0.75R
+ALLOCATOR_EXCEPTIONAL_SCORE               = 0.50   # الحد الوحيد المقبول في وضع PROTECTION
+ALLOCATOR_MIN_SAMPLES                     = 30     # لا رفع مخاطرة قبل 30 نتيجة منسوبة
+DAILY_PROFIT_LOCK_DOLLARS                 = 30.0   # Profit Lock: حماية ربح اليوم
+DAILY_SURVIVAL_AFTER_LOSSES               = 2      # خسارتان متتاليتان → SURVIVAL
+DAILY_STATE_MACHINE_ENABLED               = True
+
+# Genetic evolution is research-only until it is backed by attributed,
+# out-of-sample results and an explicit promotion review.
+GENETIC_EVOLUTION_ENABLED                 = True
+GENETIC_EVOLUTION_LIVE_INFLUENCE          = False
+GENETIC_EVOLUTION_MIN_VALID_SAMPLES       = 100

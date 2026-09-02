@@ -25,6 +25,8 @@ from core.settings import (
     ORDER_RETRY_STEP_PCT,
     ORDER_RETRY_MAX_ATTEMPTS,
     ORDER_RETRY_REJECTION_RETCODES,
+    ORDER_RETRY_MAX_WIDEN_FACTOR,
+    MAX_SL_DISTANCE_DOLLARS,
     BUILD_ID,
     # AUDIT FIX [CERT-6] (re-applied on top of REARCH-1/2): STEP 3 below used
     # to hardcode the per-strategy cap as a bare `>= 1` instead of reading
@@ -35,7 +37,6 @@ from core.settings import (
 )
 from core.test_mode_manager import register_trade as register_test_mode_trade
 from core.trade_logger import log_trade as persist_trade_log
-from core.trailing_stop import update_trailing_stop
 from core.trade_identity import resolve_trade_identity
 from core.mt5_order_utils import get_filling_fallback_sequence
 
@@ -180,7 +181,8 @@ def _enforce_min_stop_distance(symbol: str, sl_dist: float, point: float = 0.01)
         # MT5 غير متاح (sandbox) → استخدم fallback آمن فقط في حالات الطوارئ.
         floor = max(floor, float(BROKER_STOP_LEVEL_FALLBACK) * point)
 
-    if sl_dist is None:
+    if sl_dist is None or float(sl_dist or 0) <= 0:
+        print(f'🛑 HIGH_FIX_6: Invalid SL distance sl_dist={sl_dist}, using floor={floor}')
         return floor
     enforced = max(float(sl_dist), floor)
     # FER3ON FINAL [SLTP-2]: cap the adaptive stop for this account size —
@@ -224,6 +226,8 @@ def _enforce_min_tp_distance(
     confluence/quality/session/etc.), just scaled to the stop that is truly
     at risk, instead of leaving TP anchored to a stop distance that no
     longer exists.
+    
+    CRITICAL FIX #2: Added division-by-zero guard before computing intended_rr.
     """
     if tp_dist is None:
         return float(sl_dist_final)
@@ -233,6 +237,10 @@ def _enforce_min_tp_distance(
 
     if sl_dist_original and float(sl_dist_original) > 0:
         sl_dist_original = float(sl_dist_original)
+        # CRITICAL FIX #2: Guard against division by zero
+        if sl_dist_original <= 0:
+            print(f'🛑 DIVISION_BY_ZERO_GUARD: sl_dist_original={sl_dist_original}, skipping RR rescale')
+            return max(float(tp_dist), float(sl_dist_final))
         intended_rr = tp_dist / sl_dist_original
         rescaled_tp = sl_dist_final * intended_rr
         # Still keep an absolute floor: TP must never end up <= the real SL.
@@ -271,6 +279,34 @@ def enforce_and_return_min_stop(symbol: str, sl_dist: float, point: float = 0.01
 # =========================================
 
 
+def _cap_retry_growth(growth, sl_dist_raw):
+    """FER3ON Phase-0: cap the stops-retry widening factor so a retried
+    order can NEVER carry more risk than the account-size cap allows.
+
+    Uncapped, ORDER_RETRY_STEP_PCT=0.10 with MAX_ATTEMPTS=5 widens SL by
+    1.10^4 ≈ 1.61x — e.g. a $30 gold stop becomes $48, silently breaking
+    the MAX_SL_DISTANCE_DOLLARS contract the finalizer just enforced.
+    The effective factor is the TIGHTEST of:
+      1. the requested geometric growth,
+      2. ORDER_RETRY_MAX_WIDEN_FACTOR,
+      3. MAX_SL_DISTANCE_DOLLARS / original sl_dist.
+    Same capped factor is applied to BOTH sl and tp so the RR ratio the
+    finalizer chose is preserved (TP is never left behind while SL grows).
+    """
+    try:
+        base = float(sl_dist_raw)
+        if base <= 0:
+            return max(1.0, float(growth))
+        capped = min(
+            float(growth),
+            float(ORDER_RETRY_MAX_WIDEN_FACTOR),
+            float(MAX_SL_DISTANCE_DOLLARS) / base,
+        )
+        return max(1.0, capped)
+    except Exception:
+        return max(1.0, float(growth))
+
+
 def _send_order_with_stops_retry(request, symbol, point, sl_dist, tp_dist, price, signal):
     """
     If the broker rejects the order because SL/TP are too close to price,
@@ -293,6 +329,7 @@ def _send_order_with_stops_retry(request, symbol, point, sl_dist, tp_dist, price
     for retry_index in range(max_attempts):
         if retry_index > 0:
             growth = (1.0 + ORDER_RETRY_STEP_PCT) ** retry_index
+            growth = _cap_retry_growth(growth, sl_dist)  # Phase-0: never exceed account cap
             current_sl_dist = round(float(sl_dist) * growth, 2)
             current_tp_dist = round(float(tp_dist) * growth, 2)
             print(
@@ -412,7 +449,9 @@ def _check_per_strategy_limit(mt5_module, symbol, magic, max_open_per_strategy):
     settings.PER_STRATEGY_SOFT_POSITION_LIMITS per REARCH-2) are NOT this
     cap.
     """
-    positions_all = mt5_module.positions_get(symbol=symbol) or []
+    positions_all = mt5_module.positions_get(symbol=symbol)
+    if positions_all is None:
+        raise RuntimeError("POSITION_STATE_UNAVAILABLE")
     this_magic = int(magic or 0)
     same_strategy_open = sum(
         1 for pos in positions_all if int(getattr(pos, "magic", 0) or 0) == this_magic
@@ -475,7 +514,13 @@ def execute_trade(
             print(f'\xf0\x9f\x9a\xab KILL_SWITCH_BLOCK | {_reason}')
             return {'retcode': -1, 'comment': _reason}
     except Exception as _ks_exc:
-        print(f'\xe2\x9a\xa0 KILL_SWITCH_CHECK_FAILED (non-fatal, allowing trade): {_ks_exc}')
+        # [FER3ON-FIX-2026-08-21] كان قبل كده "non-fatal, allowing trade" —
+        # يعني أي خطأ في فحص الحماية نفسه كان بيسمح بالصفقة بدل ما يمنعها.
+        # ده عكس مبدأ fail-closed المطلوب لمكوّن حماية حرج. الاستثناء دلوقتي
+        # يمنع الصفقة، زي بالظبط لو should_block_trade رجّعت True صراحة.
+        _reason = f'KILL_SWITCH_CHECK_FAILED_FAIL_CLOSED_{type(_ks_exc).__name__}'
+        print(f'\xf0\x9f\x9a\xab KILL_SWITCH_CHECK_FAILED (fail-closed, blocking trade): {_ks_exc}')
+        return {'retcode': -1, 'comment': _reason}
 
 
     for k, v in request.items():
@@ -527,7 +572,8 @@ def execute_trade(
         else:
             print(f'\xe2\x9c\x85 EDGE_GATE_PASS | ev_ratio={_ev_ratio:+.3f}')
     except Exception as _ee_exc:
-        print(f'\xe2\x9a\xa0 EDGE_GATE_CHECK_FAILED (non-fatal): {_ee_exc}')
+        print(f'🛑 EDGE_GATE_CHECK_FAILED (fail-closed): {_ee_exc}')
+        return {'retcode': -8, 'comment': 'EDGE_GATE_CHECK_FAILED'}
 
 
     # The RR is now computed dynamically by the adaptive engine; no fixed RR
@@ -644,6 +690,20 @@ def execute_trade(
     except Exception as exc:
         print(f'⚠️ V9_READINESS_BRIDGE_FAILED (non-fatal, lot unchanged): {exc}')
 
+    # Final volume boundary after all quant/V7/regime/readiness adjustments.
+    # No downstream multiplier may exceed the configured account ceiling.
+    try:
+        from core.settings import MAX_LOT
+        request['volume'] = min(
+            float(MAX_LOT), max(0.0, float(request.get('volume', lot) or 0.0))
+        )
+        lot = request['volume']
+        if lot <= 0:
+            return {'retcode': -9, 'comment': 'FINAL_LOT_INVALID'}
+    except Exception as exc:
+        print(f'🛑 FINAL_LOT_BOUNDARY_FAILED: {exc}')
+        return {'retcode': -9, 'comment': 'FINAL_LOT_BOUNDARY_FAILED'}
+
     if request.get('type_filling') not in (0, 1, 2):
         try:
             request['type_filling'] = mt5.ORDER_FILLING_IOC
@@ -673,7 +733,10 @@ def execute_trade(
     # =========================================
     try:
         symbol = request.get("symbol")
-        positions_all = mt5.positions_get(symbol=symbol) or []
+        positions_all = mt5.positions_get(symbol=symbol)
+        if positions_all is None:
+            print('🛑 HEDGE CHECK FAILED: position state unavailable')
+            return {"retcode": -6, "comment": "POSITION_STATE_UNAVAILABLE"}
         current_type = request.get("type")
 
         for pos in positions_all:
@@ -698,7 +761,8 @@ def execute_trade(
                 return {"retcode": -3, "comment": "HEDGE_DISABLED_OPPOSITE_POSITION_EXISTS"}
 
     except Exception as e:
-        print(f"⚠️ HEDGE CHECK FAILED: {e}")
+        print(f"🛑 HEDGE CHECK FAILED (fail-closed): {e}")
+        return {"retcode": -6, "comment": "HEDGE_CHECK_FAILED"}
 
     # =========================================
     # STEP 3: صفقة واحدة لكل استراتيجية (تحقق بالـ magic مش بالاتجاه)
@@ -730,7 +794,8 @@ def execute_trade(
             return {"retcode": -4, "comment": "PER_STRATEGY_MAX_OPEN_HIT"}
 
     except Exception as e:
-        print(f"⚠️ PER_STRATEGY CHECK FAILED: {e}")
+        print(f"🛑 PER_STRATEGY CHECK FAILED (fail-closed): {e}")
+        return {"retcode": -7, "comment": "PER_STRATEGY_CHECK_FAILED"}
 
     # =========================================
     # STEP 4: الحد اليومي الكلي = 50 صفقة
@@ -771,6 +836,8 @@ def execute_trade(
         tp_tiers_raw=tp_tiers,
         entry_price=price if price > 0 else None,
         signal=signal,
+        market_regime=market_regime,
+        confidence=confidence,
     )
     sl_dist = final['sl_dist']
     tp_dist = final['tp_dist']
@@ -852,7 +919,10 @@ def execute_trade(
                 filled_time=None,
                 rejected=True,
                 symbol=_eq_symbol,
+                strategy=strategy,
             )
+            from core.error_memory import record_error_episode
+            record_error_episode(category="EXECUTION_REJECTED", outcome="REJECTED", strategy=strategy)
         except Exception as _eq_err:
             print(f'⚠️ EXECUTION_QUALITY_LOG_FAILED (non-fatal): {_eq_err}')
         return result
@@ -886,6 +956,7 @@ def execute_trade(
             filled_time=datetime.now(timezone.utc),
             rejected=False,
             symbol=_eq_symbol,
+            strategy=strategy,
         )
     except Exception as _eq_err:
         print(f'⚠️ EXECUTION_QUALITY_LOG_FAILED (non-fatal): {_eq_err}')
@@ -1008,13 +1079,5 @@ def execute_trade(
     except Exception as e:
         print(f'⚠️ MULTI_TP_LADDER COMPUTE FAILED: {e}')
         tp_ladder = {"enabled": False, "levels": [], "mode": "ERROR"}
-
-    try:
-        update_trailing_stop(
-            request['symbol'],
-            trailing_distance=sl_dist * 0.5,
-        )
-    except Exception as e:
-        print(f'⚠️ TRAILING UPDATE FAILED: {e}')
 
     return result

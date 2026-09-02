@@ -64,7 +64,7 @@ def _load_win_rates() -> Dict[str, float]:
                 # الفاشلة القديمة (build_id مختلف) لا تدخل في حساب WR
                 if _CURRENT_BUILD_ID:
                     row_build = str(row.get("build_id", "") or "")
-                    if row_build and row_build != str(_CURRENT_BUILD_ID):
+                    if row_build != str(_CURRENT_BUILD_ID):
                         continue
                 per_strat.setdefault(strat, []).append(result)
     except OSError:

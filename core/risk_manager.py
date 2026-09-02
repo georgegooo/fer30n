@@ -15,6 +15,7 @@ from core.settings import (
     MIN_LOT,
     MIN_SL_DISTANCE,
     MAX_SL_DISTANCE_DOLLARS,
+    TOTAL_RISK_CAP,
     MIN_LOT_RISK_MULTIPLE_CAP,
     QUALITY_RISK_TABLE,
     TESTING_MODE,
@@ -131,6 +132,42 @@ def _normalize_strategy(strategy):
 
 def _clamp(v, low, high):
     return max(low, min(high, v))
+
+
+# =========================================
+# POSITION MANAGER (single gate for open-position policy)
+# =========================================
+
+class PositionManager:
+    """Single object that enforces the open-position policy for all strategies."""
+
+    def evaluate(self, *, strategy='SCALP', current_positions=0, total_positions=0):
+        result = evaluate_position_limits(
+            strategy=strategy,
+            current_positions=current_positions,
+            total_positions=total_positions,
+        )
+        if not result['allowed']:
+            result['reason'] = f"{result['reason']}|POSITION_LIMIT"
+        return result
+
+    def can_open(self, *, strategy='SCALP', current_positions=0, total_positions=0):
+        result = self.evaluate(
+            strategy=strategy,
+            current_positions=current_positions,
+            total_positions=total_positions,
+        )
+        return bool(result['allowed']), result
+
+
+_position_manager = None
+
+
+def get_position_manager() -> PositionManager:
+    global _position_manager
+    if _position_manager is None:
+        _position_manager = PositionManager()
+    return _position_manager
 
 
 # =========================================
@@ -586,6 +623,24 @@ def calculate_smart_lot(
                 )
                 return 0.0, round(raw_lot, 4), adjustments
 
+        implied_risk = lot * sl_points * tick_value
+        if implied_risk > TOTAL_RISK_CAP + 1e-9:
+            cap_factor = (TOTAL_RISK_CAP / (sl_points * tick_value)) if (sl_points * tick_value) > 0 else MIN_LOT
+            capped_lot = max(MIN_LOT, min(float(cap_factor), max_lot))
+            capped_lot = round(round(capped_lot / lot_step) * lot_step, 2)
+            if capped_lot <= 0:
+                capped_lot = MIN_LOT
+            adjustments.append(
+                f'TOTAL_RISK_CAP:cap lot={capped_lot:.2f} '
+                f'(implied_risk=${implied_risk:.2f} > cap=${TOTAL_RISK_CAP:.2f})'
+            )
+            print(
+                f'🛑 TOTAL_RISK_CAP | balance=${balance:.0f} sl=${sl_price_dist:.2f} '
+                f'| implied_risk=${implied_risk:.2f} > cap=${TOTAL_RISK_CAP:.2f} '
+                f'| capping lot to {capped_lot:.2f}'
+            )
+            return capped_lot, round(raw_lot, 4), adjustments
+
     print(
         f'[AI-RISK]'
         f' mode={aggression_mode}'
@@ -769,13 +824,13 @@ def evaluate_unified_risk(
     try:
         from risk.hard_risk_cap import check_hard_risk_cap
         hard_risk = check_hard_risk_cap(balance, requested_risk_percent, drawdown_status['daily_used'])
-    except Exception:
+    except Exception as exc:
         hard_risk = {
             'enabled': False,
-            'allowed': True,
-            'hard_risk_status': 'ACTIVE',
-            'capped_risk_percent': float(requested_risk_percent or 0.0),
-            'reason': 'UNAVAILABLE',
+            'allowed': False,
+            'hard_risk_status': 'ERROR',
+            'capped_risk_percent': 0.0,
+            'reason': f'HARD_RISK_CHECK_FAILED:{type(exc).__name__}',
         }
 
     if not hard_risk.get('allowed', True):

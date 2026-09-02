@@ -46,6 +46,7 @@ AI_MEMORY_COLUMNS = [
     "conflict_report",
     "master_breakdown",
     "decision_snapshot_id",
+    "account_id",
 ]
 
 HISTORY_COLUMNS = [
@@ -63,6 +64,7 @@ HISTORY_COLUMNS = [
     "quality_score",
     "brain_score",
     "build_id",
+    "account_id",
 ]
 
 FIELD_ALIASES = {
@@ -115,6 +117,7 @@ FIELD_ALIASES = {
     "master_breakdown": "master_breakdown",
     "decision_snapshot_id": "decision_snapshot_id",
     "build_id": "build_id",
+    "account_id": "account_id",
 }
 
 

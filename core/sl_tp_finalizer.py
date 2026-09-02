@@ -63,6 +63,9 @@ def finalize_sl_tp(
     tp_tiers_raw: Optional[List[Dict[str, Any]]] = None,
     entry_price: Optional[float] = None,
     signal: Optional[str] = None,
+    market_regime: Optional[str] = None,
+    confidence: float = 1.0,
+    exposure_modifier: float = 1.0,
 ) -> Dict[str, Any]:
     """Compute the final SL/TP distances (raw price units) that should
     actually be sent to the broker, plus a rescaled tp_tiers ladder for
@@ -77,15 +80,30 @@ def finalize_sl_tp(
     sl_dist_raw = float(sl_dist_raw) if sl_dist_raw is not None else None
     tp_dist_raw = float(tp_dist_raw) if tp_dist_raw is not None else None
 
-    # STEP 1 — SL: broker-min-stop floor + account-size cap.
-    sl_dist_final = _enforce_min_stop_distance(symbol, sl_dist_raw, point)
+    # Preserve the raw values for RR and diagnostics before applying policy.
+    original_sl_dist_raw = sl_dist_raw
+
+    # STEP 1 — SL: strategy policy cap, then broker-min-stop floor and the
+    # global account-size cap in _enforce_min_stop_distance.
+    if sl_dist_raw is not None and strategy:
+        from core.sl_risk_policy import resolve_sl_cap
+        strategy_cap = resolve_sl_cap(
+            strategy=strategy,
+            market_regime=market_regime,
+            confidence=confidence,
+            exposure_modifier=exposure_modifier,
+        )["effective_cap"]
+        sl_dist_for_enforcement = min(sl_dist_raw, strategy_cap)
+    else:
+        sl_dist_for_enforcement = sl_dist_raw
+    sl_dist_final = _enforce_min_stop_distance(symbol, sl_dist_for_enforcement, point)
 
     # STEP 2 — TP: RR-preserving rescale against the REAL, enforced SL.
     tp_dist_final = _enforce_min_tp_distance(
         sl_dist_final=sl_dist_final,
         tp_dist=tp_dist_raw,
         strategy=strategy,
-        sl_dist_original=sl_dist_raw,
+        sl_dist_original=original_sl_dist_raw,
     )
 
     # STEP 3 — secondary ATR sanity ceiling (defense-in-depth only).
@@ -133,7 +151,8 @@ def finalize_sl_tp(
         "tp_tiers": tp_tiers_final,
         "rr": round(tp_dist_final / sl_dist_final, 2) if sl_dist_final else 0.0,
         "sl_was_capped": (
-            sl_dist_raw is None or round(sl_dist_final, 6) != round(sl_dist_raw, 6)
+            original_sl_dist_raw is None
+            or round(sl_dist_final, 6) != round(original_sl_dist_raw, 6)
         ),
         "tp_was_rescaled": (
             tp_dist_raw is None or tp_dist_final is None
