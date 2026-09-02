@@ -1,0 +1,207 @@
+[
+  {
+    "scenario": "strong_buy",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 74.0,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [
+      "Model health degraded: 50.0 < 60.0",
+      "ML_SAFETY: WARNING (50)"
+    ],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN",
+      "SYSTEM_HEALTH"
+    ]
+  },
+  {
+    "scenario": "strong_sell",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 76.2,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "weak_buy",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_WAIT",
+    "score": 43.79,
+    "matched_actual": false,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "weak_sell",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_WAIT",
+    "score": 46.42,
+    "matched_actual": false,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "neutral_buy",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 61.75,
+    "matched_actual": false,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "neutral_sell",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 61.1,
+    "matched_actual": false,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "high_risk_portfolio",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_WAIT",
+    "score": 56.34,
+    "matched_actual": false,
+    "errors": [],
+    "warnings": [
+      "Portfolio concentrated in single strategy",
+      "Portfolio near capacity — exposure score low"
+    ],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "bad_signal",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_REJECT",
+    "score": 32.0,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [
+      "Portfolio concentrated in single strategy",
+      "Portfolio near capacity — exposure score low"
+    ],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "low_confidence",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_WAIT",
+    "score": 51.95,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "concentrated_strategy",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 63.57,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [
+      "Portfolio concentrated in single strategy",
+      "Portfolio near capacity — exposure score low"
+    ],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "unknown_regime",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 67.25,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  },
+  {
+    "scenario": "volatility_pressured",
+    "mode": "SHADOW",
+    "final_decision": "SHADOW_APPROVE",
+    "score": 61.07,
+    "matched_actual": true,
+    "errors": [],
+    "warnings": [],
+    "components_run": [
+      "PORTFOLIO_BRAIN",
+      "GOLD_CONTEXT_LAYER",
+      "ML_SAFETY",
+      "STRATEGY_DNA",
+      "FINAL_BRAIN"
+    ]
+  }
+]

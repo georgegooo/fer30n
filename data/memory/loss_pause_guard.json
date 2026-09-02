@@ -1,7 +1,7 @@
 {
-  "consecutive_losses": 0,
-  "last_loss_timestamp": 0.0,
-  "last_loss_ticket": null,
+  "consecutive_losses": 1,
+  "last_loss_timestamp": 1788355359.8350685,
+  "last_loss_ticket": 10318331193,
   "pause_active": false,
   "pause_start_timestamp": 0.0,
   "last_signal_signature": ""

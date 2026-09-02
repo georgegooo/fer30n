@@ -1,12 +1,12 @@
 {
   "version": "phase3.0",
-  "generated_at": "2026-08-19T15:42:36.976191+00:00",
+  "generated_at": "2026-09-02T17:25:23.692512+00:00",
   "mode": "SHADOW",
   "tabs": {
     "portfolio_analytics": {
       "tab": "PORTFOLIO_ANALYTICS",
-      "generated_at": "2026-08-19T15:42:36.976207+00:00",
-      "error": "cannot import name '_state' from 'core.portfolio_risk_authority' (/home/claude/audit/FER3ON-FINAL-build1-MERGED-rearch-cert6/project/core/portfolio_risk_authority.py)",
+      "generated_at": "2026-09-02T17:25:23.692538+00:00",
+      "error": "cannot import name '_state' from 'core.portfolio_risk_authority' (D:\\FER3ON_PHASE4_5_COMPLETE\\project\\core\\portfolio_risk_authority.py)",
       "portfolio_brain": {
         "component": "PORTFOLIO_BRAIN",
         "mode": "SHADOW",
@@ -26,19 +26,19 @@
     },
     "risk_analytics": {
       "tab": "RISK_ANALYTICS",
-      "generated_at": "2026-08-19T15:42:36.976221+00:00",
+      "generated_at": "2026-09-02T17:25:23.692702+00:00",
       "loss_limits": {
         "daily_used": 0.0,
         "weekly_used": 0.0,
-        "daily_limit": 3.0,
-        "weekly_limit": 12.0,
-        "daily_remaining": 3.0,
-        "weekly_remaining": 12.0,
+        "daily_limit": 5.0,
+        "weekly_limit": 20.0,
+        "daily_remaining": 5.0,
+        "weekly_remaining": 20.0,
         "consecutive_losses": 0,
         "source": "mt5_live_sync"
       },
       "risk_config": {
-        "max_daily_risk_pct": 3.0,
+        "max_daily_risk_pct": 5.0,
         "risk_per_trade_pct": 0.75,
         "max_lot": 0.06,
         "max_open_trades": 4,
@@ -50,40 +50,40 @@
         "enabled": true,
         "live_block": false,
         "last_health_score": 50.0,
-        "total_predictions": 14949,
-        "total_resolved": 6632,
-        "drift_alerts_count": 326,
-        "retrain_recommendations": 320,
-        "baseline_accuracy": 0.5
+        "total_predictions": 702,
+        "total_resolved": 46,
+        "drift_alerts_count": 0,
+        "retrain_recommendations": 0,
+        "baseline_accuracy": null
       }
     },
     "strategy_dna": {
       "tab": "STRATEGY_DNA",
-      "generated_at": "2026-08-19T15:42:36.976570+00:00",
+      "generated_at": "2026-09-02T17:25:23.697491+00:00",
       "rankings": [
         {
-          "strategy": "MANUAL",
-          "dna_score": 97.65,
-          "win_rate": 0.9562043795620438,
-          "total_trades": 137,
-          "expectancy": 9.722,
+          "strategy": "SMC",
+          "dna_score": 87.4,
+          "win_rate": 0.9166666666666666,
+          "total_trades": 24,
+          "expectancy": 13.125,
           "health": "STRONG"
         },
         {
-          "strategy": "SMC",
-          "dna_score": 65.01,
-          "win_rate": 0.22516835016835016,
-          "total_trades": 2376,
-          "expectancy": 3.2164,
+          "strategy": "TEST_STRAT",
+          "dna_score": 50.0,
+          "win_rate": 1.0,
+          "total_trades": 1,
+          "expectancy": 10.0,
           "health": "STABLE"
         },
         {
-          "strategy": "MICRO",
-          "dna_score": 21.26,
-          "win_rate": 0.014656415185007208,
-          "total_trades": 4162,
-          "expectancy": -0.5765,
-          "health": "WEAK"
+          "strategy": "WEAK_STRAT",
+          "dna_score": 50.0,
+          "win_rate": 0.0,
+          "total_trades": 1,
+          "expectancy": -10.0,
+          "health": "STABLE"
         }
       ],
       "status": {
@@ -91,55 +91,40 @@
         "mode": "SHADOW",
         "enabled": true,
         "live_influence": false,
-        "total_updates": 7005,
+        "total_updates": 24,
         "strategies_tracked": 3,
         "rankings": [
           {
-            "strategy": "MANUAL",
-            "dna_score": 97.65,
-            "win_rate": 0.9562043795620438,
-            "total_trades": 137,
-            "expectancy": 9.722,
+            "strategy": "SMC",
+            "dna_score": 87.4,
+            "win_rate": 0.9166666666666666,
+            "total_trades": 24,
+            "expectancy": 13.125,
             "health": "STRONG"
           },
           {
-            "strategy": "SMC",
-            "dna_score": 65.01,
-            "win_rate": 0.22516835016835016,
-            "total_trades": 2376,
-            "expectancy": 3.2164,
+            "strategy": "TEST_STRAT",
+            "dna_score": 50.0,
+            "win_rate": 1.0,
+            "total_trades": 1,
+            "expectancy": 10.0,
             "health": "STABLE"
           },
           {
-            "strategy": "MICRO",
-            "dna_score": 21.26,
-            "win_rate": 0.014656415185007208,
-            "total_trades": 4162,
-            "expectancy": -0.5765,
-            "health": "WEAK"
+            "strategy": "WEAK_STRAT",
+            "dna_score": 50.0,
+            "win_rate": 0.0,
+            "total_trades": 1,
+            "expectancy": -10.0,
+            "health": "STABLE"
           }
         ]
       },
-      "brain_rankings": [
-        {
-          "strategy": "SMC",
-          "trades": 17,
-          "win_rate": 41.18,
-          "profit": -43.81,
-          "score": 27.51
-        },
-        {
-          "strategy": "SCALP",
-          "trades": 70,
-          "win_rate": 61.43,
-          "profit": -829.61,
-          "score": 18.11
-        }
-      ]
+      "brain_rankings": []
     },
     "session_intelligence": {
       "tab": "SESSION_INTELLIGENCE",
-      "generated_at": "2026-08-19T15:42:36.978443+00:00",
+      "generated_at": "2026-09-02T17:25:23.706157+00:00",
       "adaptive_shadow": {
         "component": "ADAPTIVE_SHADOW_CALIBRATION",
         "mode": "SHADOW_ADVISORY_ONLY",
@@ -155,11 +140,11 @@
         "confidence_suggestions_enabled": true,
         "session_pref_enabled": true,
         "strategy_ranking_enabled": true,
-        "suggestions_file": "data/analytics/phase3/adaptive_shadow/adaptive_suggestions.json",
+        "suggestions_file": "data/analytics/phase3\\adaptive_shadow\\adaptive_suggestions.json",
         "notice": "Advisory only. No live threshold changes in Phase 3."
       },
       "adaptive_suggestions": {
-        "generated_at": "2026-08-19T15:42:36.935967+00:00",
+        "generated_at": "2026-09-02T17:25:23.126036+00:00",
         "mode": "SHADOW_ADVISORY_ONLY",
         "important_notice": "These are RECOMMENDATIONS ONLY. No changes are applied automatically. Human review and explicit approval required before any live activation.",
         "cannot_change_in_phase3": [
@@ -179,7 +164,7 @@
             "confidence": 0.5,
             "data_sample_size": 25,
             "approved_for_live": false,
-            "timestamp": 1787154156.935843
+            "timestamp": 1788369923.1240406
           }
         ],
         "session_preferences": {
@@ -208,7 +193,7 @@
     },
     "regime_intelligence": {
       "tab": "REGIME_INTELLIGENCE",
-      "generated_at": "2026-08-19T15:42:36.978507+00:00",
+      "generated_at": "2026-09-02T17:25:23.706815+00:00",
       "gold_context_config": {
         "component": "GOLD_CONTEXT_LAYER",
         "mode": "SHADOW",
@@ -231,7 +216,7 @@
     },
     "phase3_status": {
       "tab": "PHASE3_SHADOW_STATUS",
-      "generated_at": "2026-08-19T15:42:36.978517+00:00",
+      "generated_at": "2026-09-02T17:25:23.706854+00:00",
       "phase3_enabled": true,
       "mode": "SHADOW",
       "live_authority": false,
@@ -240,18 +225,18 @@
           "component": "FINAL_BRAIN",
           "mode": "SHADOW",
           "live_authority": false,
-          "total_shadow_cycles": 18470,
-          "approval_accuracy": 0.5606,
-          "false_rejection_rate": 0.3347826086956522,
-          "false_rejections": 77,
+          "total_shadow_cycles": 766,
+          "approval_accuracy": 0.8172,
+          "false_rejection_rate": 0.29333333333333333,
+          "false_rejections": 22,
           "avoided_losers": 0,
-          "readiness_score": 72.38,
-          "live_ready": false,
+          "readiness_score": 83.89,
+          "live_ready": true,
           "requirements": {
             "shadow_cycles_required": 200,
-            "shadow_cycles_done": 18470,
+            "shadow_cycles_done": 766,
             "false_reject_max": 0.1,
-            "current_false_reject": 0.3347826086956522
+            "current_false_reject": 0.29333333333333333
           }
         },
         "portfolio_brain": {
@@ -276,43 +261,43 @@
           "enabled": true,
           "live_block": false,
           "last_health_score": 50.0,
-          "total_predictions": 14949,
-          "total_resolved": 6632,
-          "drift_alerts_count": 326,
-          "retrain_recommendations": 320,
-          "baseline_accuracy": 0.5
+          "total_predictions": 702,
+          "total_resolved": 46,
+          "drift_alerts_count": 0,
+          "retrain_recommendations": 0,
+          "baseline_accuracy": null
         },
         "strategy_dna": {
           "component": "STRATEGY_DNA",
           "mode": "SHADOW",
           "enabled": true,
           "live_influence": false,
-          "total_updates": 7005,
+          "total_updates": 24,
           "strategies_tracked": 3,
           "rankings": [
             {
-              "strategy": "MANUAL",
-              "dna_score": 97.65,
-              "win_rate": 0.9562043795620438,
-              "total_trades": 137,
-              "expectancy": 9.722,
+              "strategy": "SMC",
+              "dna_score": 87.4,
+              "win_rate": 0.9166666666666666,
+              "total_trades": 24,
+              "expectancy": 13.125,
               "health": "STRONG"
             },
             {
-              "strategy": "SMC",
-              "dna_score": 65.01,
-              "win_rate": 0.22516835016835016,
-              "total_trades": 2376,
-              "expectancy": 3.2164,
+              "strategy": "TEST_STRAT",
+              "dna_score": 50.0,
+              "win_rate": 1.0,
+              "total_trades": 1,
+              "expectancy": 10.0,
               "health": "STABLE"
             },
             {
-              "strategy": "MICRO",
-              "dna_score": 21.26,
-              "win_rate": 0.014656415185007208,
-              "total_trades": 4162,
-              "expectancy": -0.5765,
-              "health": "WEAK"
+              "strategy": "WEAK_STRAT",
+              "dna_score": 50.0,
+              "win_rate": 0.0,
+              "total_trades": 1,
+              "expectancy": -10.0,
+              "health": "STABLE"
             }
           ]
         },
@@ -350,7 +335,7 @@
           "confidence_suggestions_enabled": true,
           "session_pref_enabled": true,
           "strategy_ranking_enabled": true,
-          "suggestions_file": "data/analytics/phase3/adaptive_shadow/adaptive_suggestions.json",
+          "suggestions_file": "data/analytics/phase3\\adaptive_shadow\\adaptive_suggestions.json",
           "notice": "Advisory only. No live threshold changes in Phase 3."
         }
       },
@@ -358,24 +343,24 @@
         "component": "FINAL_BRAIN",
         "mode": "SHADOW",
         "live_authority": false,
-        "total_shadow_cycles": 18470,
-        "approval_accuracy": 0.5606,
-        "false_rejection_rate": 0.3347826086956522,
-        "false_rejections": 77,
+        "total_shadow_cycles": 766,
+        "approval_accuracy": 0.8172,
+        "false_rejection_rate": 0.29333333333333333,
+        "false_rejections": 22,
         "avoided_losers": 0,
-        "readiness_score": 72.38,
-        "live_ready": false,
+        "readiness_score": 83.89,
+        "live_ready": true,
         "requirements": {
           "shadow_cycles_required": 200,
-          "shadow_cycles_done": 18470,
+          "shadow_cycles_done": 766,
           "false_reject_max": 0.1,
-          "current_false_reject": 0.3347826086956522
+          "current_false_reject": 0.29333333333333333
         }
       },
       "estimated_cycles_remaining": 0,
-      "readiness_pct": 72.38,
+      "readiness_pct": 83.89,
       "system_health": {
-        "overall_score": 72.48,
+        "overall_score": 74.13,
         "overall_status": "OK",
         "phase3_readiness": 90.0,
         "warnings_count": 1,

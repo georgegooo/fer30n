@@ -1,9 +1,9 @@
 {
   "pending": [
     {
-      "id": "eda42ca1-58b",
-      "timestamp": "2026-07-27T00:47:49.591100+00:00",
-      "eval_after": 1785114169.591106,
+      "id": "a8712f06-ff8",
+      "timestamp": "2026-09-02T16:28:11.773249+00:00",
+      "eval_after": 1788367391.7732713,
       "symbol": "V7-INTEGRATION",
       "strategy": "INTEGRATION",
       "direction": "BUY",
@@ -16,6 +16,8 @@
       "entry_price": 1000.0,
       "verdict": "REJECT",
       "rejection_reason": "FINAL_BRAIN",
+      "entry_timing": "UNKNOWN",
+      "sl_diagnostic": "UNKNOWN",
       "evaluated": false
     }
   ],

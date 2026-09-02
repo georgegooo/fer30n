@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-09-02T06:57:06.493869+00:00",
+  "total_trades": 149,
+  "starting_balance": 1000.0,
+  "overall_metrics": {
+    "total_trades": 149,
+    "wins": 73,
+    "losses": 76,
+    "breakeven": 0,
+    "win_rate": 0.4899328859060403,
+    "total_profit": 1874.2600000000004,
+    "total_loss": 2246.7799999999993,
+    "net_pnl": -372.51999999999884,
+    "profit_factor": 0.8341982748644732,
+    "expectancy": -2.5001342281879118,
+    "avg_win": 25.674794520547945,
+    "avg_loss": 29.562894736842107,
+    "avg_rr": 2.1817073170731707,
+    "avg_duration_sec": 240.0,
+    "max_drawdown": 665.0899999999998,
+    "max_consecutive_losses": 7,
+    "max_consecutive_wins": 5,
+    "best_trade": 301.1,
+    "worst_trade": -94.8
+  },
+  "equity_curve_summary": {
+    "starting_balance": 1000.0,
+    "final_equity": 627.48,
+    "total_return_pct": -0.3725,
+    "max_drawdown_abs": 665.09,
+    "max_drawdown_pct": 0.5479,
+    "total_data_points": 149
+  },
+  "rolling_windows": [
+    {
+      "window": 10,
+      "win_rate": 0.5,
+      "profit_factor": 0.7697175781618966,
+      "expectancy": -2.438000000000001,
+      "net_pnl": -24.38000000000001,
+      "sample_size": 10
+    },
+    {
+      "window": 20,
+      "win_rate": 0.4,
+      "profit_factor": 0.3483626789534309,
+      "expectancy": -11.88,
+      "net_pnl": -237.60000000000002,
+      "sample_size": 20
+    },
+    {
+      "window": 50,
+      "win_rate": 0.48,
+      "profit_factor": 0.8082600309169756,
+      "expectancy": -2.8031999999999995,
+      "net_pnl": -140.15999999999997,
+      "sample_size": 50
+    }
+  ],
+  "exposure_diagnostics": {
+    "total_trades": 149,
+    "strategy_distribution": {
+      "SCALP": 11,
+      "MICRO": 32,
+      "SMC": 68,
+      "MANUAL": 38
+    },
+    "session_distribution": {
+      "LONDON": 51,
+      "NEW_YORK": 1,
+      "ASIA": 37,
+      "NEWYORK": 42,
+      "OFF_HOURS": 18
+    },
+    "regime_distribution": {
+      "TRENDING": 51,
+      "RANGING": 39,
+      "UNKNOWN": 59
+    },
+    "direction_distribution": {
+      "BUY": 72,
+      "SELL": 77
+    },
+    "avg_lot": 0.0273,
+    "avg_risk_percent": 0.4,
+    "avg_duration_hours": 0.07,
+    "concentration_flag": false,
+    "concentration_notes": [
+      "No concentration issues detected."
+    ]
+  },
+  "advisory_only": true,
+  "not_applied_live": true
+}

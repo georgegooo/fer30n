@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-09-02T09:49:30.455159",
+  "baseline_metrics": {
+    "win_rate": 0.64,
+    "profit_factor": 4.105,
+    "net_profit": 172388,
+    "sharpe_ratio": 7.868,
+    "max_drawdown": 0.366,
+    "ruin_probability": 0.0,
+    "date": "2026-09-02"
+  },
+  "shadow_learning": {
+    "status": "loaded",
+    "date": "N/A",
+    "signals_analyzed": 0,
+    "simulated_win_rate": 0,
+    "avg_pnl": 0,
+    "avg_rr": 0,
+    "high_priority_recommendations": [
+      {
+        "priority": "HIGH",
+        "action": "خفض معايير QUALITY_TRUST_DISABLED",
+        "reason": "الإشارات المرفوضة لديها معدل نجاح عالي (60.05%)",
+        "impact": "قد تزيد الأرباح"
+      },
+      {
+        "priority": "HIGH",
+        "action": "تشديد معايير جودة الإشارات العالية",
+        "reason": "الإشارات عالية الجودة (69.77%) أفضل من المنخفضة (0.00%)",
+        "impact": "تحسين نسبة الفوز الكلية"
+      }
+    ],
+    "medium_priority_recommendations": []
+  },
+  "quality_adjustments": {
+    "status": "loaded",
+    "phase": "Monitoring Phase (Week 0)",
+    "timestamp": "2026-09-02T09:48:07.741405",
+    "adjustments": {
+      "QUALITY_SCORE_TRUST_ENABLED": false,
+      "apply_rate": 0.0,
+      "notes": "Monitoring phase - no changes yet"
+    }
+  },
+  "genetic_evolution": {
+    "status": "loaded",
+    "file": "genetic_evolution_results_20260902_094813.json",
+    "generations": 10,
+    "best_fitness": 4.670960383061325,
+    "best_parameters": {
+      "risk_percent": 0.4966453202736195,
+      "max_trades_per_day": 5,
+      "tp_multiplier": 1.5,
+      "sl_multiplier": 0.7277113454544263,
+      "confidence_threshold": 53,
+      "quality_floor": 65
+    },
+    "improvement": {
+      "fitness": -0.4063344708869694,
+      "win_rate": -0.017554887530819796,
+      "profit_factor": -0.10532932518491878
+    }
+  },
+  "performance_alerts": []
+}

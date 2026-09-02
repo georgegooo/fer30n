@@ -1,0 +1,245 @@
+{
+  "version": "7.0",
+  "total_trades": 16,
+  "wins": 8,
+  "losses": 8,
+  "last_tune_at_trade": 15,
+  "offsets": {
+    "composite_full": 0.5,
+    "composite_reduced": 0.5,
+    "composite_micro": 0.5
+  },
+  "recent_results": [
+    {
+      "ts": 1787314542,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 30.92,
+      "win": true
+    },
+    {
+      "ts": 1787534491,
+      "strategy": "SCALP",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 26.74,
+      "win": true
+    },
+    {
+      "ts": 1787534492,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 45.27,
+      "win": true
+    },
+    {
+      "ts": 1787534493,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -12.88,
+      "win": false
+    },
+    {
+      "ts": 1787534494,
+      "strategy": "SCALP",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 1.74,
+      "win": true
+    },
+    {
+      "ts": 1787534494,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 0.98,
+      "win": true
+    },
+    {
+      "ts": 1787579085,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 26.69,
+      "win": true
+    },
+    {
+      "ts": 1787585917,
+      "strategy": "SCALP",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 18.34,
+      "win": true
+    },
+    {
+      "ts": 1787609402,
+      "strategy": "SCALP",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.96,
+      "win": false
+    },
+    {
+      "ts": 1787609402,
+      "strategy": "SMC",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -59.84,
+      "win": false
+    },
+    {
+      "ts": 1787630162,
+      "strategy": "SMC",
+      "session": "ASIA",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.97,
+      "win": false
+    },
+    {
+      "ts": 1787705436,
+      "strategy": "SCALP",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -29.99,
+      "win": false
+    },
+    {
+      "ts": 1787757371,
+      "strategy": "SMC",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -43.86,
+      "win": false
+    },
+    {
+      "ts": 1787788828,
+      "strategy": "SCALP",
+      "session": "OFF_HOURS",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -30.18,
+      "win": false
+    },
+    {
+      "ts": 1787911235,
+      "strategy": "SMC",
+      "session": "LONDON",
+      "regime": "UNKNOWN",
+      "signal": "BUY",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": -34.95,
+      "win": false
+    },
+    {
+      "ts": 1787987441,
+      "strategy": "SCALP",
+      "session": "NEWYORK",
+      "regime": "UNKNOWN",
+      "signal": "SELL",
+      "composite": 0.0,
+      "size_mode": "SYNC",
+      "pnl": 0.5,
+      "win": true
+    }
+  ],
+  "per_strategy": {
+    "SMC": {
+      "trades": 9,
+      "wins": 4,
+      "pnl": -77.64
+    },
+    "SCALP": {
+      "trades": 7,
+      "wins": 4,
+      "pnl": -42.81
+    }
+  },
+  "per_session": {
+    "NEWYORK": {
+      "trades": 6,
+      "wins": 4,
+      "pnl": 2.6
+    },
+    "OFF_HOURS": {
+      "trades": 8,
+      "wins": 4,
+      "pnl": -58.13
+    },
+    "ASIA": {
+      "trades": 1,
+      "wins": 0,
+      "pnl": -29.97
+    },
+    "LONDON": {
+      "trades": 1,
+      "wins": 0,
+      "pnl": -34.95
+    }
+  },
+  "per_regime": {
+    "UNKNOWN": {
+      "trades": 16,
+      "wins": 8,
+      "pnl": -120.45
+    }
+  },
+  "updated_at": 1787987442,
+  "tune_log": [
+    {
+      "ts": 1787911235,
+      "wr": 0.467,
+      "expectancy": -8.0633,
+      "direction": 1,
+      "offsets": {
+        "composite_full": 0.5,
+        "composite_reduced": 0.5,
+        "composite_micro": 0.5
+      }
+    }
+  ]
+}

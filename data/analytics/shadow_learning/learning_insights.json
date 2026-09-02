@@ -1,0 +1,59 @@
+{
+  "analysis_date": "2026-09-02T15:47:47.303710",
+  "total_shadow_records": 2523,
+  "simulated_statistics": {
+    "win_rate": 0.5818470075307174,
+    "winning_signals": 1468,
+    "avg_pnl": 36.720436979785966,
+    "avg_rr_ratio": 2.758912545614836
+  },
+  "confidence_distribution": {
+    "C+": 540,
+    "A": 422,
+    "A+": 18,
+    "B": 1471,
+    "B+": 72
+  },
+  "regime_performance": {
+    "RANGING": 0.5599784830554061,
+    "TRENDING": 0.6430722891566265
+  },
+  "quality_performance": {
+    "high_quality_wr": 0.7068181818181818,
+    "low_quality_wr": 0.0,
+    "delta": 0.7068181818181818
+  },
+  "rejection_analysis": {
+    "total_rejected": 2523,
+    "rejection_gates": {
+      "QUALITY_TRUST_DISABLED": 2523
+    },
+    "rejection_reasons": {
+      "NONE": 1310,
+      "FULL": 1173,
+      "REDUCED": 40
+    },
+    "avg_quality_rejected": 60.4978200554895,
+    "avg_confidence_rejected": 57.71375346809354,
+    "quality_distribution": {
+      "min": 50.0,
+      "max": 94.0,
+      "median": 57.0,
+      "stdev": 10.743286969679655
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "action": "خفض معايير QUALITY_TRUST_DISABLED",
+      "reason": "الإشارات المرفوضة لديها معدل نجاح عالي (58.18%)",
+      "impact": "قد تزيد الأرباح"
+    },
+    {
+      "priority": "HIGH",
+      "action": "تشديد معايير جودة الإشارات العالية",
+      "reason": "الإشارات عالية الجودة (70.68%) أفضل من المنخفضة (0.00%)",
+      "impact": "تحسين نسبة الفوز الكلية"
+    }
+  ]
+}

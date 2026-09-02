@@ -1,16 +1,16 @@
 {
   "version": "phase3.0",
-  "total_shadow_cycles": 18579,
-  "total_approvals": 12998,
-  "total_rejections": 231,
-  "total_waits": 5350,
-  "matched_actual_count": 10385,
-  "false_rejections": 77,
+  "total_shadow_cycles": 774,
+  "total_approvals": 613,
+  "total_rejections": 76,
+  "total_waits": 85,
+  "matched_actual_count": 634,
+  "false_rejections": 22,
   "missed_winners": 0,
   "avoided_losers": 0,
-  "approval_accuracy": 0.559,
-  "false_rejection_rate": 0.3347826086956522,
-  "readiness_score": 72.32,
+  "approval_accuracy": 0.8191,
+  "false_rejection_rate": 0.29333333333333333,
+  "readiness_score": 83.96,
   "live_ready": false,
-  "last_updated": 1787276427.1334307
+  "last_updated": 1788370481.8898182
 }
