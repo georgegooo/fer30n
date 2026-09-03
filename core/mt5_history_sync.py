@@ -26,6 +26,7 @@ from core.account_scope import get_cached_account_id
 # =========================================
 
 FILE_NAME = "data/history/mt5_trade_history.csv"
+OPEN_RECONCILIATION_LOG = "data/analytics/reconciliation/open_records_shadow.jsonl"
 
 
 # =========================================
@@ -70,12 +71,93 @@ def initialize_mt5_history():
 # =========================================
 
 
+def shadow_reconcile_open_records(*, history_file: str = HISTORY_FILE,
+                                  log_file: str = OPEN_RECONCILIATION_LOG) -> dict:
+    """Report local OPEN rows absent from current MT5 positions.
+
+    Shadow-only: this function never changes a trade ledger or an MT5
+    position. A row becomes CLOSED_UNCONFIRMED only as a recommendation;
+    WIN/LOSS still requires a confirmed closing deal in sync_mt5_history().
+    """
+    result = {"ok": False, "checked": 0, "candidates": 0, "logged": 0}
+    try:
+        if not MT5_AVAILABLE or mt5 is None:
+            result["reason"] = "MT5_UNAVAILABLE"
+            return result
+        positions = mt5.positions_get()
+        if positions is None:
+            result["reason"] = "POSITION_STATE_UNAVAILABLE"
+            return result
+        active_tickets = {
+            str(getattr(position, "ticket", ""))
+            for position in positions
+            if getattr(position, "ticket", None) is not None
+        }
+        if not os.path.exists(history_file):
+            result.update(ok=True, reason="NO_HISTORY_FILE")
+            return result
+
+        with open(history_file, "r", encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        candidates = []
+        for row in rows:
+            if str(row.get("result", "")).upper() != "OPEN":
+                continue
+            result["checked"] += 1
+            ticket = str(row.get("ticket", "") or "")
+            if ticket and ticket not in active_tickets:
+                candidates.append({
+                    "record_type": "OPEN_RECONCILIATION",
+                    "ticket": ticket,
+                    "symbol": row.get("symbol", "XAUUSD"),
+                    "strategy": row.get("strategy", "UNKNOWN"),
+                    "previous_status": "OPEN",
+                    "proposed_status": "CLOSED_UNCONFIRMED",
+                    "reason": "ABSENT_FROM_CURRENT_MT5_POSITIONS",
+                    "confirmed_close_required": True,
+                    "shadow_only": True,
+                })
+        result["candidates"] = len(candidates)
+        existing = set()
+        if os.path.exists(log_file):
+            with open(log_file, "r", encoding="utf-8") as handle:
+                for line in handle:
+                    try:
+                        record = json.loads(line)
+                        existing.add(str(record.get("ticket", "")))
+                    except json.JSONDecodeError:
+                        continue
+        if candidates:
+            parent = os.path.dirname(log_file)
+            if parent:
+                os.makedirs(parent, exist_ok=True)
+            with open(log_file, "a", encoding="utf-8") as handle:
+                for candidate in candidates:
+                    if candidate["ticket"] in existing:
+                        continue
+                    candidate["timestamp"] = datetime.now(timezone.utc).isoformat()
+                    handle.write(json.dumps(candidate, ensure_ascii=False) + "\n")
+                    result["logged"] += 1
+        result["ok"] = True
+        return result
+    except Exception as exc:
+        result["reason"] = type(exc).__name__
+        return result
+
+
 def sync_mt5_history():
     if not MT5_AVAILABLE or mt5 is None:
         print("⚠️ MT5 unavailable — history sync skipped")
         return {"synced": 0, "history_rows": 0, "memory_rows": 0, "adaptive_rows": 0}
 
     initialize_mt5_history()
+
+    reconciliation = shadow_reconcile_open_records()
+    if reconciliation.get("candidates"):
+        print(
+            f"🔎 OPEN_RECONCILIATION_SHADOW | candidates="
+            f"{reconciliation['candidates']} | logged={reconciliation['logged']}"
+        )
 
     try:
         deals = mt5.history_deals_get(

@@ -1661,9 +1661,17 @@ def main():
             if runtime_decision.get('approved'):
                 try:
                     snapshot_fresh = _build_live_snapshot(SYMBOL)
-                    if snapshot_fresh and snapshot_fresh.get('signal') is not None:
+                    if (
+                        snapshot_fresh
+                        and snapshot_fresh.get('ready') is True
+                        and snapshot_fresh.get('signal') in ('BUY', 'SELL')
+                        and isinstance(snapshot_fresh.get('quality_gate'), dict)
+                        and isinstance(snapshot_fresh.get('execution'), dict)
+                    ):
                         snapshot = snapshot_fresh
                         print(f'[FRESHNESS] Snapshot refreshed | Price: {snapshot.get("entry_price", 0):.2f} | ATR: {snapshot.get("atr", 0):.2f}')
+                    elif snapshot_fresh:
+                        print('[FRESHNESS] Incomplete snapshot ignored; retaining previous valid snapshot')
                 except Exception as _snapshot_refresh_err:
                     print(f'⚠️ [FRESHNESS] Snapshot refresh failed (using stale): {_snapshot_refresh_err}')
 
