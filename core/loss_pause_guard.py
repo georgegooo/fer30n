@@ -287,25 +287,6 @@ def _evaluate_loss_pause_impl(snapshot_or_symbol, market_regime: Optional[str] =
     # (1) هل regime الحالي ضمن القائمة المسموحة لتشغيل الإيقاف؟
     regime_norm = str(market_regime or '').upper() if market_regime else ''
     regime_active_for_pause = regime_norm in {str(r).upper() for r in LOSS_PAUSE_REQUIRE_REGIME}
-    # إذا الـ regime خارج القائمة (مثل TRENDING) → الإيقاف لا يعمل
-    if pause_active and regime_norm and not regime_active_for_pause:
-        print(
-            f'ℹ️ LOSS_PAUSE_GUARD | regime={regime_norm} outside pause-list '
-            f'{LOSS_PAUSE_REQUIRE_REGIME} → pause lifted for this regime'
-        )
-        state['pause_active'] = False
-        state['consecutive_losses'] = 0  # reset to allow fresh entries
-        state['last_signal_signature'] = ''
-        _save_state(state)
-        return {
-            'trading_allowed': True,
-            'reason': f'REGIME_BYPASS:{regime_norm}',
-            'state': state,
-            'fresh_signal_detected': False,
-            'consecutive_losses': 0,
-            'regime_active_for_pause': False,
-        }
-
     # (2) إذا العداد لم يصل للـ trigger → التداول مسموح
     if consecutive < LOSS_PAUSE_TRIGGER and not pause_active:
         return {

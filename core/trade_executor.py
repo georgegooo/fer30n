@@ -496,6 +496,22 @@ def execute_trade(
 
     # Ensure we have a strategy key available for downstream adjustments
     _strat_key = str(strategy or 'UNKNOWN')
+    initial_lot = max(0.0, float(request.get('volume', lot) or 0.0))
+
+    # Enforce the loss pause at the final execution authority as well as in
+    # the main loop. This closes alternate runner paths and race windows.
+    try:
+        from core.loss_pause_guard import evaluate_loss_pause
+        pause_state = evaluate_loss_pause(
+            {'symbol': request.get('symbol'), 'signal': signal},
+            market_regime=market_regime,
+        )
+        if not pause_state.get('trading_allowed', True):
+            return {'retcode': -10, 'comment': 'LOSS_PAUSE_GUARD_ACTIVE'}
+        loss_streak = int(pause_state.get('consecutive_losses', 0) or 0)
+    except Exception as exc:
+        print(f'🛑 LOSS_PAUSE_CHECK_FAILED (fail-closed): {exc}')
+        return {'retcode': -10, 'comment': 'LOSS_PAUSE_CHECK_FAILED'}
 
     # =========================================
     # [FER3ON-FIX-2026-08-19] STRATEGY KILL-SWITCH
@@ -600,6 +616,7 @@ def execute_trade(
     try:
         from analytics.quant_engine import evaluate_strategy_health
         health = evaluate_strategy_health(_strat_key)
+        health_tier = str(health.health_tier or 'UNKNOWN').upper()
         if health.risk_multiplier != 1.0:
             _lot_before = float(lot)
             lot = round(float(lot) * health.risk_multiplier, 2)
@@ -610,6 +627,7 @@ def execute_trade(
                 f" | lot {_lot_before} → {lot} (×{health.risk_multiplier})"
             )
     except Exception as exc:
+        health_tier = 'UNKNOWN'
         print(f'⚠️ QUANT_ENGINE_LOT_ADJUST_FAILED (non-fatal, lot unchanged): {exc}')
 
     # =========================================
@@ -694,6 +712,8 @@ def execute_trade(
     # No downstream multiplier may exceed the configured account ceiling.
     try:
         from core.settings import MAX_LOT
+        if loss_streak > 0 or health_tier in {'WEAK', 'POOR'}:
+            request['volume'] = min(float(request.get('volume', lot) or 0.0), initial_lot)
         request['volume'] = min(
             float(MAX_LOT), max(0.0, float(request.get('volume', lot) or 0.0))
         )
