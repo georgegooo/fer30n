@@ -261,6 +261,18 @@ def _register_off_hours_trade() -> None:
         _off_hours_trade_count += 1
 
 
+def _register_confirmed_close_events(history_sync: dict) -> None:
+    """Feed each newly confirmed economic close to the loss guard once."""
+    for event in (history_sync or {}).get('close_events', []) or []:
+        outcome = str(event.get('result', '') or '').upper()
+        if outcome not in {'WIN', 'LOSS'}:
+            continue
+        register_loss_pause_result(
+            trade_result=outcome,
+            ticket=event.get('ticket'),
+            profit=float(event.get('profit', 0.0) or 0.0),
+        )
+
 def maybe_skip_analysis(now, rates, atr, market_regime, session, confidence_pct):
     global _last_analysis_hash, _last_analysis_time
     current_hash = build_market_snapshot_hash(rates, atr, market_regime, session, confidence_pct)
@@ -2011,6 +2023,7 @@ def main():
 
             try:
                 history_sync = sync_mt5_history()
+                _register_confirmed_close_events(history_sync)
                 certification = update_certification_progress()
                 analytics_result = analyze_trades()
                 metrics = analytics_result[1] if isinstance(analytics_result, tuple) else {}
@@ -2064,6 +2077,7 @@ def main():
                 sync_added_close = (
                     isinstance(history_sync, dict)
                     and int(history_sync.get('synced', 0) or 0) > 0
+                    and not history_sync.get('close_events')
                 )
                 chosen = last_closed if isinstance(last_closed, dict) else (
                     last_csv_row if sync_added_close else None

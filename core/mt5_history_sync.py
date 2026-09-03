@@ -1,5 +1,6 @@
 from core.mt5_compat import mt5, MT5_AVAILABLE
 import csv
+import json
 import os
 
 from datetime import datetime, timezone, timedelta
@@ -27,6 +28,7 @@ from core.account_scope import get_cached_account_id
 
 FILE_NAME = "data/history/mt5_trade_history.csv"
 OPEN_RECONCILIATION_LOG = "data/analytics/reconciliation/open_records_shadow.jsonl"
+DEAL_EVENTS_FILE = "data/history/mt5_deal_events.jsonl"
 
 
 # =========================================
@@ -148,7 +150,8 @@ def shadow_reconcile_open_records(*, history_file: str = HISTORY_FILE,
 def sync_mt5_history():
     if not MT5_AVAILABLE or mt5 is None:
         print("⚠️ MT5 unavailable — history sync skipped")
-        return {"synced": 0, "history_rows": 0, "memory_rows": 0, "adaptive_rows": 0}
+        return {"synced": 0, "history_rows": 0, "memory_rows": 0,
+                "adaptive_rows": 0, "close_events": []}
 
     initialize_mt5_history()
 
@@ -166,7 +169,78 @@ def sync_mt5_history():
         )
         if deals is None:
             print("❌ NO MT5 HISTORY")
-            return {"synced": 0, "history_rows": 0, "memory_rows": 0, "adaptive_rows": 0}
+            return {"synced": 0, "history_rows": 0, "memory_rows": 0,
+                    "adaptive_rows": 0, "close_events": []}
+
+        # Deal events are immutable evidence. Their composite key prevents
+        # duplicate close notifications across restarts and accounts.
+        account_id = str(get_cached_account_id() or "UNKNOWN")
+        known_deal_events = set()
+        if os.path.exists(DEAL_EVENTS_FILE):
+            try:
+                with open(DEAL_EVENTS_FILE, "r", encoding="utf-8") as handle:
+                    for line in handle:
+                        try:
+                            event = json.loads(line)
+                            known_deal_events.add((
+                                str(event.get("account_id", "")),
+                                str(event.get("deal_ticket", "")),
+                            ))
+                        except json.JSONDecodeError:
+                            continue
+            except OSError:
+                pass
+        open_volumes = {}
+        close_volumes = {}
+        for deal in deals:
+            position_id = int(getattr(deal, "position_id", 0) or 0)
+            volume = float(getattr(deal, "volume", 0.0) or 0.0)
+            if getattr(deal, "entry", None) == 0:
+                open_volumes[position_id] = open_volumes.get(position_id, 0.0) + volume
+            elif getattr(deal, "entry", None) == 1:
+                close_volumes[position_id] = close_volumes.get(position_id, 0.0) + volume
+
+        close_events = []
+        event_by_deal_ticket = {}
+        new_event_records = []
+        for deal in deals:
+            if getattr(deal, "entry", None) != 1:
+                continue
+            event_key = (account_id, str(getattr(deal, "ticket", "")))
+            if event_key in known_deal_events:
+                continue
+            profit_value = float(getattr(deal, "profit", 0.0) or 0.0)
+            position_id = int(getattr(deal, "position_id", 0) or 0)
+            outcome = "WIN" if profit_value > 0 else "LOSS" if profit_value < 0 else "BREAKEVEN"
+            event = {
+                "record_type": "MT5_CLOSE_DEAL",
+                "account_id": account_id,
+                "deal_ticket": int(getattr(deal, "ticket", 0) or 0),
+                "position_id": position_id,
+                "symbol": str(getattr(deal, "symbol", "") or ""),
+                "profit": round(profit_value, 4),
+                "outcome": outcome,
+                "is_final_close": close_volumes.get(position_id, 0.0)
+                >= open_volumes.get(position_id, 0.0) - 1e-9,
+                "timestamp": datetime.fromtimestamp(
+                    float(getattr(deal, "time", 0) or 0), tz=timezone.utc
+                ).isoformat(),
+                "shadow_only": False,
+            }
+            new_event_records.append(event)
+            event_by_deal_ticket[event["deal_ticket"]] = event
+            if event["is_final_close"]:
+                close_events.append({
+                    "ticket": event["position_id"],
+                    "deal_ticket": event["deal_ticket"],
+                    "profit": event["profit"],
+                    "result": outcome,
+                })
+        if new_event_records:
+            os.makedirs(os.path.dirname(DEAL_EVENTS_FILE), exist_ok=True)
+            with open(DEAL_EVENTS_FILE, "a", encoding="utf-8") as handle:
+                for event in new_event_records:
+                    handle.write(json.dumps(event, ensure_ascii=False) + "\n")
 
         mt5_existing_tickets = set()
         if os.path.exists(FILE_NAME):
@@ -228,6 +302,12 @@ def sync_mt5_history():
                 )
 
         new_rows = []
+        cumulative_profit_by_ticket = {}
+        for row in _history_rows_snapshot:
+            try:
+                cumulative_profit_by_ticket[str(row.get("ticket", ""))] = float(row.get("profit", 0) or 0)
+            except (TypeError, ValueError):
+                pass
         synced_history = 0
         synced_memory = 0
         synced_adaptive = 0
@@ -293,7 +373,8 @@ def sync_mt5_history():
                         )
 
                 close_dt = datetime.fromtimestamp(deal.time, tz=timezone.utc)
-                result = "WIN" if float(deal.profit or 0) >= 0 else "LOSS"
+                profit_value = float(deal.profit or 0)
+                result = "WIN" if profit_value > 0 else "LOSS" if profit_value < 0 else "BREAKEVEN"
                 session = _session_from_hour(close_dt.hour)
                 market_regime = "UNKNOWN"
 
@@ -314,6 +395,11 @@ def sync_mt5_history():
                 # closing deal back to the position/order it closes.
                 close_ticket = int(getattr(deal, "position_id", None) or deal.ticket)
                 has_open_record = deal_exists(close_ticket)
+                event = event_by_deal_ticket.get(int(deal.ticket), {
+                    "is_final_close": True,
+                })
+                cumulative_profit = cumulative_profit_by_ticket.get(str(close_ticket), 0.0) + profit_value
+                cumulative_profit_by_ticket[str(close_ticket)] = cumulative_profit
 
                 # See open_price_by_position note above: falls back to
                 # deal.price (old behavior) only when the true opening deal
@@ -371,8 +457,8 @@ def sync_mt5_history():
                         "ticket",
                         close_ticket,
                         {
-                            "result": result,
-                            "profit": round(float(deal.profit or 0), 2),
+                            "result": result if event["is_final_close"] else "PARTIAL",
+                            "profit": round(cumulative_profit, 2),
                         },
                     )
                 else:
@@ -386,8 +472,8 @@ def sync_mt5_history():
                             "ticket": close_ticket,
                             "signal": trade_type,
                             "lot": round(float(deal.volume or 0), 2),
-                            "profit": round(float(deal.profit or 0), 2),
-                            "result": result,
+                            "profit": round(cumulative_profit, 2),
+                            "result": result if event["is_final_close"] else "PARTIAL",
                             "strategy": strategy,
                             "session": session,
                             "market_regime": market_regime,
@@ -488,7 +574,7 @@ def sync_mt5_history():
 
                 if result == "WIN":
                     register_win(round(float(deal.profit or 0), 4))
-                else:
+                elif result == "LOSS":
                     register_loss(round(float(deal.profit or 0), 4))
                 synced_adaptive += 1
 
@@ -555,12 +641,14 @@ def sync_mt5_history():
             "history_rows": synced_history,
             "memory_rows": synced_memory,
             "adaptive_rows": synced_adaptive,
+            "close_events": close_events,
             "certification_closed_trades": certification.get("closed_trade_count", 0),
         }
 
     except Exception as error:
         print(f"❌ MT5 SYNC ERROR: {error}")
-        return {"synced": 0, "history_rows": 0, "memory_rows": 0, "adaptive_rows": 0, "error": str(error)}
+        return {"synced": 0, "history_rows": 0, "memory_rows": 0,
+            "adaptive_rows": 0, "close_events": [], "error": str(error)}
 
 
 def _session_from_hour(hour):
