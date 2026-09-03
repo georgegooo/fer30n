@@ -523,16 +523,17 @@ def sync_mt5_history():
                 save_trade_memory(**_memory_kwargs)
                 synced_memory += 1
 
-                record_trade_outcome(
-                    strategy=strategy,
-                    session=session,
-                    regime=market_regime,
-                    signal=trade_type,
-                    composite_score=0,
-                    size_mode="SYNC",
-                    pnl=round(float(deal.profit or 0), 4),
-                    win=result == "WIN",
-                )
+                if event["is_final_close"]:
+                    record_trade_outcome(
+                        strategy=strategy,
+                        session=session,
+                        regime=market_regime,
+                        signal=trade_type,
+                        composite_score=0,
+                        size_mode="SYNC",
+                        pnl=round(cumulative_profit, 4),
+                        win=result == "WIN",
+                    )
                 # V3.5 PHASE-3.1 FIX: Truth Layer existed in analytics/truth_layer.py
                 # but nothing ever called append_trade() with real data — its
                 # trade_history.jsonl stayed empty. This feeds it the same
@@ -540,7 +541,8 @@ def sync_mt5_history():
                 # using the actual TradeRecord schema (the original plan's
                 # `record_trade_outcome` import does not exist in this module).
                 try:
-                    append_trade(TradeRecord(
+                    if event["is_final_close"]:
+                        append_trade(TradeRecord(
                         # DATA-INTEGRITY FIX: was `ticket=int(deal.ticket)` --
                         # deal.ticket is the closing DEAL's own id, not the
                         # POSITION ticket used everywhere else this trade is
@@ -564,11 +566,11 @@ def sync_mt5_history():
                         entry_price=float(real_open_price or 0),
                         exit_price=float(deal.price or 0),
                         lot=round(float(deal.volume or 0), 2),
-                        profit=round(float(deal.profit or 0), 2),
+                        profit=round(cumulative_profit, 2),
                         is_win=(result == "WIN"),
                         build_id=BUILD_ID,
                         extra={"source": "mt5_history_sync", "deal_ticket": int(deal.ticket)},
-                    ))
+                        ))
                 except Exception as error:
                     print(f"⚠️ truth_layer.append_trade failed for ticket={deal.ticket}: {error}")
 
