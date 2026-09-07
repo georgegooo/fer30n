@@ -230,6 +230,22 @@ def _build_order_request_generic(signal: str, lot: float, sl_dist: float, tp_dis
     }
 
 
+def _finalize_candidate_sl_tp(*, strategy: str, sl_dist: float, tp_dist: float,
+                              atr: float, signal: str = None) -> tuple[float, float]:
+    """Finalize candidate distances before sizing or execution."""
+    from core.sl_tp_finalizer import finalize_sl_tp
+
+    result = finalize_sl_tp(
+        symbol=SYMBOL,
+        sl_dist_raw=sl_dist,
+        tp_dist_raw=tp_dist,
+        strategy=strategy,
+        atr=atr,
+        signal=signal,
+    )
+    return float(result['sl_dist']), float(result['tp_dist'])
+
+
 def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist: float,
              risk_percent: float, quality_score: float, session: str, market_regime: str,
              atr: float, magic: int, rates=None, tp_tiers=None,
@@ -496,6 +512,10 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
     )
     sl_dist = adaptive['sl_distance']
     tp_dist = adaptive['tp_distance']
+    sl_dist, tp_dist = _finalize_candidate_sl_tp(
+        strategy='SWING', sl_dist=sl_dist, tp_dist=tp_dist,
+        atr=atr, signal=signal,
+    )
 
     allowed, allocator_multiplier, allocator_reason = _allocator_gate(
         strategy='SCALP', quality_score=quality_score, confidence_pct=quality_score,
@@ -567,6 +587,10 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
         )
         sl_dist = adaptive['sl_distance']
         tp_dist = adaptive['tp_distance']
+        sl_dist, tp_dist = _finalize_candidate_sl_tp(
+            strategy='SWING', sl_dist=sl_dist, tp_dist=tp_dist,
+            atr=atr, signal=signal,
+        )
         tp_tiers = adaptive.get('tp_tiers')
     if lot <= 0:
         return {'opened': False, 'reason': 'LOT_ZERO'}

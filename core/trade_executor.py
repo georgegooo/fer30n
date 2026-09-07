@@ -12,6 +12,7 @@
 # =========================================
 
 import json
+import threading
 from datetime import datetime, timezone
 
 from core.mt5_compat import mt5, MT5_AVAILABLE
@@ -34,11 +35,34 @@ from core.settings import (
     # was dropped when the rearch-phase1-2 branch forked from a pre-CERT-6
     # snapshot; merged back in manually alongside REARCH-1/2/3/4.
     MAX_OPEN_PER_STRATEGY,
+    PER_STRATEGY_MAX_OPEN_LIMITS,
+    MAX_OPEN_PER_SYMBOL_DIRECTION,
+    ENABLE_CROSS_STRATEGY_HEDGE,
+    MAX_CROSS_STRATEGY_HEDGES,
+    TRADE_EXECUTOR_LOG_PATH,
 )
 from core.test_mode_manager import register_trade as register_test_mode_trade
 from core.trade_logger import log_trade as persist_trade_log
-from core.trade_identity import resolve_trade_identity
+from core.trade_identity import resolve_trade_identity, strategy_from_magic
 from core.mt5_order_utils import get_filling_fallback_sequence
+from core.structured_logging import StructuredLogger
+
+
+_EXECUTOR_LOGGER = StructuredLogger(
+    log_path=TRADE_EXECUTOR_LOG_PATH,
+    console=False,
+)
+
+
+def _log_executor_exception(event: str, exc: Exception, **extra) -> None:
+    """Persist critical executor failures without weakening fail-closed gates."""
+    try:
+        _EXECUTOR_LOGGER.error(
+            event,
+            {"exception_type": type(exc).__name__, "exception": str(exc), **extra},
+        )
+    except Exception:
+        return
 
 
 # =========================================
@@ -52,6 +76,7 @@ from core.mt5_order_utils import get_filling_fallback_sequence
 _live_trade_day = None
 _live_trade_count = 0
 MAX_LIVE_DAILY_TRADES = MAX_DAILY_TRADES
+_EXECUTION_LOCK = threading.RLock()
 
 
 def _reset_live_daily_counter_if_needed():
@@ -65,6 +90,13 @@ def _reset_live_daily_counter_if_needed():
 def _live_daily_cap_hit():
     _reset_live_daily_counter_if_needed()
     return _live_trade_count >= MAX_LIVE_DAILY_TRADES
+
+
+def _synchronized_execution(function):
+    def wrapper(*args, **kwargs):
+        with _EXECUTION_LOCK:
+            return function(*args, **kwargs)
+    return wrapper
 
 
 def _register_live_trade():
@@ -459,11 +491,61 @@ def _check_per_strategy_limit(mt5_module, symbol, magic, max_open_per_strategy):
     return same_strategy_open >= max_open_per_strategy, same_strategy_open
 
 
+def _check_hedge_policy(mt5_module, symbol, current_type, strategy):
+    positions_all = mt5_module.positions_get(symbol=symbol)
+    if positions_all is None:
+        raise RuntimeError("POSITION_STATE_UNAVAILABLE")
+    opposite_type = (
+        mt5_module.POSITION_TYPE_SELL
+        if current_type == mt5_module.ORDER_TYPE_BUY
+        else mt5_module.POSITION_TYPE_BUY
+    )
+    opposite_positions = [
+        pos for pos in positions_all
+        if getattr(pos, "type", None) == opposite_type
+    ]
+    if not opposite_positions:
+        return False, 0
+    if not ENABLE_CROSS_STRATEGY_HEDGE:
+        return True, len(opposite_positions)
+
+    account = mt5_module.account_info()
+    hedging_mode = getattr(mt5_module, "ACCOUNT_MARGIN_MODE_RETAIL_HEDGING", 2)
+    if account is None or getattr(account, "margin_mode", None) != hedging_mode:
+        return True, len(opposite_positions)
+
+    current_strategy = str(strategy or "UNKNOWN").upper()
+    same_strategy = any(
+        strategy_from_magic(getattr(pos, "magic", None), default="UNKNOWN")
+        == current_strategy
+        for pos in opposite_positions
+    )
+    return same_strategy or len(opposite_positions) >= MAX_CROSS_STRATEGY_HEDGES, len(opposite_positions)
+
+
+def _check_symbol_direction_limit(mt5_module, symbol, signal, max_open):
+    positions_all = mt5_module.positions_get(symbol=symbol)
+    if positions_all is None:
+        raise RuntimeError("POSITION_STATE_UNAVAILABLE")
+    target_direction = str(signal or '').upper()
+    buy_type = getattr(mt5_module, 'POSITION_TYPE_BUY', 0)
+    same_direction_open = sum(
+        1 for pos in positions_all
+        if (
+            target_direction == 'BUY' and getattr(pos, 'type', None) == buy_type
+        ) or (
+            target_direction == 'SELL' and getattr(pos, 'type', None) != buy_type
+        )
+    )
+    return same_direction_open >= max_open, same_direction_open
+
+
 # =========================================
 # EXECUTE TRADE
 # =========================================
 
 
+@_synchronized_execution
 def execute_trade(
     request,
     strategy,
@@ -490,6 +572,7 @@ def execute_trade(
     liq_map_dir=None,
     mtf_strength=None,
     mtf_structural=None,
+    size_mode=None,
 ):
     print('=' * 80)
     print('📤 ORDER REQUEST')
@@ -510,6 +593,7 @@ def execute_trade(
             return {'retcode': -10, 'comment': 'LOSS_PAUSE_GUARD_ACTIVE'}
         loss_streak = int(pause_state.get('consecutive_losses', 0) or 0)
     except Exception as exc:
+        _log_executor_exception('LOSS_PAUSE_CHECK_FAILED', exc, strategy=_strat_key)
         print(f'🛑 LOSS_PAUSE_CHECK_FAILED (fail-closed): {exc}')
         return {'retcode': -10, 'comment': 'LOSS_PAUSE_CHECK_FAILED'}
 
@@ -525,11 +609,13 @@ def execute_trade(
             session=session,
             market_regime=market_regime,
             exec_grade=exec_grade,
+            size_mode=size_mode,
         )
         if _block:
             print(f'\xf0\x9f\x9a\xab KILL_SWITCH_BLOCK | {_reason}')
             return {'retcode': -1, 'comment': _reason}
     except Exception as _ks_exc:
+        _log_executor_exception('KILL_SWITCH_CHECK_FAILED', _ks_exc, strategy=_strat_key)
         # [FER3ON-FIX-2026-08-21] كان قبل كده "non-fatal, allowing trade" —
         # يعني أي خطأ في فحص الحماية نفسه كان بيسمح بالصفقة بدل ما يمنعها.
         # ده عكس مبدأ fail-closed المطلوب لمكوّن حماية حرج. الاستثناء دلوقتي
@@ -588,6 +674,7 @@ def execute_trade(
         else:
             print(f'\xe2\x9c\x85 EDGE_GATE_PASS | ev_ratio={_ev_ratio:+.3f}')
     except Exception as _ee_exc:
+        _log_executor_exception('EDGE_GATE_CHECK_FAILED', _ee_exc, strategy=_strat_key)
         print(f'🛑 EDGE_GATE_CHECK_FAILED (fail-closed): {_ee_exc}')
         return {'retcode': -8, 'comment': 'EDGE_GATE_CHECK_FAILED'}
 
@@ -628,6 +715,7 @@ def execute_trade(
             )
     except Exception as exc:
         health_tier = 'UNKNOWN'
+        _log_executor_exception('QUANT_ENGINE_LOT_ADJUST_FAILED', exc, strategy=_strat_key)
         print(f'⚠️ QUANT_ENGINE_LOT_ADJUST_FAILED (non-fatal, lot unchanged): {exc}')
 
     # =========================================
@@ -749,36 +837,20 @@ def execute_trade(
         print(f"⚠️ MAGIC INJECTION FAILED: {e}")
 
     # =========================================
-    # STEP 2: HEDGE OFF — منع الصفقة العكسية على نفس الرمز
+    # STEP 2: conditional cross-strategy hedge protection
     # =========================================
     try:
         symbol = request.get("symbol")
-        positions_all = mt5.positions_get(symbol=symbol)
-        if positions_all is None:
-            print('🛑 HEDGE CHECK FAILED: position state unavailable')
-            return {"retcode": -6, "comment": "POSITION_STATE_UNAVAILABLE"}
         current_type = request.get("type")
-
-        for pos in positions_all:
-            if (
-                current_type == mt5.ORDER_TYPE_BUY
-                and pos.type == mt5.POSITION_TYPE_SELL
-            ):
-                print(
-                    f"🚫 HEDGE_BLOCKED | BUY rejected — SELL already open"
-                    f" | ticket={pos.ticket}"
-                )
-                return {"retcode": -3, "comment": "HEDGE_DISABLED_OPPOSITE_POSITION_EXISTS"}
-
-            if (
-                current_type == mt5.ORDER_TYPE_SELL
-                and pos.type == mt5.POSITION_TYPE_BUY
-            ):
-                print(
-                    f"🚫 HEDGE_BLOCKED | SELL rejected — BUY already open"
-                    f" | ticket={pos.ticket}"
-                )
-                return {"retcode": -3, "comment": "HEDGE_DISABLED_OPPOSITE_POSITION_EXISTS"}
+        hedge_blocked, opposite_count = _check_hedge_policy(
+            mt5, symbol, current_type, strategy
+        )
+        if hedge_blocked:
+            print(
+                f"🚫 HEDGE_BLOCKED | strategy={strategy}"
+                f" opposite_positions={opposite_count}"
+            )
+            return {"retcode": -3, "comment": "HEDGE_POLICY_BLOCKED"}
 
     except Exception as e:
         print(f"🛑 HEDGE CHECK FAILED (fail-closed): {e}")
@@ -802,16 +874,30 @@ def execute_trade(
         symbol = request.get("symbol")
         this_magic = int(request.get("magic", 0))
         blocked, same_strategy_open = _check_per_strategy_limit(
-            mt5, symbol, this_magic, MAX_OPEN_PER_STRATEGY
+            mt5,
+            symbol,
+            this_magic,
+            int(PER_STRATEGY_MAX_OPEN_LIMITS.get(str(strategy or '').upper(), MAX_OPEN_PER_STRATEGY)),
         )
 
         if blocked:
             print(
                 f"🚫 PER_STRATEGY_LIMIT | magic={this_magic}"
                 f" already has {same_strategy_open} open position(s)"
-                f" (max={MAX_OPEN_PER_STRATEGY})"
+                f" (max={PER_STRATEGY_MAX_OPEN_LIMITS.get(str(strategy or '').upper(), MAX_OPEN_PER_STRATEGY)})"
             )
             return {"retcode": -4, "comment": "PER_STRATEGY_MAX_OPEN_HIT"}
+
+        blocked, same_direction_open = _check_symbol_direction_limit(
+            mt5, symbol, signal, MAX_OPEN_PER_SYMBOL_DIRECTION
+        )
+        if blocked:
+            print(
+                f"🚫 SYMBOL_DIRECTION_LIMIT | {symbol} {signal}"
+                f" already has {same_direction_open} open position(s)"
+                f" (max={MAX_OPEN_PER_SYMBOL_DIRECTION})"
+            )
+            return {"retcode": -8, "comment": "SYMBOL_DIRECTION_MAX_OPEN_HIT"}
 
     except Exception as e:
         print(f"🛑 PER_STRATEGY CHECK FAILED (fail-closed): {e}")

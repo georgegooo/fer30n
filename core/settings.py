@@ -378,6 +378,7 @@ SHADOW_COUNTERFACTUAL_MIN_SAMPLES   = 100   # الحد الأدنى قبل اس�
 RESOLVER_TELEMETRY_ENABLED          = True
 RESOLVER_TELEMETRY_LOG_PATH         = "data/analytics/resolver/resolver_cycles.jsonl"
 RESOLVER_HISTORY_BARS               = 5000  # M5 history for multi-day pending records
+TRADE_EXECUTOR_LOG_PATH             = _data_path("data/logs/trade_executor.jsonl")
 
 # =============================================================================
 # FER3ON — PHASE 2 | ENTRY CONTROLLER + STRUCTURAL SL (Demo)

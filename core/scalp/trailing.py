@@ -33,6 +33,7 @@ from core.settings import (
     TRAILING_ALIGNMENT_FACTOR,
     TRAILING_SMC_REQUIRES_TP1,
     TRAILING_MIN_DISTANCE_BY_STRATEGY,
+    MAX_SL_DISTANCE_DOLLARS,
 )
 from core.trade_identity import strategy_from_magic
 
@@ -84,7 +85,10 @@ def _resolve_trail_distance(
     base_mult = TRAILING_BASE_ATR_MULT.get(strat, ATR_TRAIL_MULT)
     align_factor = TRAILING_ALIGNMENT_FACTOR.get(str(mtf_mode or "ALIGNED").upper(), 1.0)
     min_dist = TRAILING_MIN_DISTANCE_BY_STRATEGY.get(strat, MIN_TRAIL)
-    atr_dist = max(atr * base_mult * align_factor, min_dist)
+    atr_dist = min(
+        max(atr * base_mult * align_factor, min_dist),
+        float(MAX_SL_DISTANCE_DOLLARS),
+    )
 
     if strat == "DAILY" and symbol and price is not None and direction:
         swing_dist = _daily_swing_distance(symbol, price, direction)

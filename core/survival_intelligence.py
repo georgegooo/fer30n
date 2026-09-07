@@ -6,6 +6,7 @@
 
 from core.mt5_compat import mt5, MT5_AVAILABLE
 from datetime import datetime, timezone
+from core.settings import get_min_sl_dollars
 
 
 # =========================================
@@ -167,7 +168,7 @@ def find_adaptive_entry(
         execution_grade='B',
         broker_stop_level=0.0,
         broker_stop_fallback=0.0,
-        min_sl=100.0,
+        min_sl=get_min_sl_dollars(),
     )
     sl_dist = adaptive['sl_distance']
     tp_dist = adaptive['tp_distance']

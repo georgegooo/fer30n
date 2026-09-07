@@ -87,6 +87,26 @@ def test_strategy_runners_use_finalize_sl_tp():
     print("✅ strategy_runners.py has access to finalize_sl_tp")
 
 
+def test_strategy_runner_pre_sizing_helper_uses_finalizer_output():
+    """The candidate SL passed to sizing must be the finalized SL value."""
+    from core import strategy_runners
+
+    with patch(
+        "core.sl_tp_finalizer.finalize_sl_tp",
+        return_value={"sl_dist": 7.5, "tp_dist": 12.0},
+    ) as finalize:
+        sl_dist, tp_dist = strategy_runners._finalize_candidate_sl_tp(
+            strategy="SWING",
+            sl_dist=30.0,
+            tp_dist=60.0,
+            atr=10.0,
+            signal="BUY",
+        )
+
+    assert (sl_dist, tp_dist) == (7.5, 12.0)
+    finalize.assert_called_once()
+
+
 def test_finalize_sl_tp_single_source_of_truth():
     """Verify that finalize_sl_tp is deterministic and idempotent."""
     symbol = 'XAUUSD'
