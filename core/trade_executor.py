@@ -326,13 +326,16 @@ def _cap_retry_growth(growth, sl_dist_raw):
     finalizer chose is preserved (TP is never left behind while SL grows).
     """
     try:
+        # Keep retry widening tied to the same account hard cap consumed by
+        # finalize_sl_tp; this is a safety ceiling, not a second SL policy.
+        from core.settings import MAX_SL_DISTANCE_DOLLARS as FINALIZER_SL_CAP
         base = float(sl_dist_raw)
         if base <= 0:
             return max(1.0, float(growth))
         capped = min(
             float(growth),
             float(ORDER_RETRY_MAX_WIDEN_FACTOR),
-            float(MAX_SL_DISTANCE_DOLLARS) / base,
+            float(FINALIZER_SL_CAP) / base,
         )
         return max(1.0, capped)
     except Exception:
