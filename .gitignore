@@ -36,3 +36,6 @@ data/analytics/ci_shadow_backtest_baseline.json
 .env
 config.env
 *.local
+
+# Local Shadow runtime output
+logs/
