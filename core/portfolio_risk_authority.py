@@ -57,6 +57,8 @@ from core.settings import (
     PORTFOLIO_RISK_AUTHORITY_CANNOT_REJECT_FOR,
     MAX_OPEN_TRADES,
     MAX_OPEN_PER_STRATEGY,
+    PER_STRATEGY_MAX_OPEN_LIMITS,
+    MAX_OPEN_PER_SYMBOL_DIRECTION,
     # === V3.5 Fairness: read UNIFIED_DEFAULTS from settings only ===
     ML_AUTHORITY_WEIGHT,
     ML_ADVISOR_WEIGHT,
@@ -131,6 +133,16 @@ def reset_portfolio_state(balance: Optional[float] = None) -> None:
         _STATE.emergency_reason = ""
 
 
+def sync_portfolio_equity(balance: float) -> None:
+    """Synchronize current authority equity with the broker account."""
+    with _STATE_LOCK:
+        value = _safe_float(balance, 0.0)
+        if value > 0:
+            _STATE.current_equity = value
+            if not _STATE.last_reset_day:
+                _STATE.day_start_balance = value
+
+
 # =============================================================================
 # RISK-ONLY DECISION DATACLASS
 # =============================================================================
@@ -188,6 +200,16 @@ def count_open_by_strategy() -> Dict[str, int]:
         s = str(t.get("strategy", "UNKNOWN")).upper()
         counts[s] = counts.get(s, 0) + 1
     return counts
+
+
+def count_open_by_symbol_direction(*, symbol: str, direction: str) -> int:
+    target_symbol = str(symbol or '').upper()
+    target_direction = str(direction or '').upper()
+    return sum(
+        1 for trade in _STATE.open_trades
+        if str(trade.get('symbol', '')).upper() == target_symbol
+        and str(trade.get('direction', '')).upper() == target_direction
+    )
 
 
 def _daily_reset_if_needed() -> None:
@@ -285,13 +307,29 @@ def _evaluate_risk_impl(
     # core.risk_manager.evaluate_position_limits()'s per-strategy numbers are
     # NOT this cap and can't currently bind.
     per_strat = count_open_by_strategy()
-    if per_strat.get(strat, 0) >= MAX_OPEN_PER_STRATEGY:
+    strategy_limit = int(PER_STRATEGY_MAX_OPEN_LIMITS.get(strat, MAX_OPEN_PER_STRATEGY))
+    if per_strat.get(strat, 0) >= strategy_limit:
         decision.rejection_reason = "PER_STRATEGY_MAX_OPEN_HIT"
         decision.notes.append(
-            f"{strat}_open={per_strat.get(strat,0)}>=max={MAX_OPEN_PER_STRATEGY}"
+            f"{strat}_open={per_strat.get(strat,0)}>=max={strategy_limit}"
         )
         decision.portfolio_snapshot = _snapshot()
         return decision
+
+    candidate_symbol = str(meta.get('symbol', '') or '').upper()
+    if candidate_symbol:
+        same_direction_open = count_open_by_symbol_direction(
+            symbol=candidate_symbol,
+            direction=direction,
+        )
+        if same_direction_open >= MAX_OPEN_PER_SYMBOL_DIRECTION:
+            decision.rejection_reason = "SYMBOL_DIRECTION_MAX_OPEN_HIT"
+            decision.notes.append(
+                f"{candidate_symbol}_{direction}_open={same_direction_open}"
+                f">=max={MAX_OPEN_PER_SYMBOL_DIRECTION}"
+            )
+            decision.portfolio_snapshot = _snapshot()
+            return decision
 
     # -------- drawdown protection -------------------------------------------
     if _STATE.drawdown_peak_pnl > 0 and _STATE.daily_pnl < -_STATE.drawdown_peak_pnl * 0.5:
@@ -397,11 +435,12 @@ def record_trade_open(
     entry_price: float,
     sl: float,
     tp: float,
+    symbol: str = "",
     meta: Optional[Dict[str, Any]] = None,
 ) -> None:
     """THREAD-SAFE: Record a newly opened trade."""
     with _STATE_LOCK:  # FIX #4: Thread-safe access
-        _record_trade_open_impl(ticket, strategy, direction, lot, risk_percent, entry_price, sl, tp, meta)
+        _record_trade_open_impl(ticket, strategy, direction, lot, risk_percent, entry_price, sl, tp, symbol, meta)
 
 
 def _record_trade_open_impl(
@@ -413,6 +452,7 @@ def _record_trade_open_impl(
     entry_price: float,
     sl: float,
     tp: float,
+    symbol: str = "",
     meta: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Internal implementation (called under _STATE_LOCK)."""
@@ -420,6 +460,7 @@ def _record_trade_open_impl(
         "ticket": int(ticket),
         "strategy": strategy.upper(),
         "direction": direction.upper(),
+        "symbol": str(symbol or "").upper(),
         "lot": float(lot),
         "risk_percent": float(risk_percent),
         "entry_price": float(entry_price),
@@ -520,6 +561,7 @@ def _record_trade_partial_close_impl(ticket: int, volume_closed: float, profit: 
 # imports any live position not yet tracked, inferring strategy from its
 # magic number, so the cap is correct immediately after a restart, not just
 # within a single continuous run.
+@_with_state_lock
 def reconcile_with_live_positions(live_positions) -> Dict[str, int]:
     """
     `live_positions` must be an iterable of MT5 position objects/namedtuples
@@ -559,6 +601,7 @@ def reconcile_with_live_positions(live_positions) -> Dict[str, int]:
             "ticket": ticket,
             "strategy": strategy,
             "direction": direction,
+            "symbol": str(getattr(pos, "symbol", "") or "").upper(),
             "lot": float(getattr(pos, "volume", 0) or 0),
             "risk_percent": 0.0,
             "entry_price": float(getattr(pos, "price_open", 0) or 0),
@@ -600,6 +643,8 @@ def _snapshot() -> Dict[str, Any]:
         "emergency": _STATE.emergency_stop,
         "emergency_reason": _STATE.emergency_reason,
         "max_open": MAX_OPEN_TRADES,
+        "max_open_per_strategy": dict(PER_STRATEGY_MAX_OPEN_LIMITS),
+        "max_open_per_symbol_direction": MAX_OPEN_PER_SYMBOL_DIRECTION,
         "max_daily_loss_amount": round(
             _STATE.day_start_balance * (HARD_RISK_DAILY_LOSS_PERCENT / 100.0), 2
         ),

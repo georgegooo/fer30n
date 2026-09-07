@@ -318,6 +318,6 @@ def build_swing_structure_report(analysis: Dict[str, Any], entry_price: Optional
         "Final RR :",
         f"{final_rr:.2f}" if final_rr is not None else "N/A",
         "Decision :",
-        "FULL ENTRY" if entry_value > 0 else "NO ENTRY",
+        "TARGET AVAILABLE" if entry_value > 0 else "NO TARGET",
     ]
     return "\n".join(lines)

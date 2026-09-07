@@ -53,10 +53,10 @@ class AuthorityIsolationTests(unittest.TestCase):
 
     def test_04_rejects_when_daily_loss_exceeded(self):
         state = get_portfolio_state()
-        # 1000$ balance; daily loss limit 3% => 30 USD
+        # 1000$ balance; daily loss limit 10% => 100 USD
         state.day_start_balance = 1000.0
         state.current_equity = 1000.0
-        state.daily_loss_amount = 50.0   # > 30 USD
+        state.daily_loss_amount = 101.0   # > 100 USD
         d = evaluate_risk(
             strategy="SCALP",
             direction="BUY",
@@ -129,6 +129,29 @@ class AuthorityIsolationTests(unittest.TestCase):
         self.assertAlmostEqual(remaining["risk_percent"], 0.6)
         self.assertEqual(len(state.open_trades), 1)
         self.assertAlmostEqual(state.daily_pnl, 8.0)
+
+    def test_08_blocks_same_symbol_direction_across_strategies(self):
+        for ticket, strategy in ((801, "SCALP"), (802, "SWING")):
+            record_trade_open(
+                ticket=ticket,
+                strategy=strategy,
+                direction="BUY",
+                lot=0.01,
+                risk_percent=0.2,
+                entry_price=2000.0,
+                sl=1999.0,
+                tp=2001.0,
+                symbol="XAUUSD",
+            )
+
+        decision = evaluate_risk(
+            strategy="MICRO",
+            direction="BUY",
+            requested_risk_percent=0.5,
+            candidate_meta={"symbol": "XAUUSD"},
+        )
+        self.assertFalse(decision.approved)
+        self.assertEqual(decision.rejection_reason, "SYMBOL_DIRECTION_MAX_OPEN_HIT")
 
 
 def run_all():

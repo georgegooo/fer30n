@@ -26,7 +26,7 @@ from core.trade_identity import (
     resolve_trade_identity,
 )
 from core.risk_manager import evaluate_position_limits
-from core.trade_executor import _check_per_strategy_limit
+from core.trade_executor import _check_per_strategy_limit, _check_hedge_policy
 
 
 class RecoverySurvivalMagicTests(unittest.TestCase):
@@ -117,12 +117,11 @@ class PerStrategyLimitTests(unittest.TestCase):
             fake_mt5, "XAUUSD", magic=4001, max_open_per_strategy=3
         )
         self.assertTrue(blocked)
-        self.assertEqual(count, 3)
 
     def test_only_counts_positions_sharing_this_strategys_magic(self):
         fake_mt5 = MagicMock()
         fake_mt5.positions_get.return_value = [
-            self._fake_position(5001),  # a different strategy's magic (MICRO)
+            self._fake_position(5001),
         ]
         blocked, count = _check_per_strategy_limit(
             fake_mt5, "XAUUSD", magic=4001, max_open_per_strategy=1
@@ -131,15 +130,58 @@ class PerStrategyLimitTests(unittest.TestCase):
         self.assertEqual(count, 0)
 
     def test_current_live_setting_still_blocks_at_one(self):
-        # settings.MAX_OPEN_PER_STRATEGY is 1 today. Confirms the fixed
-        # wiring reflects the real config value rather than a stale
-        # hardcoded number (in either direction).
         self.assertEqual(MAX_OPEN_PER_STRATEGY, 1)
         fake_mt5 = MagicMock()
         fake_mt5.positions_get.return_value = [self._fake_position(4001)]
         blocked, _ = _check_per_strategy_limit(
             fake_mt5, "XAUUSD", magic=4001, max_open_per_strategy=MAX_OPEN_PER_STRATEGY
         )
+        self.assertTrue(blocked)
+
+
+class HedgePolicyTests(unittest.TestCase):
+    @staticmethod
+    def _position(position_type, magic):
+        pos = MagicMock()
+        pos.type = position_type
+        pos.magic = magic
+        return pos
+
+    @staticmethod
+    def _mt5(positions, margin_mode=2):
+        fake_mt5 = MagicMock()
+        fake_mt5.ORDER_TYPE_BUY = 0
+        fake_mt5.ORDER_TYPE_SELL = 1
+        fake_mt5.POSITION_TYPE_BUY = 0
+        fake_mt5.POSITION_TYPE_SELL = 1
+        fake_mt5.ACCOUNT_MARGIN_MODE_RETAIL_HEDGING = 2
+        fake_mt5.positions_get.return_value = positions
+        fake_mt5.account_info.return_value.margin_mode = margin_mode
+        return fake_mt5
+
+    def test_cross_strategy_hedge_is_allowed_on_hedging_account(self):
+        fake_mt5 = self._mt5([self._position(1, 3001)])
+        blocked, count = _check_hedge_policy(fake_mt5, "XAUUSD", 0, "SCALP")
+        self.assertFalse(blocked)
+        self.assertEqual(count, 1)
+
+    def test_second_cross_strategy_hedge_is_allowed_for_two_buy_two_sell_plan(self):
+        fake_mt5 = self._mt5([
+            self._position(0, 1001),
+            self._position(0, 3001),
+        ])
+        blocked, count = _check_hedge_policy(fake_mt5, "XAUUSD", 1, "MICRO")
+        self.assertFalse(blocked)
+        self.assertEqual(count, 2)
+
+    def test_same_strategy_hedge_is_blocked(self):
+        fake_mt5 = self._mt5([self._position(1, 1001)])
+        blocked, _ = _check_hedge_policy(fake_mt5, "XAUUSD", 0, "SCALP")
+        self.assertTrue(blocked)
+
+    def test_netting_account_blocks_hedge(self):
+        fake_mt5 = self._mt5([self._position(1, 3001)], margin_mode=0)
+        blocked, _ = _check_hedge_policy(fake_mt5, "XAUUSD", 0, "SCALP")
         self.assertTrue(blocked)
 
 

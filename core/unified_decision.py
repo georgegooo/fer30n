@@ -321,11 +321,11 @@ def _adaptive_quality_floor(ctx: DecisionContext) -> float:
         floor = 70.0
 
     if regime == 'TRENDING' and trend_strength >= 0.75:
-        floor = min(floor, 50.0)
+        floor = min(floor, 52.0)
     if regime == 'RANGING' and quality >= 70.0 and confidence >= 70.0 and liquidity >= 70.0 and structure >= 65.0:
-        floor = max(46.0, floor - 2.0)
+        floor = max(48.0, floor - 1.0)
     if quality >= 75.0 and execution_grade in {'A', 'A+', 'ELITE'} and execution_score >= 65.0:
-        floor -= 2.0
+        floor -= 1.0
     if execution_grade in {'A', 'A+', 'ELITE'} and execution_score >= 65.0 and liquidity >= 70.0 and structure >= 65.0:
         floor -= 1.0
     if confidence >= 80.0:
@@ -333,7 +333,7 @@ def _adaptive_quality_floor(ctx: DecisionContext) -> float:
     if liquidity >= 70.0 and getattr(ctx, 'session', 'UNKNOWN') in {'LONDON', 'NEW_YORK'}:
         floor -= 1.0
 
-    return round(max(45.0, min(70.0, floor)), 1)
+    return round(max(47.0, min(70.0, floor + 2.0)), 1)
 
 
 def calculate_dynamic_entry_threshold(ctx: DecisionContext) -> float:
@@ -346,7 +346,7 @@ def calculate_dynamic_entry_threshold(ctx: DecisionContext) -> float:
         floor += 2.0
     if ml_score >= 70.0 and confidence >= 75.0:
         floor -= 1.0
-    return round(max(45.0, min(65.0, floor)), 1)
+    return round(max(47.0, min(67.0, floor + 2.0)), 1)
 
 
 def _evaluate_smart_environment(ctx: DecisionContext) -> Dict[str, Any]:
@@ -434,14 +434,14 @@ def _smart_entry_classification(ctx: DecisionContext, adjusted: float, dynamic_t
     if ctx.ml_score <= 38.0 and ctx.confidence_pct <= 75.0 and ctx.quality_score <= 75.0:
         return 'REDUCED_ENTRY'
 
-    if quality >= 64.0 and confidence >= 65.0 and execution_score >= 65.0 and liquidity >= 65.0 and structure >= 60.0:
-        if adjusted >= dynamic_threshold + 6.0:
+    if quality >= 66.0 and confidence >= 67.0 and execution_score >= 66.0 and liquidity >= 67.0 and structure >= 62.0:
+        if adjusted >= dynamic_threshold + 7.0:
             return 'FULL_ENTRY'
 
-    if adjusted >= max(85.0, dynamic_threshold + 15.0) and ctx.confidence_pct >= 75.0 and ctx.quality_score >= 75.0 and ctx.execution_score >= 70.0 and ctx.liquidity_alignment >= 70.0 and ctx.structure_quality >= 65.0:
+    if adjusted >= max(86.0, dynamic_threshold + 16.0) and ctx.confidence_pct >= 76.0 and ctx.quality_score >= 76.0 and ctx.execution_score >= 71.0 and ctx.liquidity_alignment >= 71.0 and ctx.structure_quality >= 66.0:
         return 'HIGH_CONVICTION_ENTRY'
 
-    if adjusted >= dynamic_threshold + 8.0 and ctx.confidence_pct >= 65.0 and ctx.quality_score >= 68.0 and ctx.execution_score >= 65.0 and ctx.liquidity_alignment >= 65.0 and ctx.structure_quality >= 60.0:
+    if adjusted >= dynamic_threshold + 9.0 and ctx.confidence_pct >= 66.0 and ctx.quality_score >= 69.0 and ctx.execution_score >= 66.0 and ctx.liquidity_alignment >= 66.0 and ctx.structure_quality >= 61.0:
         return 'FULL_ENTRY'
 
     return 'NORMAL_ENTRY'

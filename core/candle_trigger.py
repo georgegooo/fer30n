@@ -485,6 +485,19 @@ def check_candle_trigger(
         gate_mode   = "REDUCED_ENTRY"
         gate_weight = min(gate_weight, 3)
 
+    # candle_gate_v3 is the authoritative classification. Keep this public
+    # result aligned with it so logs cannot report FULL while the gate says
+    # REDUCED because of opposite MTF context or structure confidence.
+    gate_mode_map = {
+        "FULL_ENTRY": ("FULL_ENTRY", 4),
+        "REDUCED": ("REDUCED_ENTRY", 3),
+        "BLOCKED": ("HARD_BLOCK", 0),
+        "NEUTRAL": ("WAIT", 0),
+    }
+    if gate["execution_mode"] in gate_mode_map:
+        gate_mode, gate_weight = gate_mode_map[gate["execution_mode"]]
+        gate_conf = gate_weight > 0
+
     print(
         f"🕯️ CANDLE TRIGGER"
         f" | Signal:{signal}"

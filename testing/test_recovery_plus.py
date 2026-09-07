@@ -83,7 +83,7 @@ class TestHardRiskCap(unittest.TestCase):
         r = hard_risk_cap.check_hard_risk_cap(
             account_balance=10000.0,
             requested_risk_percent=0.3,
-            daily_loss_amount=501.0,
+            daily_loss_amount=1001.0,
         )
         self.assertEqual(r["hard_risk_status"], "EMERGENCY_STOP")
         self.assertFalse(r["allowed"])

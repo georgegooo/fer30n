@@ -31,8 +31,8 @@ def _make_stub():
     )
     _AccountInfo = namedtuple(
         "AccountInfo",
-        ["trade_mode", "balance", "equity", "profit", "margin"],
-        defaults=(0, 10000.0, 10000.0, 0.0, 0.0),
+        ["trade_mode", "balance", "equity", "profit", "margin", "margin_mode"],
+        defaults=(0, 10000.0, 10000.0, 0.0, 0.0, 2),
     )
     _TerminalInfo = namedtuple("TerminalInfo", ["connected"], defaults=(False,))
     _TradeResult = namedtuple("TradeResult", ["retcode", "order"], defaults=(10009, 0))
@@ -53,6 +53,7 @@ def _make_stub():
         ORDER_TYPE_SELL = 1
         POSITION_TYPE_BUY = 0
         POSITION_TYPE_SELL = 1
+        ACCOUNT_MARGIN_MODE_RETAIL_HEDGING = 2
 
         ORDER_FILLING_FOK = 0
         ORDER_FILLING_IOC = 1

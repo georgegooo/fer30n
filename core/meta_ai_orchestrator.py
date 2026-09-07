@@ -13,7 +13,7 @@ from typing import Any, Dict, Optional
 from core.contextual_memory import ContextualMemory
 from core.dynamic_aggression import resolve_session_aggression_multiplier
 from core.micro_probe_entries import build_execution_decision
-from core.recovery_cooldown import build_cooldown_state
+from core.recovery_cooldown import build_cooldown_state, evaluate_reentry_gate
 
 
 class MetaAIOrchestrator:
@@ -43,6 +43,17 @@ class MetaAIOrchestrator:
         structure_bias: str = "NEUTRAL",
         strategy: str = "UNKNOWN",
         setup_type: str = "UNKNOWN",
+        previous_exit_time: Any = None,
+        previous_exit_price: float | None = None,
+        current_price: float | None = None,
+        atr_value: float | None = None,
+        profit_amount: float = 0.0,
+        recent_closes: Optional[list[float]] = None,
+        recent_highs: Optional[list[float]] = None,
+        recent_lows: Optional[list[float]] = None,
+        trend_bias: str = "SIDEWAYS",
+        liquidity_score: float = 0.0,
+        last_structure_signal: str = "NEUTRAL",
     ) -> Dict[str, Any]:
 
         # =========================================================
@@ -354,6 +365,25 @@ class MetaAIOrchestrator:
         if cooldown_state["cooldown_active"] and execution_decision["decision"] == "FULL_EXECUTION":
             execute_trade = False
 
+        reentry_gate = None
+        if previous_exit_time is not None or previous_exit_price is not None:
+            reentry_gate = evaluate_reentry_gate(
+                previous_exit_time=previous_exit_time,
+                previous_exit_price=float(previous_exit_price) if previous_exit_price is not None else float(current_price or 0.0),
+                current_price=float(current_price) if current_price is not None else float(spread or 0.0),
+                atr_value=float(atr_value) if atr_value is not None else 0.0,
+                profit_amount=float(profit_amount or 0.0),
+                direction=signal,
+                recent_closes=list(recent_closes or []),
+                recent_highs=list(recent_highs or []),
+                recent_lows=list(recent_lows or []),
+                trend_bias=str(trend_bias or "SIDEWAYS").upper(),
+                liquidity_score=float(liquidity_score or 0.0),
+                last_structure_signal=str(last_structure_signal or "NEUTRAL").upper(),
+            )
+            if not reentry_gate["allow"]:
+                execute_trade = False
+
         # =========================================================
         # RETURN
         # =========================================================
@@ -377,6 +407,8 @@ class MetaAIOrchestrator:
             "cooldown_active": cooldown_state["cooldown_active"],
             "cooldown_seconds": cooldown_state["cooldown_seconds"],
             "cooldown_reason": cooldown_state["cooldown_reason"],
+            "reentry_gate": reentry_gate,
+            "reentry_reason": reentry_gate["reason"] if reentry_gate else None,
             "session_multiplier": round(session_multiplier, 3),
             "reasoning": [
                 f"regime={regime}",

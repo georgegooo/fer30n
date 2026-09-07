@@ -87,13 +87,23 @@ class MultiDimensionalRegimeAnalyzer:
         self.trend_periods = [20, 50]  # EMA periods
         self.vol_periods = [14, 20]    # ATR/StdDev periods
         self.sr_lookback = 100         # نقاط البحث عن S/R
+
+    @staticmethod
+    def _field(row: Any, name: str, default: Any = 0) -> Any:
+        """Read both dict-like bars and NumPy structured MT5 rows."""
+        if isinstance(row, dict):
+            return row.get(name, default)
+        try:
+            return row[name]
+        except (IndexError, KeyError, TypeError, ValueError):
+            return default
         
     def calculate_trend_direction(self) -> Dimension:
         """حساب اتجاه الاتجاه"""
         if len(self.rates) < max(self.trend_periods):
             return Dimension('trend', 'UNKNOWN', 0.0, ['بيانات ناقصة'])
         
-        closes = np.array([r.get('close', 0) for r in self.rates[-100:]])
+        closes = np.array([self._field(r, 'close') for r in self.rates[-100:]])
         
         # حساب EMAs
         ema_20 = self._calculate_ema(closes, 20)
@@ -128,7 +138,7 @@ class MultiDimensionalRegimeAnalyzer:
         if len(self.rates) < 20:
             return Dimension('volatility', 'UNKNOWN', 0.0, ['بيانات ناقصة'])
         
-        closes = np.array([r.get('close', 0) for r in self.rates[-100:]])
+        closes = np.array([self._field(r, 'close') for r in self.rates[-100:]])
         
         # حساب ATR (Average True Range)
         atr = self._calculate_atr(self.rates[-100:], 14)
@@ -161,7 +171,7 @@ class MultiDimensionalRegimeAnalyzer:
         if len(self.rates) < 20:
             return Dimension('volume', 'UNKNOWN', 0.0, ['بيانات ناقصة'])
         
-        volumes = np.array([r.get('tick_volume', 0) for r in self.rates[-20:]])
+        volumes = np.array([self._field(r, 'tick_volume') for r in self.rates[-20:]])
         
         if len(volumes) == 0 or np.all(volumes == 0):
             return Dimension('volume', 'NEUTRAL', 0.0, ['لا توجد بيانات حجم'])
@@ -193,7 +203,7 @@ class MultiDimensionalRegimeAnalyzer:
         if len(self.rates) < 50:
             return Dimension('sr_status', 'UNKNOWN', 0.0, ['بيانات ناقصة'])
         
-        closes = np.array([r.get('close', 0) for r in self.rates[-100:]])
+        closes = np.array([self._field(r, 'close') for r in self.rates[-100:]])
         current = closes[-1]
         
         # البحث عن آخر قمة وقاع
@@ -397,9 +407,9 @@ class MultiDimensionalRegimeAnalyzer:
         
         tr_list = []
         for i in range(1, len(rates)):
-            h = rates[i].get('high', 0)
-            l = rates[i].get('low', 0)
-            c = rates[i-1].get('close', 0)
+            h = MultiDimensionalRegimeAnalyzer._field(rates[i], 'high')
+            l = MultiDimensionalRegimeAnalyzer._field(rates[i], 'low')
+            c = MultiDimensionalRegimeAnalyzer._field(rates[i-1], 'close')
             
             tr = max(h - l, abs(h - c), abs(l - c))
             tr_list.append(tr)

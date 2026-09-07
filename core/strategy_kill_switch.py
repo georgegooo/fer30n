@@ -226,6 +226,7 @@ def should_block_trade(
     session: Optional[str] = None,
     market_regime: Optional[str] = None,
     exec_grade: Optional[str] = None,
+    size_mode: Optional[str] = None,
 ) -> Tuple[bool, str]:
     """
     يعيد (block, reason).
@@ -245,7 +246,12 @@ def should_block_trade(
         return True, f"KILL_SWITCH_REGIME_{strat}_{regime}"
 
     # 3) exec_grade مشدد للاستراتيجيات الخاسرة
-    if strat in STRICT_EXEC_GRADE_STRATEGIES and grade and grade not in ALLOWED_EXEC_GRADES:
+    if (
+        strat in STRICT_EXEC_GRADE_STRATEGIES
+        and str(size_mode or "").upper() != "MICRO"
+        and grade
+        and grade not in ALLOWED_EXEC_GRADES
+    ):
         # [FER3ON-FIX-2026-08-31] نفس grace period للحساب الجديد: لا نطبق
         # حظر exec_grade قبل وجود بيانات كافية على الحساب الفعلي.
         weekly = _read_recent_trades(hours=168)

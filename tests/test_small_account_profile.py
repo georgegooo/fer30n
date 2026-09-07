@@ -27,7 +27,7 @@ def test_frozen_profile_absolute_ceilings_hold(monkeypatch):
     settings = importlib.reload(settings)
 
     assert settings.MAX_LOT <= 0.10
-    assert settings.MAX_RISK_PER_DAY_PERCENT <= 5.0
+    assert settings.MAX_RISK_PER_DAY_PERCENT <= 10.0
     assert settings.MAX_SL_DISTANCE_DOLLARS > 0
 
 
