@@ -373,6 +373,7 @@ def _execute(*, strategy: str, signal: str, lot: float, sl_dist: float, tp_dist:
                 entry_price=_entry_price_val,
                 sl=_sl_price_val,
                 tp=float(request.get('tp', 0) or 0),
+                symbol=SYMBOL,
                 meta={'quality_score': quality_score, 'session': session},
             )
         except Exception as exc:
@@ -414,6 +415,10 @@ def _allocator_gate(*, strategy: str, quality_score: float,
     """Apply the opportunity allocator independently per strategy."""
     try:
         from core.opportunity_allocator import rank_opportunity
+        from core.settings import (
+            PHASE5_OPPORTUNITY_ALLOCATOR_LIVE_ENABLED,
+            PHASE5_ADVISORY_WEAK_RISK_MULTIPLIER,
+        )
         rank = rank_opportunity(
             quality_score=float(quality_score),
             confidence_pct=float(confidence_pct),
@@ -425,7 +430,9 @@ def _allocator_gate(*, strategy: str, quality_score: float,
             daily_bias_alignment=False,
         )
         if rank.should_reject:
-            return False, 0.0, f'ALLOCATOR_REJECT:{rank.reasoning}'
+            if PHASE5_OPPORTUNITY_ALLOCATOR_LIVE_ENABLED:
+                return False, 0.0, f'ALLOCATOR_REJECT:{rank.reasoning}'
+            return True, PHASE5_ADVISORY_WEAK_RISK_MULTIPLIER, f'ALLOCATOR_ADVISORY_WEAK:{rank.reasoning}'
         return True, float(rank.risk_adjustment), rank.reasoning
     except Exception as exc:
         return False, 0.0, f'ALLOCATOR_CHECK_FAILED:{type(exc).__name__}'
@@ -439,8 +446,9 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
     if not MT5_AVAILABLE or mt5 is None:
         return {'opened': False, 'reason': 'MT5_UNAVAILABLE'}
 
-    if session not in SCALP_SESSIONS:
-        return {'opened': False, 'reason': 'SESSION_NOT_ALLOWED'}
+    # User request: allow SCALP to evaluate at any time, instead of being
+    # blocked by a hard session whitelist.
+    # The strategy still keeps all other risk/cooldown/quality gates.
 
     if _daily_count_for('SCALP') >= MAX_SCALP_TRADES_PER_DAY:
         return {'opened': False, 'reason': 'DAILY_CAP_HIT'}
@@ -515,6 +523,7 @@ def run_scalp_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
         strategy='SCALP',
         direction=signal,
         requested_risk_percent=risk_percent,
+        candidate_meta={'symbol': SYMBOL},
     )
     try:
         from analytics.authority_impact import record_risk_decision
@@ -661,6 +670,7 @@ def run_swing_cycle(*, session: str, market_regime: str = 'UNKNOWN') -> Dict[str
         strategy='SWING',
         direction=signal,
         requested_risk_percent=risk_percent,
+        candidate_meta={'symbol': SYMBOL},
     )
     try:
         from analytics.authority_impact import record_risk_decision
@@ -816,6 +826,7 @@ def run_micro_cycle(*, session: str, market_regime: str = 'UNKNOWN', confidence_
         strategy='MICRO',
         direction=signal,
         requested_risk_percent=risk_percent,
+        candidate_meta={'symbol': SYMBOL},
     )
     try:
         from analytics.authority_impact import record_risk_decision
