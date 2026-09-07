@@ -724,6 +724,8 @@ BACKUP_DIR    = 'data/backups'
 
 import os
 ALLOW_LIVE_TRADING = os.getenv('ALLOW_LIVE_TRADING', 'False').lower() in ('true', '1', 'yes')
+SHADOW_ONLY_RUNTIME = os.getenv('FER3ON_SHADOW_ONLY', 'False').lower() in ('true', '1', 'yes')
+SHADOW_RUN_MAX_CYCLES = max(0, int(os.getenv('FER3ON_SHADOW_MAX_CYCLES', '0') or 0))
 
 # =============================================================================
 # SELF OPTIMIZER + ADAPTIVE LEARNING

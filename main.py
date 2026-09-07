@@ -79,6 +79,7 @@ from core.settings import (
     PHASE5_ADVISORY_WEAK_RISK_MULTIPLIER,
     RISK_PER_TRADE_PERCENT, MIN_EFFECTIVE_RISK_PERCENT, MAX_RISK_TOTAL,
     BREAKEVEN_BUFFER_ATR, MULTI_TP_PROFILE,
+    SHADOW_ONLY_RUNTIME, SHADOW_RUN_MAX_CYCLES,
     HISTORY_DIR,
     PROACTIVE_OPPORTUNITY_SCAN_ENABLED,
     PROACTIVE_OPPORTUNITY_SCAN_INTERVAL,
@@ -1040,6 +1041,7 @@ def main():
     print('=' * 60)
     print(f"Time: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC")
     print(f'MT5 available: {MT5_AVAILABLE}')
+    print(f'Shadow-only runtime: {SHADOW_ONLY_RUNTIME} | max cycles: {SHADOW_RUN_MAX_CYCLES or "unlimited"}')
 
     try:
         if not connect_mt5():
@@ -2023,7 +2025,7 @@ def main():
                     time.sleep(CHECK_INTERVAL)
                     continue
 
-                if lot > 0 and MT5_AVAILABLE:
+                if lot > 0 and MT5_AVAILABLE and not SHADOW_ONLY_RUNTIME:
 
                     request = _build_order_request(
                         snapshot['signal'],
@@ -2354,6 +2356,9 @@ def main():
             # processing is slow, and allows faster re-entry when idle.
             # ═════════════════════════════════════════════════════════════
             cycle_elapsed = time.time() - loop_start
+            if SHADOW_RUN_MAX_CYCLES and counter >= SHADOW_RUN_MAX_CYCLES:
+                print(f'Shadow cycle limit reached: {counter}. Exiting safely.')
+                break
             adaptive_sleep = max(1.0, CHECK_INTERVAL - cycle_elapsed)  # Min 1 second
             if cycle_elapsed > 5.0:  # Only log if processing was slow
                 print(f"[LATENCY] Cycle: {cycle_elapsed:.1f}s | Sleeping: {adaptive_sleep:.1f}s")
