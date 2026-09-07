@@ -27,4 +27,5 @@ Updated: 2026-09-07
 - Fresh post-recovery configuration cohort is still required before changing
   thresholds or enabling live authorities.
 - Secondary strategy runners need a dedicated shadow-evaluation path before
-  being wired into the main loop.
+- being granted execution authority. A non-executing signal sidecar now logs
+  SCALP/SWING/MICRO coverage in `data/analytics/shadow_context`.

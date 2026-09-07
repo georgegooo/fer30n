@@ -1257,6 +1257,23 @@ def main():
                 _run_resolvers_cycle(snapshot)
             except Exception as e:
                 print(f'⚠️ RESOLVERS_CYCLE_FAILED: {e}')
+
+            # Secondary strategies are evaluated in a sidecar only. This
+            # closes the observability gap without granting them execution
+            # authority or calling any order path.
+            if counter % max(1, int(PROACTIVE_OPPORTUNITY_SCAN_INTERVAL)) == 0:
+                try:
+                    from core.secondary_shadow import evaluate_secondary_shadow
+                    evaluate_secondary_shadow(
+                        symbol=SYMBOL,
+                        rates=snapshot.get('rates'),
+                        session=snapshot.get('session', 'UNKNOWN'),
+                        market_regime=snapshot.get('market_regime', 'UNKNOWN'),
+                        confidence_pct=(snapshot.get('confidence') or {}).get('pct', 50)
+                        if isinstance(snapshot.get('confidence'), dict) else 50,
+                    )
+                except Exception as _secondary_shadow_err:
+                    print(f'⚠️ SECONDARY_SHADOW_ERROR (non-fatal): {_secondary_shadow_err}')
             
             # V3.6: استدعاء دوري حقيقي للتريلينج المتقدم (break-even Stage1 +
             # ATR staged trailing Stage2) لكل الصفقات المفتوحة، لكل الاستراتيجيات
