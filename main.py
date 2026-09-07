@@ -1750,16 +1750,13 @@ def main():
                 )
                 parallel_results = trigger_parallel_strategy_runners(
                     snapshot,
-                    allow_execution=(
-                        SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED
-                        or MICRO_LIVE_ENABLED
-                        or SCALP_LIVE_ENABLED
-                        or SWING_LIVE_ENABLED
-                    ),
+                    # Capability flags do not grant authority. Execution
+                    # requires the explicit secondary authority gate.
+                    allow_execution=SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED,
                     enabled_strategies={
-                        'MICRO': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED or MICRO_LIVE_ENABLED,
-                        'SCALP': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED or SCALP_LIVE_ENABLED,
-                        'SWING': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED or SWING_LIVE_ENABLED,
+                        'MICRO': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED and MICRO_LIVE_ENABLED,
+                        'SCALP': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED and SCALP_LIVE_ENABLED,
+                        'SWING': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED and SWING_LIVE_ENABLED,
                     },
                 )
                 for strategy_name, result in parallel_results.items():
