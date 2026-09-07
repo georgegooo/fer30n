@@ -31,3 +31,5 @@ Updated: 2026-09-07
   SCALP/SWING/MICRO coverage in `data/analytics/shadow_context`.
 - `scripts/check_recovery_cohort.py` distinguishes old resolved records from
   post-recovery records; old records must not count toward readiness.
+- `LEGACY_ROOT_INVENTORY.md` documents historical root reports and diagnostic
+  scripts that remain for path compatibility.

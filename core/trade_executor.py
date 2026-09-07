@@ -1037,6 +1037,7 @@ def execute_trade(
             from core.error_memory import record_error_episode
             record_error_episode(category="EXECUTION_REJECTED", outcome="REJECTED", strategy=strategy)
         except Exception as _eq_err:
+            _log_executor_exception('EXECUTION_QUALITY_REJECT_LOG_FAILED', _eq_err, strategy=_strat_key)
             print(f'⚠️ EXECUTION_QUALITY_LOG_FAILED (non-fatal): {_eq_err}')
         return result
 
@@ -1072,6 +1073,7 @@ def execute_trade(
             strategy=strategy,
         )
     except Exception as _eq_err:
+        _log_executor_exception('EXECUTION_QUALITY_FILL_LOG_FAILED', _eq_err, strategy=_strat_key)
         print(f'⚠️ EXECUTION_QUALITY_LOG_FAILED (non-fatal): {_eq_err}')
 
     try:
@@ -1099,6 +1101,7 @@ def execute_trade(
             build_id=BUILD_ID,
         )
     except Exception as e:
+        _log_executor_exception('TRADE_LOG_PERSIST_FAILED', e, strategy=_strat_key)
         print(f'⚠️ LOGGING FAILED: {e}')
 
     try:
@@ -1158,11 +1161,13 @@ def execute_trade(
             **_enrichment_kwargs,
         )
     except Exception as e:
+        _log_executor_exception('TRADE_MEMORY_SAVE_FAILED', e, strategy=_strat_key)
         print(f'⚠️ MEMORY SAVE FAILED: {e}')
 
     try:
         register_test_mode_trade(lot=lot)
     except Exception as e:
+        _log_executor_exception('TEST_MODE_QUOTA_UPDATE_FAILED', e, strategy=_strat_key)
         print(f'⚠️ TEST MODE QUOTA UPDATE FAILED: {e}')
 
     # =========================================
@@ -1190,6 +1195,7 @@ def execute_trade(
             f" | levels={tp_ladder.get('levels')}"
         )
     except Exception as e:
+        _log_executor_exception('TP_LADDER_COMPUTE_FAILED', e, strategy=_strat_key)
         print(f'⚠️ MULTI_TP_LADDER COMPUTE FAILED: {e}')
         tp_ladder = {"enabled": False, "levels": [], "mode": "ERROR"}
 
