@@ -62,6 +62,36 @@ class TestTpMonitor(unittest.TestCase):
             self.assertEqual(multi_tp.get_registered_ladder(123)['closed_labels'], ['TP1'])
 
     @patch('execution.tp_monitor._round_volume', return_value=0.5)
+    def test_process_tp_ladders_restores_registry_after_restart(self, fake_round_volume):
+        fake_mt5 = MagicMock()
+        fake_mt5.TRADE_ACTION_DEAL = 1
+        fake_mt5.ORDER_TYPE_SELL = 1
+        fake_mt5.POSITION_TYPE_BUY = 0
+        fake_mt5.TRADE_RETCODE_DONE = 10009
+
+        fake_tick = MagicMock(bid=2013.0, ask=2013.5)
+        fake_position = MagicMock()
+        fake_position.ticket = 789
+        fake_position.type = fake_mt5.POSITION_TYPE_BUY
+        fake_position.volume = 1.0
+        fake_position.price_open = 2000.0
+        fake_position.sl = 1990.0
+        fake_position.comment = 'SMC'
+
+        fake_mt5.symbol_info_tick.return_value = fake_tick
+        fake_mt5.positions_get.return_value = [fake_position]
+        fake_mt5.order_send.return_value = MagicMock(retcode=fake_mt5.TRADE_RETCODE_DONE)
+
+        with patch('execution.tp_monitor.mt5', fake_mt5), patch('execution.tp_monitor.MT5_AVAILABLE', True):
+            process_tp_ladders('EURUSD')
+
+            restored = multi_tp.get_registered_ladder(789)
+            self.assertIsNotNone(restored)
+            self.assertTrue(restored['restored_after_restart'])
+            self.assertEqual(restored['closed_labels'], ['TP1'])
+            fake_mt5.order_send.assert_called_once()
+
+    @patch('execution.tp_monitor._round_volume', return_value=0.5)
     def test_partial_close_request_carries_position_magic(self, fake_round_volume):
         """Regression test: partial TP-ladder closes were being sent with no
         magic field at all, so MT5 defaulted the resulting deal to magic=0.

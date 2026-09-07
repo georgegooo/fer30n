@@ -21,6 +21,15 @@ import os
 from config.ai_config import AI_CONFIG
 from config.execution_config import EXECUTION_CONFIG
 
+_TEST_DATA_ROOT = os.getenv("FER3ON_TEST_DATA_DIR", "").strip()
+
+
+def _data_path(relative_path: str) -> str:
+    """Prefix analytics paths only when an isolated test root is requested."""
+    if not _TEST_DATA_ROOT:
+        return relative_path
+    return os.path.join(_TEST_DATA_ROOT, relative_path.replace("/", os.sep))
+
 SYMBOL    = 'XAUUSD'
 TIMEFRAME = 15
 BOT_NAME    = 'FER3ON-AI-V3-PLUS-PLUS-PLUS'
@@ -108,7 +117,7 @@ else:
     # DEMO default — no real capital at risk either way.
     BASE_ACCOUNT_BALANCE = 1000.0
 
-RISK_PER_TRADE_PERCENT = 0.75     # conservative low-account profile for XAUUSD; keeps MIN_LOT risk tractable
+RISK_PER_TRADE_PERCENT = 1.0      # staged recovery profile; keep live activation behind Demo/Shadow validation
 # FER3ON FINAL [EXPOSURE-3]: floor for any confidence/strategy-scaled
 # risk_percent derived from RISK_PER_TRADE_PERCENT below (main.py's
 # risk_multiplier scaling, strategy_runners.py's BASE_RISK_*). Without a
@@ -118,18 +127,22 @@ RISK_PER_TRADE_PERCENT = 0.75     # conservative low-account profile for XAUUSD;
 # single trade at the $200 end of the range. See FER3ON_FINAL_CHANGELOG.md
 # [EXPOSURE-3] for the full trace.
 MIN_EFFECTIVE_RISK_PERCENT = 0.75
-MAX_RISK_PER_DAY_PERCENT = 5.0   # unified daily loss brake for all risk paths
-MAX_LOT = 0.06                   # tighter ceiling for safer execution in low-balance accounts
+MAX_RISK_PER_DAY_PERCENT = 10.0  # unified daily loss brake for all risk paths
+MAX_LOT = 0.08                   # staged recovery ceiling; still below the legacy 0.10 cap
 MIN_LOT = 0.01                   # broker floor for XAUUSD (1oz)
 MIN_SL_DISTANCE = 500.0          # last-resort floor ($5) — only used if ATR computation fails entirely
 BROKER_STOP_LEVEL_FALLBACK = 50  # ~$0.50 fallback when broker doesn't report trade_stops_level
 MAX_RISK_TOTAL = 1.5             # ceiling on risk_percent itself (calculate_smart_lot clamps to this)
+MICRO_FIXED_SL_DOLLARS = 5.0
+MICRO_FIXED_TP_DOLLARS = 8.0
+SCALP_FIXED_SL_DOLLARS = 8.0
+SCALP_FIXED_TP_DOLLARS = 15.0
 
 # Absolute ceilings — kept as a defensive backstop even though there is only
 # one profile now, so a future edit above can't silently exceed the FINAL
 # build's safety envelope (Action Plan #1, #4, #5).
 MAX_LOT = min(MAX_LOT, 0.10)
-MAX_RISK_PER_DAY_PERCENT = min(MAX_RISK_PER_DAY_PERCENT, 5.0)
+MAX_RISK_PER_DAY_PERCENT = min(MAX_RISK_PER_DAY_PERCENT, 10.0)
 
 # =============================================================================
 # FER3ON FINAL — MIN-LOT RISK GUARD (new, build spec bonus fix [SLTP-2])
@@ -228,17 +241,24 @@ MAX_DAILY_RISK = MAX_RISK_PER_DAY_PERCENT  # V3.5 unified — single source of t
 # =============================================================================
 
 MAX_OPEN_TRADES = 4
-# FER3ON FINAL [EXPOSURE-2]: main.py's SMC path already checked live MT5
-# positions for a same-direction concentration cap (hardcoded 4, matching
-# MAX_OPEN_TRADES) — core/strategy_runners.py's SCALP/SWING/MICRO paths did
-# not have the equivalent check. Named here so both paths can share one
-# number instead of two independently-hardcoded 4s drifting apart.
-MAX_SAME_DIRECTION_POSITIONS = 4
+# FER3ON FINAL [EXPOSURE-2]: all live strategy paths share this same-direction
+# concentration cap, instead of maintaining separate hardcoded values.
 MAX_OPEN_PER_STRATEGY = 1
 MAX_OPEN_SCALP = 1
 MAX_OPEN_MICRO = 1
 MAX_OPEN_SMC   = 1
 MAX_OPEN_SWING_OR_DAILY = 1   # SWING و DAILY يتقاسمان نفس الحد الأقصى
+PER_STRATEGY_MAX_OPEN_LIMITS = {
+    'SCALP': MAX_OPEN_SCALP,
+    'MICRO': MAX_OPEN_MICRO,
+    'SMC': MAX_OPEN_SMC,
+    'SWING': MAX_OPEN_SWING_OR_DAILY,
+    'DAILY': MAX_OPEN_SWING_OR_DAILY,
+}
+MAX_OPEN_PER_SYMBOL_DIRECTION = 2
+MAX_SAME_DIRECTION_POSITIONS = MAX_OPEN_PER_SYMBOL_DIRECTION
+ENABLE_CROSS_STRATEGY_HEDGE = True
+MAX_CROSS_STRATEGY_HEDGES = MAX_OPEN_TRADES
 
 # [REARCH-2] Per-strategy SOFT position-count ceilings, read by
 # core/risk_manager.py::evaluate_position_limits. This used to be a second,
@@ -351,10 +371,13 @@ ORDER_RETRY_MAX_WIDEN_FACTOR = 1.30   # أقصى توسيع مسموح لمسا�
 SHADOW_COUNTERFACTUAL_ENABLED       = True
 ANALYTICS_DATA_EPOCH                = "2026-09-01-clean"
 ANALYTICS_SCHEMA_VERSION            = "5.0"
-SHADOW_COUNTERFACTUAL_LOG_PATH      = "data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl"
-SHADOW_COUNTERFACTUAL_QUARANTINE_PATH = "data/analytics/quarantine/rejected_shadow_invalid_2026-09-01-clean.jsonl"
+SHADOW_COUNTERFACTUAL_LOG_PATH      = _data_path("data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl")
+SHADOW_COUNTERFACTUAL_QUARANTINE_PATH = _data_path("data/analytics/quarantine/rejected_shadow_invalid_2026-09-01-clean.jsonl")
 SHADOW_COUNTERFACTUAL_HORIZON_BARS  = 48    # شموع المتابعة قبل اعتبار النتيجة TIMEOUT
 SHADOW_COUNTERFACTUAL_MIN_SAMPLES   = 100   # الحد الأدنى قبل استخلاص أي استنتاج إحصائي
+RESOLVER_TELEMETRY_ENABLED          = True
+RESOLVER_TELEMETRY_LOG_PATH         = "data/analytics/resolver/resolver_cycles.jsonl"
+RESOLVER_HISTORY_BARS               = 5000  # M5 history for multi-day pending records
 
 # =============================================================================
 # FER3ON — PHASE 2 | ENTRY CONTROLLER + STRUCTURAL SL (Demo)
@@ -386,7 +409,7 @@ PROACTIVE_OPPORTUNITY_SCAN_INTERVAL    = 5      # shadow scan every N heartbeats
 PHASE3_EXIT_MANAGER_ENABLED            = True
 PHASE3_EXIT_MANAGER_LIVE_ENABLED       = False  # advisory/log-only حتى مراجعة الديمو
 PHASE3_EXIT_MANAGER_LOG_PATH           = "data/analytics/exit_manager/exit_actions.jsonl"
-TP_LADDER_RR                           = (1.5, 2.5, 4.0)   # مستويات الهدف المستقلة بمضاعفات R
+TP_LADDER_RR                           = (1.2, 2.5, 4.0)   # fallback aligned with MULTI_TP_PROFILE
 TP_LADDER_FRACTIONS                    = (0.5, 0.3, 0.2)   # نسب الإغلاق الجزئي لكل مستوى
 BREAKEVEN_BUFFER_ATR                   = 0.1    # بفر فوق التعادل بعد TP1
 TRAILING_ATR_MULT                      = 1.0    # مسافة التتبع بعد TP2 = 1 × ATR
@@ -421,8 +444,8 @@ ATR_TP_SWING = 5.0
 ATR_SL_SMC   = 1.2
 ATR_TP_SMC   = 2.5
 
-ATR_SL_MICRO = 1.0
-ATR_TP_MICRO = 2.0
+ATR_SL_MICRO = 2.0   # legacy alias; active MICRO profile is MICRO_SL_ATR_MULT
+ATR_TP_MICRO = 4.0   # legacy alias; active MICRO profile is MICRO_TP_ATR_MULT
 
 ATR_TRAIL_MULT = 1.0
 MIN_TRAIL      = 5.0
@@ -680,6 +703,8 @@ SCALP_MIN_QUALITY      = 55
 SCALP_TP_ATR_MULT      = 1.5
 SCALP_SL_ATR_MULT      = 0.8
 SCALP_COOLDOWN_SEC      = 120
+MICRO_SL_ATR_MULT      = 2.0
+MICRO_TP_ATR_MULT      = 4.0
 
 SWING_MAX_PER_DAY        = 3
 SWING_MIN_QUALITY        = 70
@@ -866,7 +891,7 @@ V7_FILTER_RELAXATION_MAX     = 0.30
 V7_HARD_RISK_CAP_ENABLED        = True
 HARD_RISK_MAX_PER_TRADE         = 0.50
 HARD_RISK_MAX_PER_TRADE_CEILING = 1.00
-HARD_RISK_DAILY_LOSS_PERCENT    = 5.0  # must match MAX_RISK_PER_DAY_PERCENT
+HARD_RISK_DAILY_LOSS_PERCENT    = 10.0  # must match MAX_RISK_PER_DAY_PERCENT
 
 V7_SESSION_INTELLIGENCE_ENABLED = True
 
@@ -1016,13 +1041,13 @@ MICRO_SCORE_THRESHOLD_OLD_60      = 65   # كان 60
 # لنفس منطق التشديد التدريجي لـ V3.5 Phase-1 (35 -> 40) أعلاه، وليس تراجعًا
 # عنه. راجع النتيجة الفعلية بعد تجميع عينة صفقات نظيفة جديدة قبل أي رفع إضافي.
 #
-# بقرار المستخدم: جولة تشديد إضافية +10% فوق قيم V3.7 (مايكرو فقط، باقي
-# الاستراتيجيات لم تُمس).
-MICRO_CONFIDENCE_THRESHOLD_OLD_45 = 50   # كان 45 (+10%)
-MICRO_SCORE_THRESHOLD_OLD_60_V2   = 66   # كان 60 (+10%)
+# Legacy reference values retained for audit history; the active recovery
+# profile below intentionally restores the stricter 50/66 gate.
+MICRO_CONFIDENCE_THRESHOLD_OLD_45 = 45
+MICRO_SCORE_THRESHOLD_OLD_60_V2   = 60
 
-MICRO_MIN_CONFIDENCE_DEFAULT      = MICRO_CONFIDENCE_THRESHOLD_OLD_45   # 50
-MICRO_MIN_SCORE_DEFAULT           = MICRO_SCORE_THRESHOLD_OLD_60_V2     # 66
+MICRO_MIN_CONFIDENCE_DEFAULT      = 50
+MICRO_MIN_SCORE_DEFAULT           = 66
 MICRO_STABILIZATION_ACTIVE        = True   # مفتاح التفعيل
 MICRO_STRATEGY_ENABLED            = True  # سياسة التشغيل: MICRO مُوقّف مؤقتًا
 
@@ -1105,11 +1130,11 @@ SMC_DEBUG_REPORT_DIR = 'data/truth_layer/smc_diagnostics'
 # Analytics-only sidecar. Zero runtime influence.
 # =============================================================================
 
-PHASE2_ANALYTICS_DIR         = "data/analytics/phase2"
-PHASE2_REPORTS_DIR           = "data/analytics/phase2/reports"
-PHASE2_RANKINGS_DIR          = "data/analytics/phase2/rankings"
-PHASE2_CONTRIB_DIR           = "data/analytics/phase2/contributions"
-PHASE2_SHADOW_DIR            = "data/analytics/phase2/shadow"
+PHASE2_ANALYTICS_DIR         = _data_path("data/analytics/phase2")
+PHASE2_REPORTS_DIR           = _data_path("data/analytics/phase2/reports")
+PHASE2_RANKINGS_DIR          = _data_path("data/analytics/phase2/rankings")
+PHASE2_CONTRIB_DIR           = _data_path("data/analytics/phase2/contributions")
+PHASE2_SHADOW_DIR            = _data_path("data/analytics/phase2/shadow")
 
 PHASE2_ENABLED                    = True
 PHASE2_RUNTIME_INFLUENCE          = False   # NEVER flip to True in this phase
@@ -1125,14 +1150,14 @@ PHASE2_MIN_SAMPLE_PER_BUCKET      = 5       # below this → INSUFFICIENT_SAMPLE
 # =============================================================================
 
 # --- Phase 3 Directory Paths ---
-PHASE3_ANALYTICS_DIR        = "data/analytics/phase3"
-PHASE3_FINAL_BRAIN_DIR      = "data/analytics/phase3/final_brain"
-PHASE3_PORTFOLIO_BRAIN_DIR  = "data/analytics/phase3/portfolio_brain"
-PHASE3_GOLD_CONTEXT_DIR     = "data/analytics/phase3/gold_context"
-PHASE3_ML_SAFETY_DIR        = "data/analytics/phase3/ml_safety"
-PHASE3_STRATEGY_DNA_DIR     = "data/analytics/phase3/strategy_dna"
-PHASE3_SYSTEM_HEALTH_DIR    = "data/analytics/phase3/system_health"
-PHASE3_SHADOW_LOG_DIR       = "data/analytics/phase3/shadow_log"
+PHASE3_ANALYTICS_DIR        = _data_path("data/analytics/phase3")
+PHASE3_FINAL_BRAIN_DIR      = _data_path("data/analytics/phase3/final_brain")
+PHASE3_PORTFOLIO_BRAIN_DIR  = _data_path("data/analytics/phase3/portfolio_brain")
+PHASE3_GOLD_CONTEXT_DIR     = _data_path("data/analytics/phase3/gold_context")
+PHASE3_ML_SAFETY_DIR        = _data_path("data/analytics/phase3/ml_safety")
+PHASE3_STRATEGY_DNA_DIR     = _data_path("data/analytics/phase3/strategy_dna")
+PHASE3_SYSTEM_HEALTH_DIR    = _data_path("data/analytics/phase3/system_health")
+PHASE3_SHADOW_LOG_DIR       = _data_path("data/analytics/phase3/shadow_log")
 
 # --- Phase 3 Global Switch ---
 # لا تُفعّل هذا إلا بعد اجتياز جميع شروط التفعيل
@@ -1394,14 +1419,14 @@ MULTI_TP_STRATEGY_ENABLED = {
 # → متوسط الربح < متوسط الخسارة رياضيًا.
 # الحل: رفع tp1_rr وتقليل حجم TP1 لإطالة العمر الفعلي للصفقة الرابحة.
 MULTI_TP_PROFILE = {
-    "DAILY": {"tp1_pct": 0.30, "tp2_pct": 0.35, "tp3_pct": 0.35,
-              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 4.0},
-    "SMC":   {"tp1_pct": 0.35, "tp2_pct": 0.35, "tp3_pct": 0.30,
-              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 4.0},
-    "SCALP": {"tp1_pct": 0.45, "tp2_pct": 0.55, "tp3_pct": 0.0,
-              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 0.0},
+    "DAILY": {"tp1_pct": 0.50, "tp2_pct": 0.30, "tp3_pct": 0.20,
+              "tp1_rr": 1.2, "tp2_rr": 2.5, "tp3_rr": 4.0},
+    "SMC":   {"tp1_pct": 0.50, "tp2_pct": 0.30, "tp3_pct": 0.20,
+              "tp1_rr": 1.2, "tp2_rr": 2.5, "tp3_rr": 4.0},
+    "SCALP": {"tp1_pct": 0.50, "tp2_pct": 0.50, "tp3_pct": 0.0,
+              "tp1_rr": 1.2, "tp2_rr": 2.5, "tp3_rr": 0.0},
     "MICRO": {"tp1_pct": 0.50, "tp2_pct": 0.50, "tp3_pct": 0.0,
-              "tp1_rr": 1.5, "tp2_rr": 2.5, "tp3_rr": 0.0},
+              "tp1_rr": 1.2, "tp2_rr": 2.5, "tp3_rr": 0.0},
 }
 
 # عند تعارض MTF (CONFLICT) — يتجاوز الجدول أعلاه: هدف واحد سريع وحذِر فقط
@@ -1574,7 +1599,11 @@ PHASE5_OPPORTUNITY_ALLOCATOR_PROMOTION_ENABLED = False
 PHASE5_OPPORTUNITY_ALLOCATOR_LIVE_ENABLED = bool(
     ALLOW_LIVE_TRADING and PHASE5_OPPORTUNITY_ALLOCATOR_PROMOTION_ENABLED
 )  # requires both global and explicit promotion approval
+PHASE5_ADVISORY_WEAK_RISK_MULTIPLIER = 0.25
 SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED = False
+MICRO_LIVE_ENABLED = True
+SCALP_LIVE_ENABLED = True
+SWING_LIVE_ENABLED = True
 PHASE5_ALLOCATOR_LOG_PATH                 = "data/analytics/opportunity_allocator/evaluations.jsonl"
 ALLOCATOR_BASE_RISK_R                     = 0.25   # مخاطرة الفرصة العادية
 ALLOCATOR_MIN_SCORE                       = 0.10   # أقل منها = SKIP

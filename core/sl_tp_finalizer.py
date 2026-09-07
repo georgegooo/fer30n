@@ -82,18 +82,26 @@ def finalize_sl_tp(
 
     # Preserve the raw values for RR and diagnostics before applying policy.
     original_sl_dist_raw = sl_dist_raw
+    strategy_key = str(strategy or "").upper()
 
-    # STEP 1 — SL: strategy policy cap, then broker-min-stop floor and the
-    # global account-size cap in _enforce_min_stop_distance.
+    # STEP 1 — SL: ATR profiles use the account-wide cap; other strategies
+    # retain their context-aware policy cap before broker enforcement.
     if sl_dist_raw is not None and strategy:
-        from core.sl_risk_policy import resolve_sl_cap
-        strategy_cap = resolve_sl_cap(
-            strategy=strategy,
-            market_regime=market_regime,
-            confidence=confidence,
-            exposure_modifier=exposure_modifier,
-        )["effective_cap"]
-        sl_dist_for_enforcement = min(sl_dist_raw, strategy_cap)
+        if strategy_key in {"SCALP", "MICRO"}:
+            # ATR profiles use the account-wide hard cap as their only
+            # strategy-independent ceiling; do not reintroduce a context
+            # dependent dollar stop at finalization.
+            from core.settings import MAX_SL_DISTANCE_DOLLARS
+            sl_dist_for_enforcement = min(sl_dist_raw, float(MAX_SL_DISTANCE_DOLLARS))
+        else:
+            from core.sl_risk_policy import resolve_sl_cap
+            strategy_cap = resolve_sl_cap(
+                strategy=strategy,
+                market_regime=market_regime,
+                confidence=confidence,
+                exposure_modifier=exposure_modifier,
+            )["effective_cap"]
+            sl_dist_for_enforcement = min(sl_dist_raw, strategy_cap)
     else:
         sl_dist_for_enforcement = sl_dist_raw
     sl_dist_final = _enforce_min_stop_distance(symbol, sl_dist_for_enforcement, point)

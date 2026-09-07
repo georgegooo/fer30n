@@ -21,20 +21,19 @@ class RiskConsistencyTests(unittest.TestCase):
     def test_01_settings_is_source_of_truth(self):
         # V3.5 unified values; settings.py overrides legacy config.
         self.assertGreaterEqual(core.settings.HARD_RISK_DAILY_LOSS_PERCENT, 1.0)
-        self.assertEqual(core.settings.HARD_RISK_DAILY_LOSS_PERCENT, 5.0)
+        self.assertEqual(core.settings.HARD_RISK_DAILY_LOSS_PERCENT, 10.0)
         self.assertGreaterEqual(core.settings.RISK_PER_TRADE_PERCENT, 0.25)
         self.assertLessEqual(core.settings.RISK_PER_TRADE_PERCENT, 1.0)
         self.assertLessEqual(core.settings.MIN_EFFECTIVE_RISK_PERCENT, 1.0)
-        self.assertEqual(core.settings.MAX_RISK_PER_DAY_PERCENT, 5.0)
+        self.assertEqual(core.settings.MAX_RISK_PER_DAY_PERCENT, 10.0)
         self.assertEqual(core.settings.MAX_RISK_PER_DAY_PERCENT,
                          core.settings.MAX_DAILY_RISK)
 
     def test_02_micro_stabilization_keys(self):
         self.assertTrue(core.settings.MICRO_STABILIZATION_ACTIVE)
-        # V3.7 (2026-07): 40 -> 45, see core/settings.py comment for the
-        # real-data rationale (MICRO was the worst-performing strategy).
-        self.assertEqual(core.settings.MICRO_MIN_CONFIDENCE_DEFAULT, 50)  # كان 45، +10% بقرار المستخدم
-        self.assertEqual(core.settings.MICRO_MIN_SCORE_DEFAULT, 66)  # كان 60، +10% بقرار المستخدم
+        # MICRO recovery profile restores the stricter 50/66 gate.
+        self.assertEqual(core.settings.MICRO_MIN_CONFIDENCE_DEFAULT, 50)
+        self.assertEqual(core.settings.MICRO_MIN_SCORE_DEFAULT, 66)
 
     def test_03_open_position_limits(self):
         self.assertEqual(core.settings.MAX_OPEN_TRADES, 4)

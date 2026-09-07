@@ -179,7 +179,15 @@ def plan_entry(
                 plan["cancel_level"] = round(price - sl_distance, 5)
             else:
                 plan["cancel_level"] = round(price + sl_distance, 5)
-            rr = float(_cfg("TP_LADDER_RR", (1.5,))[0])
+            try:
+                from core.settings import MULTI_TP_PROFILE
+                rr = float(
+                    MULTI_TP_PROFILE.get(str(strategy or "").upper(), {}).get(
+                        "tp1_rr", _cfg("TP_LADDER_RR", (1.2,))[0]
+                    )
+                )
+            except Exception:
+                rr = float(_cfg("TP_LADDER_RR", (1.2,))[0])
             tp_distance = sl_distance * rr
             plan["expected_sl"] = round(plan["cancel_level"], 5)
             plan["expected_tp"] = round(

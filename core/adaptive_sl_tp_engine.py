@@ -7,6 +7,11 @@ from core.settings import (
     MULTI_TP_ENABLED,
     MULTI_TP_PROFILE,
     MULTI_TP_STRATEGY_ENABLED,
+    MAX_SL_DISTANCE_DOLLARS,
+    MICRO_SL_ATR_MULT,
+    MICRO_TP_ATR_MULT,
+    SCALP_SL_ATR_MULT,
+    SCALP_TP_ATR_MULT,
 )
 
 
@@ -200,7 +205,9 @@ def calculate_adaptive_sl_tp(
 
     safety_floor = float(min_sl or 0.0)
     if safety_floor <= 0:
-        safety_floor = 100.0
+        # Standalone callers still receive the canonical broker-distance
+        # floor; the old 100-dollar fallback flattened every ATR result.
+        safety_floor = float(MIN_SL_DISTANCE) * 0.01
 
     if max_sl is None:
         max_sl = 1500.0
@@ -299,6 +306,20 @@ def calculate_adaptive_sl_tp(
     selected_distance = _normalize(selected_distance, safety_floor, max_sl_value)
     sl_distance = _normalize(selected_distance, safety_floor, max_sl_value)
     tp_distance = sl_distance * risk_reward
+
+    # SCALP and MICRO use ATR profiles for entry distances. Context still
+    # participates in diagnostics and the final safety floor/cap.
+    atr_profiles = {
+        "SCALP": (float(SCALP_SL_ATR_MULT), float(SCALP_TP_ATR_MULT)),
+        "MICRO": (float(MICRO_SL_ATR_MULT), float(MICRO_TP_ATR_MULT)),
+    }
+    profile = atr_profiles.get(str(strategy or "").upper())
+    if profile:
+        sl_multiplier, tp_multiplier = profile
+        profile_max_sl = min(float(max_sl), float(MAX_SL_DISTANCE_DOLLARS))
+        sl_distance = _normalize(atr_value * sl_multiplier, safety_floor, profile_max_sl)
+        tp_distance = max(sl_distance, atr_value * tp_multiplier)
+        risk_reward = tp_distance / sl_distance if sl_distance else 0.0
 
     def _build_tp_tiers(
         strategy: Optional[str],

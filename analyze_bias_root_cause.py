@@ -11,7 +11,13 @@ from collections import defaultdict
 def analyze_bias_root_cause():
     """تحليل الأسباب الجذرية للانحياز"""
     
-    rejected_shadow_path = Path('data/analytics/shadow_counterfactual/rejected_shadow.jsonl')
+    try:
+        from core.settings import SHADOW_COUNTERFACTUAL_LOG_PATH
+        rejected_shadow_path = Path(SHADOW_COUNTERFACTUAL_LOG_PATH)
+    except Exception:
+        rejected_shadow_path = Path(
+            'data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl'
+        )
     
     if not rejected_shadow_path.exists():
         print(f"❌ الملف غير موجود: {rejected_shadow_path}")

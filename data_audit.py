@@ -26,7 +26,7 @@ def _ledger_path(setting_name, fallback):
 def audit_rejected_shadow():
     """فحص REJECTED_SHADOW للتحقق من تلوث البيانات"""
     rejected_file = _ledger_path('SHADOW_COUNTERFACTUAL_LOG_PATH',
-                                 'data/analytics/shadow_counterfactual/rejected_shadow.jsonl')
+                                 'data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl')
     
     if not rejected_file.exists():
         print('❌ ملف REJECTED_SHADOW غير موجود')

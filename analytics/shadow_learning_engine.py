@@ -72,7 +72,13 @@ class ShadowLearningEngine:
     """محرك التعلم من الإشارات المرفوضة"""
     
     def __init__(self):
-        self.rejected_file = Path('data/analytics/shadow_counterfactual/rejected_shadow.jsonl')
+        try:
+            from core.settings import SHADOW_COUNTERFACTUAL_LOG_PATH
+            self.rejected_file = Path(SHADOW_COUNTERFACTUAL_LOG_PATH)
+        except Exception:
+            self.rejected_file = Path(
+                'data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl'
+            )
         self.training_output = Path('data/analytics/shadow_learning/training_dataset.jsonl')
         self.insights_output = Path('data/analytics/shadow_learning/learning_insights.json')
         self.training_output.parent.mkdir(parents=True, exist_ok=True)

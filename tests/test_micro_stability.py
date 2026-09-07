@@ -35,7 +35,10 @@ class MicroStabilityTests(unittest.TestCase):
             (2000.6, 2001.5, 2000.5, 2001.4),  # prev2 (bullish)
             (2001.5, 2002.5, 2001.4, 2002.4),  # last — strong bullish momentum
         )
-        ok, res = micro.should_enter_micro(rates, context={"confidence": 80})
+        ok, res = micro.should_enter_micro(rates, context={
+            "confidence": 80, "liquidity_sweep": True, "volume_spike": True,
+            "atr_expansion": True, "breakout_strength": 2,
+        })
         # With momentum breakout + 2-bar confirmation → approved
         self.assertTrue(ok, msg=f"Expected approval, got reasons={res.get('reasons')}")
 
@@ -58,7 +61,10 @@ class MicroStabilityTests(unittest.TestCase):
             (2001.5, 2002.5, 2001.4, 2002.4),
         )
         # confidence below V3.5 minimum (35)
-        ok, res = micro.should_enter_micro(rates, context={"confidence": 30})
+        ok, res = micro.should_enter_micro(rates, context={
+            "confidence": 30, "liquidity_sweep": True, "volume_spike": True,
+            "atr_expansion": True, "breakout_strength": 2,
+        })
         self.assertFalse(ok)
         self.assertTrue(any("CONF_BELOW" in r for r in res.get("reasons", [])))
 
@@ -70,7 +76,10 @@ class MicroStabilityTests(unittest.TestCase):
             (2000.6, 2001.5, 2000.5, 2001.4),
             (2001.5, 2002.5, 2001.4, 2002.4),
         )
-        ok, res = micro.should_enter_micro(rates, context={"confidence": 60})
+        ok, res = micro.should_enter_micro(rates, context={
+            "confidence": 60, "liquidity_sweep": True, "volume_spike": True,
+            "atr_expansion": True, "breakout_strength": 2,
+        })
         self.assertTrue(ok)
 
     def test_05_ema_alignment_adds_bonus_without_veto(self):
@@ -81,11 +90,15 @@ class MicroStabilityTests(unittest.TestCase):
             (2000.6, 2001.5, 2000.5, 2001.4),
             (2001.5, 2002.5, 2001.4, 2002.4),
         )
-        ok, res = micro.should_enter_micro(rates, context={"confidence": 80, "ema_direction": "BUY"})
+        base_context = {
+            "confidence": 80, "liquidity_sweep": True, "volume_spike": True,
+            "atr_expansion": True, "breakout_strength": 2,
+        }
+        ok, res = micro.should_enter_micro(rates, context={**base_context, "ema_direction": "BUY"})
         self.assertTrue(ok)
         self.assertTrue(any("EMA_DIRECTION_BONUS" in r for r in res.get("reasons", [])))
 
-        ok2, res2 = micro.should_enter_micro(rates, context={"confidence": 80, "ema_direction": "SELL"})
+        ok2, res2 = micro.should_enter_micro(rates, context={**base_context, "ema_direction": "SELL"})
         self.assertTrue(ok2)
         self.assertFalse(any("EMA_DIRECTION_BLOCK" in r for r in res2.get("reasons", [])))
 

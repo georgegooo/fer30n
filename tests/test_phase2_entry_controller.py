@@ -72,7 +72,7 @@ class TestPlanEntry(unittest.TestCase):
         self.assertEqual(p["status"], "PENDING")
         self.assertEqual(p["structural_sl"]["source"], "structure")
         self.assertEqual(p["expected_sl"], 94.0)
-        self.assertEqual(p["expected_tp"], 104.0)
+        self.assertEqual(p["expected_tp"], 102.2)  # TP1 = 1.2R from the active ladder
         self.assertEqual(p["cancel_level"], 94.0)
         self.assertEqual(p["opportunity_mode"], "PREPARE_THEN_CONFIRM")
         self.assertTrue(p["confirmation_conditions"]["structure_valid"])

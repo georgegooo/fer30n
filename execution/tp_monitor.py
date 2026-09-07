@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from core.mt5_compat import mt5, MT5_AVAILABLE
 from execution.multi_tp import (
+    compute_tp_prices,
     get_registered_ladder,
+    register_tp_ladder,
     next_pending_target,
     target_hit,
     mark_target_closed,
@@ -43,6 +45,25 @@ def process_tp_ladders(symbol: str) -> None:
         for pos in positions:
             ticket = int(pos.ticket)
             ladder = get_registered_ladder(ticket)
+            if not ladder:
+                pos_type = 'BUY' if pos.type == mt5.POSITION_TYPE_BUY else 'SELL'
+                entry_price = float(getattr(pos, 'price_open', 0.0) or 0.0)
+                sl_price = float(getattr(pos, 'sl', 0.0) or 0.0)
+                sl_distance = abs(entry_price - sl_price)
+                strategy = str(getattr(pos, 'comment', '') or 'SMC').upper()
+                restored = compute_tp_prices(
+                    entry_price=entry_price,
+                    sl_distance=sl_distance,
+                    direction=pos_type,
+                    strategy=strategy,
+                )
+                if restored.get('enabled'):
+                    register_tp_ladder(ticket, {
+                        **restored,
+                        'base_volume': float(getattr(pos, 'volume', 0.0) or 0.0),
+                        'restored_after_restart': True,
+                    })
+                    ladder = get_registered_ladder(ticket)
             if not ladder or not ladder.get('enabled'):
                 continue
 

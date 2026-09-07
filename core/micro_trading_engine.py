@@ -184,11 +184,14 @@ def evaluate_micro_setup(rates, context=None):
     else:
         micro_score_threshold = 55
 
-    if direction == "NONE" and score < micro_score_threshold:
+    score_percent = min(100, score * 10)
+    if score_percent < micro_score_threshold:
+        reasons.append(f"SCORE_BELOW_{micro_score_threshold}")
         return {
             "enabled": False,
             "direction": "NONE",
             "score": score,
+            "score_percent": score_percent,
             "reasons": reasons,
         }
 
@@ -196,6 +199,7 @@ def evaluate_micro_setup(rates, context=None):
         "enabled": True,
         "direction": direction,
         "score": score,
+        "score_percent": score_percent,
         "reasons": reasons,
         "recovery_entry": bool(context.get("recovery_entry", False)),
         "v3_5_marker": "STABILIZED_MICRO",

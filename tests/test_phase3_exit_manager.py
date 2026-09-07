@@ -28,14 +28,14 @@ def _pos(**kw):
 
 class TestTPLadder(unittest.TestCase):
     def test_buy_ladder(self):
-        # RR (1.5, 2.5, 4.0) × sl 10 → 115 / 125 / 140
+        # RR (1.2, 2.5, 4.0) × sl 10 → 112 / 125 / 140
         ladder = compute_tp_ladder("BUY", 100.0, 10.0)
-        self.assertEqual([t["price"] for t in ladder], [115.0, 125.0, 140.0])
-        self.assertEqual([t["fraction"] for t in ladder], [0.35, 0.35, 0.3])
+        self.assertEqual([t["price"] for t in ladder], [112.0, 125.0, 140.0])
+        self.assertEqual([t["fraction"] for t in ladder], [0.5, 0.3, 0.2])
 
     def test_sell_ladder_mirrored(self):
         ladder = compute_tp_ladder("SELL", 100.0, 10.0)
-        self.assertEqual([t["price"] for t in ladder], [85.0, 75.0, 60.0])
+        self.assertEqual([t["price"] for t in ladder], [88.0, 75.0, 60.0])
 
     def test_bad_input(self):
         self.assertEqual(compute_tp_ladder("BUY", 0, 10.0), [])
@@ -44,12 +44,13 @@ class TestTPLadder(unittest.TestCase):
 
 class TestEvaluateExit(unittest.TestCase):
     def test_move_sl_breakeven_after_tp1(self):
-        # bar hits high 116 >= TP1 115, low 99 > SL 90
+        # bar hits high 116 >= TP1 112, low 99 > SL 90
         r = evaluate_exit(_pos(), _candles([(116, 99)]), atr=10.0)
         self.assertEqual(r["action"], "MOVE_SL_BREAKEVEN")
         self.assertEqual(r["tier"], 1)
-        self.assertEqual(r["fraction"], 0.35)
+        self.assertEqual(r["fraction"], 0.5)
         self.assertEqual(r["breakeven_buffer"], 1.0)  # 0.1 × ATR 10
+        self.assertEqual(r["new_sl"], 101.0)
 
     def test_trail_after_tp2(self):
         r = evaluate_exit(_pos(), _candles([(126, 99)]), atr=10.0)

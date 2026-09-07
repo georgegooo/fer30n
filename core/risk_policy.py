@@ -38,15 +38,15 @@ from typing import Any, Dict
 # something to check in isolation, without importing core.settings.
 # [FER3ON-2026-08-31] Updated to match actual live values in settings.py
 DEFAULT_RISK_POLICY: Dict[str, Any] = {
-    "max_daily_risk_pct": 3.0,
-    "max_position_risk_pct": 0.75,
-    "max_total_risk_pct": 3.0,
+    "max_daily_risk_pct": 10.0,
+    "max_position_risk_pct": 1.0,
+    "max_total_risk_pct": 10.0,
     "max_open_trades": 4,
     "max_daily_trades": 50,
     "max_open_per_strategy": 1,
     "min_effective_risk_pct": 0.75,
     "min_lot": 0.01,
-    "max_lot": 0.06,
+    "max_lot": 0.08,
     "max_sl_distance_dollars": 15.0,  # Updated from 30.0 (2026-08-28 cap)
     "min_lot_risk_multiple_cap": 5.0,  # Updated for small accounts
     "cooldown_after_loss_sec": 300,

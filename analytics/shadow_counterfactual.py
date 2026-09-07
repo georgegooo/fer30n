@@ -34,7 +34,7 @@ def _default_log_path() -> str:
         from core.settings import SHADOW_COUNTERFACTUAL_LOG_PATH
         return SHADOW_COUNTERFACTUAL_LOG_PATH
     except Exception:
-        return "data/analytics/shadow_counterfactual/rejected_shadow.jsonl"
+        return "data/analytics/shadow_counterfactual/rejected_shadow_2026-09-01-clean.jsonl"
 
 
 def _enabled() -> bool:

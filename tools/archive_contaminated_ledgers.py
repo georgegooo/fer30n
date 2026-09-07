@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Archive legacy analytics ledgers before starting a clean data epoch."""
+"""Move legacy analytics ledgers before starting a clean data epoch."""
 from __future__ import annotations
 
 import argparse
@@ -45,7 +45,7 @@ def main() -> int:
         manifest["files"].append(entry)
         if not args.dry_run:
             archive_dir.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(source, archive_dir / source.name)
+            shutil.move(str(source), str(archive_dir / source.name))
         print(f"{name}: {entry['records']} records | {entry['sha256']}")
 
     if not args.dry_run:

@@ -75,7 +75,10 @@ from core.settings import (
     OFF_HOURS_MAX_TRADES,
     LONDON_VOLATILE_BLOCK_ENABLED, LONDON_VOLATILE_START, LONDON_VOLATILE_END,
     MAX_SAME_DIRECTION_POSITIONS,
+    PHASE5_OPPORTUNITY_ALLOCATOR_LIVE_ENABLED,
+    PHASE5_ADVISORY_WEAK_RISK_MULTIPLIER,
     RISK_PER_TRADE_PERCENT, MIN_EFFECTIVE_RISK_PERCENT, MAX_RISK_TOTAL,
+    BREAKEVEN_BUFFER_ATR, MULTI_TP_PROFILE,
     HISTORY_DIR,
     PROACTIVE_OPPORTUNITY_SCAN_ENABLED,
     PROACTIVE_OPPORTUNITY_SCAN_INTERVAL,
@@ -88,6 +91,7 @@ from core.portfolio_risk_authority import (
     record_trade_open,
     record_trade_close,
     reconcile_with_live_positions,
+    sync_portfolio_equity,
 )
 from core.strategy_runners import run_scalp_cycle, run_swing_cycle, run_micro_cycle
 from core.startup_check import run_startup_check
@@ -315,11 +319,45 @@ def _run_resolvers_cycle(snapshot: dict) -> None:
     NEVER raises — all exceptions swallowed.
     """
     try:
+        from core.resolver_telemetry import record_cycle
+        _telemetry = {
+            'resolver_cycles_run': 1,
+            'snapshot_ready': bool(snapshot.get('ready')),
+            'rates_is_none': snapshot.get('rates') is None,
+            'candles_len': 0,
+            'skipped_not_ready': False,
+            'skipped_short_rates': False,
+            'converted_candles': 0,
+            'rejected_resolved': 0,
+            'entry_plans_resolved': 0,
+            'exit_actions_logged': 0,
+            'rates_source': 'snapshot',
+            'error': None,
+        }
         if not snapshot.get('ready') or snapshot.get('rates') is None:
+            _telemetry['skipped_not_ready'] = True
+            record_cycle(_telemetry)
             return
         
         rates = snapshot.get('rates', [])
+        # Resolver history is independent from the short decision window.
+        # This lets old PENDING records reach their signal timestamp without
+        # changing the data volume used by the live decision path.
+        try:
+            from core.settings import RESOLVER_HISTORY_BARS
+            if mt5 is not None and RESOLVER_HISTORY_BARS > len(rates):
+                historical_rates = mt5.copy_rates_from_pos(
+                    SYMBOL, mt5.TIMEFRAME_M5, 0, int(RESOLVER_HISTORY_BARS)
+                )
+                if historical_rates is not None and len(historical_rates) > len(rates):
+                    rates = historical_rates
+                    _telemetry['rates_source'] = 'historical_mt5'
+        except Exception as exc:
+            _telemetry['error'] = f'HISTORY_FETCH:{type(exc).__name__}'
         if len(rates) < 30:
+            _telemetry['skipped_short_rates'] = True
+            _telemetry['candles_len'] = len(rates)
+            record_cycle(_telemetry)
             return
         
         # Convert MT5 rates to resolver format
@@ -344,12 +382,18 @@ def _run_resolvers_cycle(snapshot: dict) -> None:
                 pass
         
         if len(candles) < 10:
+            _telemetry['candles_len'] = len(candles)
+            _telemetry['skipped_short_rates'] = True
+            record_cycle(_telemetry)
             return
+        _telemetry['candles_len'] = len(candles)
+        _telemetry['converted_candles'] = len(candles)
         
         # Resolve REJECTED_SHADOW outcomes
         try:
             from analytics.shadow_counterfactual import resolve_outcomes, summary
             _resolve_res = resolve_outcomes(candles)
+            _telemetry['rejected_resolved'] = int(_resolve_res.get('resolved', 0) or 0)
             if _resolve_res.get('resolved', 0) > 0:
                 _summary = summary()
                 if _summary.get('ready'):
@@ -363,6 +407,7 @@ def _run_resolvers_cycle(snapshot: dict) -> None:
         try:
             from core.entry_controller import resolve_entry_plans, get_entry_plans_summary
             _ep_resolve = resolve_entry_plans(candles)
+            _telemetry['entry_plans_resolved'] = int(_ep_resolve.get('resolved', 0) or 0)
             if _ep_resolve.get('resolved', 0) > 0:
                 _ep_summary = get_entry_plans_summary()
                 if _ep_summary.get('ready'):
@@ -422,13 +467,23 @@ def _run_resolvers_cycle(snapshot: dict) -> None:
                             **result,
                         })
                         _logged_exit_actions.add(dedupe_key)
+                        _telemetry['exit_actions_logged'] += 1
                 _logged_exit_actions.intersection_update(
                     {key for key in _logged_exit_actions if key[0] in current_tickets}
                 )
         except Exception as e:
+            _telemetry['error'] = f'EXIT_MANAGER:{type(e).__name__}'
             print(f'⚠️ RESOLVER_EXIT_MANAGER_FAILED: {e}')
+        record_cycle(_telemetry)
     except Exception:
-        pass  # Fail-silent for resolvers
+        try:
+            from core.resolver_telemetry import record_cycle
+            record_cycle({
+                'resolver_cycles_run': 1,
+                'error': 'RESOLVER_OUTER_EXCEPTION',
+            })
+        except Exception:
+            pass
 
 
 def _account_balance() -> float:
@@ -959,7 +1014,7 @@ def _build_live_snapshot(symbol: str) -> dict:
     }
 
 
-def trigger_parallel_strategy_runners(snapshot: dict, *, allow_execution: bool = True) -> dict:
+def trigger_parallel_strategy_runners(snapshot: dict, *, allow_execution: bool = True, enabled_strategies: dict | None = None) -> dict:
     """Run the live SCALP/SWING/MICRO strategy runners in parallel for the
     current market snapshot. The result is advisory-only and never blocks the
     primary SMC decision path; it simply forces the real runtime wiring that
@@ -969,6 +1024,7 @@ def trigger_parallel_strategy_runners(snapshot: dict, *, allow_execution: bool =
     return dispatch_secondary_strategies(
         snapshot,
         allow_execution=allow_execution,
+        enabled_strategies=enabled_strategies,
         runners={
             'SCALP': run_scalp_cycle,
             'SWING': run_swing_cycle,
@@ -996,6 +1052,7 @@ def main():
         print('Account balance: unavailable (live trading blocked)')
     else:
         print(f'Account balance: ${startup_balance:.2f} (MT5)')
+        sync_portfolio_equity(startup_balance)
     print(f'Max daily trades: {MAX_DAILY_TRADES}')
     print(f'Testing mode lot caps: {TESTING_MODE_LOT_CAPS}')
 
@@ -1148,8 +1205,9 @@ def main():
             
             if _MULTI_REGIME_AVAILABLE:
                 try:
+                    _regime_rates = snapshot.get('rates')
                     regime_analyzer = MultiDimensionalRegimeAnalyzer(
-                        rates_data=snapshot.get('rates') or []
+                        rates_data=_regime_rates if _regime_rates is not None else []
                     )
                     regime_context = regime_analyzer.analyze()
                     # Regime recommendations remain shadow-only until a
@@ -1462,6 +1520,21 @@ def main():
                         'gate_stage': _cf_gate_stage,  # Which gate actually rejected
                         'quality_gate_mode': _cf_quality_mode,  # Quality gate output
                         'verdict': _cf_verdict,  # Authority verdict (PASS_FULL/PASS_REDUCED/HARD_BLOCK)
+                        # Configuration cohort metadata makes the one-week
+                        # Shadow comparison auditable after a policy change.
+                        'sltp_mode': 'ATR_PROFILE',
+                        'config_revision': 'recovery_atr_v1',
+                        'tp1_rr': float(MULTI_TP_PROFILE.get(
+                            str(getattr(_cf_ctx, 'strategy', None) or snapshot.get('strategy') or 'SMC').upper(),
+                            MULTI_TP_PROFILE.get('SMC', {}),
+                        ).get('tp1_rr', 0.0) or 0.0),
+                        'tp1_pct': float(MULTI_TP_PROFILE.get(
+                            str(getattr(_cf_ctx, 'strategy', None) or snapshot.get('strategy') or 'SMC').upper(),
+                            MULTI_TP_PROFILE.get('SMC', {}),
+                        ).get('tp1_pct', 0.0) or 0.0),
+                        'breakeven_buffer_atr': float(BREAKEVEN_BUFFER_ATR),
+                        'risk_per_trade_percent': float(RISK_PER_TRADE_PERCENT),
+                        'max_lot': float(MAX_LOT),
                     })
             except Exception:
                 pass
@@ -1528,8 +1601,8 @@ def main():
                 try:
                     _p3_open_trades = []
                     try:
-                        from core.portfolio_risk_authority import _state as _pra_state
-                        _p3_open_trades = list(getattr(_pra_state, 'open_trades', []) or [])
+                        from core.portfolio_risk_authority import get_portfolio_state
+                        _p3_open_trades = list(get_portfolio_state().open_trades or [])
                     except Exception:
                         pass
 
@@ -1652,10 +1725,25 @@ def main():
             # decision is not a global signal veto; portfolio risk remains
             # the shared global constraint inside each runner.
             try:
-                from core.settings import SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED
+                from core.settings import (
+                    SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED,
+                    MICRO_LIVE_ENABLED,
+                    SCALP_LIVE_ENABLED,
+                    SWING_LIVE_ENABLED,
+                )
                 parallel_results = trigger_parallel_strategy_runners(
                     snapshot,
-                    allow_execution=SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED,
+                    allow_execution=(
+                        SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED
+                        or MICRO_LIVE_ENABLED
+                        or SCALP_LIVE_ENABLED
+                        or SWING_LIVE_ENABLED
+                    ),
+                    enabled_strategies={
+                        'MICRO': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED or MICRO_LIVE_ENABLED,
+                        'SCALP': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED or SCALP_LIVE_ENABLED,
+                        'SWING': SECONDARY_STRATEGY_LIVE_AUTHORITY_ENABLED or SWING_LIVE_ENABLED,
+                    },
                 )
                 for strategy_name, result in parallel_results.items():
                     reason = result.get('reason', 'OK') if isinstance(result, dict) else str(result)
@@ -1723,11 +1811,27 @@ def main():
                     if _TIER_RANK.get(_auth_mode, 0) <= _TIER_RANK.get(_qual_mode, 0)
                     else _qual_mode
                 )
+                _smc_confirmed = bool(snapshot.get('smc_confirmed', False))
+                _smc_grade = str(snapshot.get('entry_grade', 'NONE') or 'NONE').upper()
+                _candle = snapshot.get('candle') or {}
+                _candle_gate = _candle.get('gate_v3') or {}
+                _two_candle_confirmation = bool(
+                    _candle_gate.get('m5_aligned')
+                    and _candle_gate.get('m15_aligned')
+                )
+                # SMC's signal engine remains unchanged. This downstream
+                # ceiling only prevents a full-size order without structural
+                # SMC confirmation and two aligned closed-timeframe candles.
+                if not (_smc_confirmed and _two_candle_confirmation):
+                    _effective_mode = 'REDUCED'
+                if _smc_grade == 'NONE':
+                    _effective_mode = 'MICRO'
                 _exec_grade_used = snapshot['execution'].get('grade', 'C')
                 _exec_approved   = snapshot['execution'].get('approved', False)
                 print(
                     f'V3-FIXED sizing: auth={_auth_mode} | qual={_qual_raw}→{_qual_mode} '
                     f'| effective={_effective_mode} '
+                    f'| smc={_smc_grade}/{_smc_confirmed} candles={_two_candle_confirmation} '
                     f'| exec_grade={_exec_grade_used} exec_approved={_exec_approved}'
                 )
 
@@ -1742,16 +1846,20 @@ def main():
                 if _PHASE5_ALLOCATOR_AVAILABLE and _opp_rank is not None:
                     print(f"[PHASE5-SMC] Using central ranking | Grade: {_opp_rank.grade} | Score: {_opp_rank.score:.0f}")
                     
-                    # If WEAK, print rejection reason
                     if _opp_rank.should_reject:
-                        print(f"[PHASE5] ALLOCATOR_REJECT | {_opp_rank.reasoning}")
-                        print('FINAL_DECISION: REJECTED_BY_ALLOCATOR')
-                        time.sleep(CHECK_INTERVAL)
-                        continue
-                    
-                    # Apply sizing multiplier
-                    _risk_multiplier_from_allocator = _opp_rank.risk_adjustment
-                    print(f"[PHASE5] Applying sizing: risk_mult={_risk_multiplier_from_allocator:.2f}")
+                        if PHASE5_OPPORTUNITY_ALLOCATOR_LIVE_ENABLED:
+                            print(f"[PHASE5] ALLOCATOR_REJECT | {_opp_rank.reasoning}")
+                            print('FINAL_DECISION: REJECTED_BY_ALLOCATOR')
+                            time.sleep(CHECK_INTERVAL)
+                            continue
+                        _risk_multiplier_from_allocator = PHASE5_ADVISORY_WEAK_RISK_MULTIPLIER
+                        print(
+                            f"[PHASE5] ADVISORY_WEAK | {_opp_rank.reasoning}"
+                            f" | risk_mult={_risk_multiplier_from_allocator:.2f}"
+                        )
+                    else:
+                        _risk_multiplier_from_allocator = _opp_rank.risk_adjustment
+                        print(f"[PHASE5] Applying sizing: risk_mult={_risk_multiplier_from_allocator:.2f}")
 
                 # FER3ON FINAL [EXPOSURE-3]: was `round(max(0.10, min(0.75,
                 # 0.50 * risk_multiplier)), 3)` — a hardcoded 0.50% base with
@@ -1812,10 +1920,23 @@ def main():
                 # Previously this was called AFTER lot sizing, which meant
                 # lot could exceed what the authority actually approved.
                 # =========================================================
+                # Keep the in-memory authority synchronized with the broker
+                # balance before it evaluates any risk limits. The snapshot
+                # may have been built earlier in the heartbeat, and the
+                # account can change after a closed trade.
+                current_live_balance = _live_account_balance()
+                if current_live_balance is None:
+                    print('🛑 ACCOUNT_BALANCE_CHECK_FAILED | MT5 balance unavailable, blocking trade (fail-closed)')
+                    time.sleep(CHECK_INTERVAL)
+                    continue
+                snapshot['balance'] = current_live_balance
+                sync_portfolio_equity(current_live_balance)
+
                 risk_decision = evaluate_risk(
                     strategy='SMC',
                     direction=snapshot['signal'],
                     requested_risk_percent=risk_percent,
+                    candidate_meta={'symbol': SYMBOL},
                     ml_advice_boost=0.0,
                     ml_advice_enabled=False,
                 )
@@ -1844,9 +1965,9 @@ def main():
 
                 # ═════════════════════════════════════════════════════════════
                 # ARCHITECTURE FIX #5: CONSISTENCY VALIDATION
-                # Before lot calculation, verify snapshot balance matches
-                # portfolio authority's view. If they diverge, log warning and
-                # use the authority's balance (ground truth).
+                # The broker balance was synchronized immediately before the
+                # authority gate. Keep this check as a diagnostic guard only;
+                # never replace a fresh broker value with stale in-memory data.
                 # ═════════════════════════════════════════════════════════════
                 try:
                     from core.portfolio_risk_authority import get_portfolio_state
@@ -1856,8 +1977,7 @@ def main():
                     
                     if abs(_snapshot_balance - _authority_balance) > 1.0:  # Tolerance: $1
                         print(f'⚠️ [CONSISTENCY] Balance mismatch | snapshot=${_snapshot_balance:.2f} != authority=${_authority_balance:.2f}')
-                        print(f'   Using authority balance (ground truth)')
-                        snapshot['balance'] = _authority_balance
+                        print(f'   Broker balance retained as ground truth; authority will resync next cycle')
                 except Exception as _consistency_err:
                     print(f'⚠️ [CONSISTENCY] Check failed (non-fatal): {_consistency_err}')
 
@@ -1930,6 +2050,7 @@ def main():
                         liq_map_dir=_liq_map_dir,
                         mtf_strength=snapshot.get('mtf_strength', 0),
                         mtf_structural=1 if _snap_structure.get('mtf_aligned') else 0,
+                        size_mode=_effective_mode,
 
                     )
 
@@ -1989,6 +2110,7 @@ def main():
                                 entry_price=_entry_price_val,
                                 sl=_sl_price_val,
                                 tp=float(request.get('tp', 0) or 0),
+                                symbol=SYMBOL,
                                 meta={'quality_score': snapshot['quality_score'], 'session': snapshot.get('session')},
                             )
                         except Exception as exc:

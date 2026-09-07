@@ -162,9 +162,10 @@ def evaluate_exit(
                 return out
             if _touched(tp1["price"]):
                 buf = round(float(_cfg("BREAKEVEN_BUFFER_ATR", 0.1)) * atr_v, 2) if atr_v > 0 else 0.0
+                new_sl = entry + buf if d == "BUY" else entry - buf
                 out.update(action="MOVE_SL_BREAKEVEN", tier=tp1["tier"],
                            fraction=tp1["fraction"], breakeven_buffer=buf,
-                           price=tp1["price"])
+                           new_sl=round(new_sl, 5), price=tp1["price"])
                 return out
 
         # Time exit: stale trade, no TP1 and no SL within the window
