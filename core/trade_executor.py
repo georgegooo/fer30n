@@ -745,6 +745,7 @@ def execute_trade(
                     f" | lot {_lot_before_v7} → {lot} (×{boost_factor:.3f})"
                 )
     except Exception as exc:
+        _log_executor_exception('V7_LOT_BOOST_FAILED', exc, strategy=_strat_key)
         print(f'⚠️ V7_LOT_BOOST_FAILED (non-fatal, lot unchanged): {exc}')
 
     # =========================================
@@ -769,6 +770,7 @@ def execute_trade(
                     f" | lot {_lot_before_regime} → {lot} (×{regime_fit:.2f})"
                 )
     except Exception as exc:
+        _log_executor_exception('REGIME_FIT_ADJUST_FAILED', exc, strategy=_strat_key)
         print(f'⚠️ REGIME_FIT_ADJUST_FAILED (non-fatal, lot unchanged): {exc}')
 
     # =========================================
@@ -794,6 +796,7 @@ def execute_trade(
                     f" | lot {_lot_before_v9} → {lot} (×{v9_mult:.3f})"
                 )
     except Exception as exc:
+        _log_executor_exception('V9_READINESS_BRIDGE_FAILED', exc, strategy=_strat_key)
         print(f'⚠️ V9_READINESS_BRIDGE_FAILED (non-fatal, lot unchanged): {exc}')
 
     # Final volume boundary after all quant/V7/regime/readiness adjustments.
@@ -809,6 +812,7 @@ def execute_trade(
         if lot <= 0:
             return {'retcode': -9, 'comment': 'FINAL_LOT_INVALID'}
     except Exception as exc:
+        _log_executor_exception('FINAL_LOT_BOUNDARY_FAILED', exc, strategy=_strat_key)
         print(f'🛑 FINAL_LOT_BOUNDARY_FAILED: {exc}')
         return {'retcode': -9, 'comment': 'FINAL_LOT_BOUNDARY_FAILED'}
 

@@ -29,3 +29,5 @@ Updated: 2026-09-07
 - Secondary strategy runners need a dedicated shadow-evaluation path before
 - being granted execution authority. A non-executing signal sidecar now logs
   SCALP/SWING/MICRO coverage in `data/analytics/shadow_context`.
+- `scripts/check_recovery_cohort.py` distinguishes old resolved records from
+  post-recovery records; old records must not count toward readiness.
